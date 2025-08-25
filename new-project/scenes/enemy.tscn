@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://bgwx7alhd6yb3"]
+
+[ext_resource type="Script" uid="uid://bs606d67k60lp" path="res://scripts/enemy_REVAMPED.gd" id="1_md0e3"]
+[ext_resource type="ArrayMesh" uid="uid://dqhuwx72tib5l" path="res://assets/Chicken/chickenlowpoly.res" id="2_4ra3w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_md0e3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cptob"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_md0e3"]
+
+[node name="Enemy" type="CharacterBody3D" groups=["Enemies"]]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+collision_layer = 2
+collision_mask = 8
+script = ExtResource("1_md0e3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -0.505376, 0)
+mesh = ExtResource("2_4ra3w")
+surface_material_override/0 = SubResource("StandardMaterial3D_md0e3")
+
+[node name="EnemyCollisionShape" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_cptob")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 2
+
+[node name="EnemyHitBox" type="CollisionShape3D" parent="StaticBody3D" groups=["Enemies"]]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+shape = SubResource("BoxShape3D_md0e3")
+
+[node name="EnemyHitBoxArea" type="Area3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="EnemyAnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]

@@ -1,0 +1,137 @@
+[gd_scene load_steps=14 format=3 uid="uid://cufpjto4q3vgs"]
+
+[ext_resource type="Script" uid="uid://chm5k84ccin4l" path="res://scripts/player.gd" id="1_dqkch"]
+[ext_resource type="Script" uid="uid://j8ebjmgt8dkg" path="res://scripts/init_weapon.gd" id="2_qlg0r"]
+[ext_resource type="Resource" uid="uid://dv880iu5xh4nj" path="res://weapons/baseweapon.tres" id="3_qlg0r"]
+[ext_resource type="Script" uid="uid://bdnnqe0c2tsau" path="res://scenes/whoosh_sound.gd" id="3_tuyoq"]
+[ext_resource type="Script" uid="uid://cke5kylvsk2pm" path="res://scripts/weaponcollisionREVAMPED.gd" id="4_dqkch"]
+[ext_resource type="ArrayMesh" uid="uid://cyjlrfeh8sllc" path="res://assets/swordMesh/swordMesh.res" id="6_tuyoq"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_5t4e2"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_20vo2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dqkch"]
+size = Vector3(1, 1, 1.96069)
+
+[sub_resource type="Animation" id="Animation_qlg0r"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head/SpringArm3D/Weapon/WeaponMesh:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(2.34921, 0.322886, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Head/SpringArm3D/Weapon/WeaponMesh:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.154274, -0.0799999, 0.00574401)]
+}
+
+[sub_resource type="Animation" id="Animation_dqkch"]
+resource_name = "bat_swing"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head/SpringArm3D/Weapon/WeaponMesh:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(2.34921, 0.322886, 0), Vector3(1.49749, -2.81871, 3.14159)]
+}
+
+[sub_resource type="Animation" id="Animation_tuyoq"]
+resource_name = "swinganim"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head/SpringArm3D/Weapon/WeaponMesh:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.266667, 0.5, 0.533333, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.167552, -0.211185, 0.1309), Vector3(0.644027, -0.211185, 0.1309), Vector3(1.59523, 1.50273, 0.1309), Vector3(1.59523, 1.50273, 2.03331), Vector3(-0.167552, -0.211185, 0.1309)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Head/SpringArm3D/Weapon/WeaponMesh:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.433333, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.349, -0.045, -0.389), Vector3(0.349, 0.14, -0.389), Vector3(0.349, 0.06, -0.454), Vector3(0.334, -0.055, -0.429), Vector3(0.349, -0.045, -0.389)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tuyoq"]
+_data = {
+&"RESET": SubResource("Animation_qlg0r"),
+&"bat_swing": SubResource("Animation_dqkch"),
+&"swinganim": SubResource("Animation_tuyoq")
+}
+
+[node name="Player" type="CharacterBody3D" groups=["Weapon"]]
+script = ExtResource("1_dqkch")
+
+[node name="WhooshSound" type="Node3D" parent="."]
+script = ExtResource("3_tuyoq")
+
+[node name="AudioStreamPlayer" type="Node3D" parent="WhooshSound"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_5t4e2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_20vo2")
+
+[node name="Head" type="Node3D" parent="."]
+
+[node name="SpringArm3D" type="SpringArm3D" parent="Head"]
+spring_length = 0.0
+
+[node name="Weapon" type="Node3D" parent="Head/SpringArm3D"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8754, 0)
+script = ExtResource("2_qlg0r")
+WEAPON_TYPE = ExtResource("3_qlg0r")
+
+[node name="Area3D" type="Area3D" parent="Head/SpringArm3D/Weapon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+collision_mask = 3
+
+[node name="WeaponCollisionShape" type="CollisionShape3D" parent="Head/SpringArm3D/Weapon/Area3D"]
+transform = Transform3D(3, 0, 0, 0, 2.478, 0, 0, 0, 1.696, 0, 0, 0.0461341)
+shape = SubResource("BoxShape3D_dqkch")
+script = ExtResource("4_dqkch")
+
+[node name="WeaponMesh" type="MeshInstance3D" parent="Head/SpringArm3D/Weapon"]
+transform = Transform3D(0.948324, 0.22593, -0.222796, 0, -0.702151, -0.712028, -0.317305, 0.675233, -0.665866, 0.154274, -0.0799999, 0.00574401)
+mesh = ExtResource("6_tuyoq")
+
+[node name="PlayerAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_tuyoq")
+}
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0.5, -0.866025, 0, 0.866025, 0.5, 1, 2.18557e-08, -3.78552e-08, -15, 10, 0)

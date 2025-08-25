@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://cpaew8pmlafdj"]
+
+[ext_resource type="Texture2D" uid="uid://dphw7iqay6ftl" path="res://assets/dry_bland.jpg" id="1_q2477"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_q2477"]
+vertices = PackedVector3Array(-16.25, 1, -11.25, -16.25, 1, 11.25, 17.5, 1, 11.25, 17.5, 1, -11.25)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+cell_size = 3.75
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tyffc"]
+albedo_color = Color(0.384314, 0.258824, 0.141176, 1)
+albedo_texture = ExtResource("1_q2477")
+metallic = 0.85
+metallic_specular = 0.81
+heightmap_scale = -1.2
+refraction_scale = 1.0
+
+[node name="NavigationRegion3D" type="NavigationRegion3D"]
+navigation_mesh = SubResource("NavigationMesh_q2477")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(8, 0, 0, 0, 1, 0, 0, 0, 6, 0, 0, 0)
+use_collision = true
+collision_layer = 9
+size = Vector3(5, 1, 5)
+material = SubResource("StandardMaterial3D_tyffc")
