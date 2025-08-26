@@ -10,10 +10,21 @@ extends Node3D
 
 @onready var weapon_mesh : MeshInstance3D = $WeaponMesh
 @onready var weapon_collision_shape : CollisionShape3D = $Area3D/WeaponCollisionShape
+var baseweapon = load("res://weapons/baseweapon.tres")
+var firstgun = load("res://weapons/firstgun.tres")
 
 func _ready() -> void:
 	if WEAPON_TYPE != null:
 		load_weapon()
+		
+func _process(delta):
+	if not Engine.is_editor_hint():
+		if Input.is_action_pressed("toWeapon1"):
+			WEAPON_TYPE = baseweapon
+			load_weapon()
+		if Input.is_action_pressed("toWeapon2"):
+			WEAPON_TYPE = firstgun
+			load_weapon()
 	
 func load_weapon() -> void:
 	weapon_mesh.mesh = WEAPON_TYPE.mesh

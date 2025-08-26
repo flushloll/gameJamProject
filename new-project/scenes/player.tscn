@@ -111,7 +111,7 @@ spring_length = 0.0
 
 [node name="Weapon" type="Node3D" parent="Head/SpringArm3D"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8754, 0)
+transform = Transform3D(0.973981, -0.0929676, -0.206683, 0.128698, 0.977561, 0.166769, 0.186541, -0.189029, 0.96409, 0.349, -0.045, -0.389)
 script = ExtResource("2_qlg0r")
 WEAPON_TYPE = ExtResource("3_qlg0r")
 
@@ -125,8 +125,10 @@ shape = SubResource("BoxShape3D_dqkch")
 script = ExtResource("4_dqkch")
 
 [node name="WeaponMesh" type="MeshInstance3D" parent="Head/SpringArm3D/Weapon"]
-transform = Transform3D(0.948324, 0.22593, -0.222796, 0, -0.702151, -0.712028, -0.317305, 0.675233, -0.665866, 0.154274, -0.0799999, 0.00574401)
+transform = Transform3D(2.84497, 0.67779, -0.668387, 0, -2.10645, -2.13608, -0.951914, 2.0257, -1.9976, 0.154274, -0.0799999, 0.00574401)
 mesh = ExtResource("6_tuyoq")
+
+[node name="ShootCast" type="RayCast3D" parent="Head/SpringArm3D/Weapon"]
 
 [node name="PlayerAnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

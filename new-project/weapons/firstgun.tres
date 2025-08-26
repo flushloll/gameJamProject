@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Weapons" load_steps=3 format=3 uid="uid://c7sy4eej1vynk"]
+
+[ext_resource type="Script" uid="uid://cdclv0yt67rps" path="res://weapons/weapons.gd" id="1_dj3ft"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_dj3ft"]
+
+[resource]
+script = ExtResource("1_dj3ft")
+name = &"FirstGun"
+position = Vector3(0, 0, 0)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("BoxMesh_dj3ft")
+shadow = false
+weapon_damage = 13.0
+weapon_cooldown = 1.0
+metadata/_custom_type_script = "uid://cdclv0yt67rps"

@@ -5,9 +5,9 @@
 
 [resource]
 script = ExtResource("1_o67tw")
-name = &"Box"
-position = Vector3(0, 0, 0)
-rotation = Vector3(0, 0, 0)
+name = &"BaseWeapon"
+position = Vector3(0.349, -0.045, -0.389)
+rotation = Vector3(-9.6, -12.1, 7.5)
 mesh = ExtResource("1_gghyt")
 shadow = false
 weapon_damage = 25.0
