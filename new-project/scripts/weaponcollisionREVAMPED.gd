@@ -42,9 +42,7 @@ func _ready():
 		
 func _process(delta):
 	weaponTypeName = weaponNode.WEAPON_TYPE.name
-	if Input.is_action_just_pressed("attack") and weaponTypeName == "BaseWeapon":
-		start_attack_animation()
-	if Input.is_action_just_pressed("attack") and weaponTypeName == "FirstGun" and no_more_ammo() == false and can_shoot == true and not is_reloading:
+	if Input.is_action_just_pressed("attack"):
 		start_attack_animation()
 	
 	if is_reloading == false:
@@ -81,7 +79,7 @@ func start_attack_animation():
 		await get_tree().create_timer(0.58).timeout
 		if can_swing:
 			attack()
-	if weaponTypeName == "FirstGun":
+	elif weaponTypeName == "FirstGun" and no_more_ammo() == false and can_shoot == true and not is_reloading:
 		shoot()
 
 func can_reload():
