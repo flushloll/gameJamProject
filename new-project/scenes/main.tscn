@@ -1407,4 +1407,9 @@ scale = Vector2(0.1, 0.1)
 texture = ExtResource("16_muem4")
 script = ExtResource("16_jbj1t")
 
+[node name="AmmoCounter" type="Label" parent="UI"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "30/30"
+
 [connection signal="timeout" from="spawnTimer" to="." method="_on_spawn_timer_timeout"]

@@ -22,6 +22,7 @@ var weaponTypeName
 @export var reload_time : float = 2.0
 var shoot_timer_time : float
 var reload_timer_time : float
+@onready var gui = $"../../../../../../UI"
 
 var is_reloading : bool
 var can_shoot: bool = true
@@ -29,12 +30,11 @@ var can_shoot: bool = true
 #var gui
 var ammo_text
 
-@onready var shoot_cast : RayCast3D = $ShootCast
-		
+@onready var shoot_cast : RayCast3D = $"../../../../../ShootCast"
+
 func _ready():
-	#gui = $UI
-	#ammo_text = gui.get_node("AmmoCounter")
-	#current_ammo = reserve_ammo
+	ammo_text = gui.get_node("AmmoCounter")
+	current_ammo = reserve_ammo
 	
 	shoot_timer_time = shoot_delay
 	shoot_timer_time = reload_time
@@ -81,6 +81,7 @@ func start_attack_animation():
 			attack()
 	elif weaponTypeName == "FirstGun" and no_more_ammo() == false and can_shoot == true and not is_reloading:
 		shoot()
+		print("HasShot")
 
 func can_reload():
 	return reserve_ammo > 0
@@ -98,10 +99,29 @@ func no_more_ammo():
 		return false
 		
 func shoot():
+	
+	var camera : Camera3D = $"../../../../../Camera3D"
+	var mouse_pos = get_viewport().get_mouse_position()
+	var ray_origin = camera.project_ray_origin(mouse_pos)
+	var ray_dir = camera.project_ray_normal(mouse_pos)
+	var ray_target = ray_origin + ray_dir * 1000  # Ray length
+
+	var space_state = get_world_3d().direct_space_state
+	var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_target)
+	query.collision_mask = 1
+
+	var result = space_state.intersect_ray(query)
 	can_shoot = false
 	current_ammo -= 1
-	if shoot_cast.is_colliding():
-		pass
+	if result:
+		var collider = result.collider
+		if collider and collider.has_method("take_damage"):
+			collider.take_damage(weapon_damage)
+			print("Hit enemy: ", collider.name)
+		else:
+			print("Hit something else: ", result.position)
+	else:
+		print("Missed")
 		
 func reset_shoot(delta):
 	shoot_timer_time -= delta
