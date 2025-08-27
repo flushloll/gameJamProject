@@ -5,3 +5,5 @@ extends Node
 var swinging: bool = false
 var WeaponCollisionCooldown: float
 var WeaponDamage: int
+var WeaponTypeNameGlobal: String = "BaseWeapon"
+var collider

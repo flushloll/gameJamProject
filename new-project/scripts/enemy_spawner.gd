@@ -5,7 +5,6 @@ extends Node3D
 
 const enemySpawn = preload("res://scenes/enemy.tscn")
 
-
 func _on_enemy_spawn_timer_timeout():
 	var newEnemy = enemySpawn.instantiate()
 	

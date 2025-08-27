@@ -9,7 +9,8 @@ extends CharacterBody3D
 @export var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 @export var speed = 5.0
 @export var wander_radius = 6 # How far the NPC will wander from its starting point
-@onready var player = get_parent().get_node("Player")
+@onready var player = get_node("/root/Main/SubViewportContainer/SubViewport/Player")
+@onready var chickendeadsfx = get_node("/root/Main/ChickenDeadSfx")
 
 @export var max_health: int = 100
 var current_health: int
@@ -39,7 +40,6 @@ func cubeInput(x):
 		return clampedRadius
 	
 func set_new_random_target():
-	
 	var signDifferenceBetweenPlayerAndEnemyX = sign(player.global_position.x - global_position.x) 
 	var signDifferenceBetweenPlayerAndEnemyZ = sign(player.global_position.z - global_position.z) 
 	
@@ -95,13 +95,13 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 		
 			
-func take_damage(weapon_damage):
+func take_damage():
 	if is_dead:
 		return
 	#playerCamera.add_trauma(0.4)  # Amount between 0.1 (light) and 1.0 (extreme)
 	flash_red()
-	current_health -= weapon_damage
-	print("%s took %d damage. Health: %d" % [name, weapon_damage, current_health])
+	current_health -= Global.WeaponDamage
+	print("%s took %d damage. Health: %d" % [name, Global.WeaponDamage, current_health])
 
 	if current_health <= 0:
 		die()
@@ -110,6 +110,7 @@ func die():
 	if is_dead:
 		return
 	is_dead = true
+	chickendeadsfx.play()
 	# animation_player.play("Death")
 	set_physics_process(false)
 	# animation_player.animation_finished.connect(_on_death_animation_finished)

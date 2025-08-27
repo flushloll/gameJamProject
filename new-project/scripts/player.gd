@@ -49,6 +49,7 @@ func _process(delta) -> void:
 		if absf(velocity.y) < 0.01:
 			velocity.y = 0.0
 			
+			
 	var cam: Camera3D = $Camera3D
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
 	
@@ -62,6 +63,8 @@ func _process(delta) -> void:
 
 	if result:
 		var target: Vector3 = result.position
+		var shoot_cast = $ShootCast
+		shoot_cast.target_position = shoot_cast.to_local(result.position)
 		$Head.look_at(target, Vector3.UP)
 
 	# === 2. Input direction ===
