@@ -101,14 +101,17 @@ func take_damage():
 	#playerCamera.add_trauma(0.4)  # Amount between 0.1 (light) and 1.0 (extreme)
 	flash_red()
 	if Global.isStomping:
-		current_health -= randf_range(56, 64)
+		var stompDeduction = randf_range(56, 64)
+		current_health -= stompDeduction
 		if current_health <= 0:
 			die()
 			return true
 		else:
+			$HitMarker.display_damage(stompDeduction)
 			return false
 			
 	current_health -= Global.WeaponDamage
+	$HitMarker.display_damage(Global.WeaponDamage)
 	print("%s took %d damage. Health: %d" % [name, Global.WeaponDamage, current_health])
 
 	if current_health <= 0:
@@ -118,10 +121,15 @@ func die():
 	if is_dead:
 		return
 	is_dead = true
+	$HitMarker.display_damage("KILL")
 	chickendeadsfx.play()
 	# animation_player.play("Death")
 	set_physics_process(false)
 	# animation_player.animation_finished.connect(_on_death_animation_finished)
+	$MeshInstance3D.hide()
+	$EnemyCollisionShape.hide()
+	$StaticBody3D.hide()
+	await get_tree().create_timer(1.6).timeout
 	queue_free() # REMOVE THIS AFTER DEATH ANIMATION IS ADDED
 		
 func flash_red():

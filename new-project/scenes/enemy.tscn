@@ -1,13 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://bgwx7alhd6yb3"]
+[gd_scene load_steps=10 format=3 uid="uid://bgwx7alhd6yb3"]
 
 [ext_resource type="Script" uid="uid://bs606d67k60lp" path="res://scripts/enemy_REVAMPED.gd" id="1_md0e3"]
 [ext_resource type="ArrayMesh" uid="uid://dqhuwx72tib5l" path="res://assets/Chicken/chickenlowpoly.res" id="2_4ra3w"]
+[ext_resource type="Script" uid="uid://cyi1tk0q16e4s" path="res://scripts/enemyhitmarker.gd" id="3_4ra3w"]
+[ext_resource type="FontFile" uid="uid://b5b3polo64e17" path="res://ui/ChiknScrach-Regular.ttf (2).otf" id="3_5uy6h"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_md0e3"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cptob"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_md0e3"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_md0e3"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_4ra3w"]
+size = Vector2(0.1, 0.1)
 
 [node name="Enemy" type="CharacterBody3D" groups=["Enemies"]]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
@@ -29,7 +36,7 @@ collision_layer = 4
 collision_mask = 5
 
 [node name="EnemyHitBox" type="CollisionShape3D" parent="StaticBody3D" groups=["Enemies"]]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+transform = Transform3D(3.5, 0, 0, 0, 3.5, 0, 0, 0, 3.5, 0, 0, 0)
 shape = SubResource("BoxShape3D_md0e3")
 
 [node name="EnemyHitBoxArea" type="Area3D" parent="."]
@@ -40,3 +47,19 @@ collision_mask = 0
 [node name="EnemyAnimationPlayer" type="AnimationPlayer" parent="."]
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+process_material = SubResource("ParticleProcessMaterial_md0e3")
+draw_pass_1 = SubResource("QuadMesh_4ra3w")
+
+[node name="HitMarker" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.99124, 0)
+script = ExtResource("3_4ra3w")
+
+[node name="DamageLabel" type="Label3D" parent="HitMarker"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+pixel_size = 0.0185
+modulate = Color(0.457828, 0.433537, 0.325499, 1)
+outline_modulate = Color(0.890196, 0.607843, 0.337255, 1)
+font = ExtResource("3_5uy6h")
+outline_size = 6

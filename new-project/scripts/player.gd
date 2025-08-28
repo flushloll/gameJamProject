@@ -10,7 +10,7 @@ extends CharacterBody3D
 @export var ground_friction: float = 10.0
 @export var mouse_sensitivity: float = 0.1
 
-var is_stomping: bool = false
+var is_falling: bool = false
 @export var stomp_speed: float = -30.0
 @export var stomp_radius: float = 5.0
 @export var stomp_damage: int = 20
@@ -54,13 +54,14 @@ func _process(delta) -> void:
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 		if Input.is_action_just_pressed("stomp") and can_stomp:
-				is_stomping = true
+				is_falling = true
 				can_stomp = false
 				fallingsfx.play()
 				velocity.y = stomp_speed   # force you downward fast
 	else:
 		if absf(velocity.y) < 0.01:
 			velocity.y = 0.0
+			is_falling = false
 			
 			
 	var cam: Camera3D = $Camera3D
@@ -120,7 +121,7 @@ func _process(delta) -> void:
 	# === 6. Apply movement & collision ===
 	move_and_slide()
 	
-	if is_stomping and is_on_floor():
+	if is_falling and is_on_floor():
 		perform_stomp()
 	
 	var head_rot = head.rotation_degrees.x
@@ -128,7 +129,7 @@ func _process(delta) -> void:
 	
 func perform_stomp() -> void:
 	Global.isStomping = true
-	is_stomping = false
+	is_falling = false
 	var killed: Array =  []
 	var space_state_forstomp = get_world_3d().direct_space_state
 	var query_forstomp = PhysicsShapeQueryParameters3D.new()
@@ -136,22 +137,23 @@ func perform_stomp() -> void:
 	query_forstomp.shape.radius = stomp_radius
 	query_forstomp.transform = Transform3D(Basis(), global_position)
 	
-	fallingsfx.play()
 	var results = space_state_forstomp.intersect_shape(query_forstomp)
 
 	for r in results:
 		stompsfx.play()
 		fallingsfx.stop()
 		if r.collider.has_method("take_damage"):
+			print("Hit Enemy")
 			killed.append(r.collider.take_damage())
 	if killed.has(true):
 		Global.isStomping = false
 		can_stomp = true
+		return
 	elif not killed.has(true):
 		Global.isStomping = false
 		can_stomp = false
-		await get_tree().create_timer(6).timeout
-		can_stomp = true  
+		await get_tree().create_timer(1).timeout
+		can_stomp = true
 
 	# Add effects
 	print("STOMP landed! Hit: ", results.size(), " enemies")

@@ -1395,7 +1395,7 @@ font_size = 64
 transform = Transform3D(0.938401, -0.174, 0.29854, 0.0015115, 0.866024, 0.5, -0.345543, -0.468749, 0.812941, -15.3518, 4.75097, -14.2844)
 pixel_size = 0.015
 text = "STORE/KITCHEN
-s
+
 (not set up yet)"
 font = ExtResource("14_fhp6j")
 
