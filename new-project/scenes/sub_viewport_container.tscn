@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=4 uid="uid://cswlc83di6gbp"]
+[gd_scene load_steps=87 format=4 uid="uid://cswlc83di6gbp"]
 
 [ext_resource type="PackedScene" uid="uid://cufpjto4q3vgs" path="res://scenes/player.tscn" id="1_w4pyt"]
 [ext_resource type="PackedScene" uid="uid://bgwx7alhd6yb3" path="res://scenes/enemy.tscn" id="2_fhp6j"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://bdialicv581pu" path="res://assets/WoodenPack Textures/squash_textures.png" id="12_4wffk"]
 [ext_resource type="Texture2D" uid="uid://cqkydgyo084be" path="res://assets/WoodenPack Textures/watermelon_textures.png" id="13_8je7q"]
 [ext_resource type="FontFile" uid="uid://b5b3polo64e17" path="res://ui/ChiknScrach-Regular.ttf (2).otf" id="14_fhp6j"]
+[ext_resource type="Script" uid="uid://dra5vxyvn1qm7" path="res://scenes/in_game_text.gd" id="14_lyn8a"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tyffc"]
 sky_top_color = Color(0.245337, 0.443723, 0.752067, 1)
@@ -1379,6 +1380,7 @@ skeleton = NodePath("")
 
 [node name="InGameText" type="Node3D" parent="SubViewport/Asset_pack"]
 transform = Transform3D(1.06263, -1.00589, 1.73904, 0.00343523, 1.96824, 1.13636, -2.009, -0.528688, 0.921787, -11.476, 9.61813, -5.25332)
+script = ExtResource("14_lyn8a")
 
 [node name="Label3D" type="Label3D" parent="SubViewport/Asset_pack/InGameText"]
 transform = Transform3D(0.938402, 0.174081, -0.298493, -0.174001, 0.984374, 0.027063, 0.29854, 0.0265412, 0.954028, 20.3794, 2.99594, 5.80854)
