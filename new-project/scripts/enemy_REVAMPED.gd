@@ -102,8 +102,12 @@ func take_damage():
 	flash_red()
 	if Global.isStomping:
 		current_health -= randf_range(56, 64)
-		Global.isStomping = false
-		return
+		if current_health <= 0:
+			die()
+			return true
+		else:
+			return false
+			
 	current_health -= Global.WeaponDamage
 	print("%s took %d damage. Health: %d" % [name, Global.WeaponDamage, current_health])
 

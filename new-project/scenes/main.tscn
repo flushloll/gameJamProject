@@ -100,4 +100,8 @@ text = "30/30"
 label_settings = SubResource("LabelSettings_tefeu")
 metadata/_edit_use_anchors_ = true
 
+[node name="ProgressBar" type="ProgressBar" parent="UI"]
+offset_right = 4.0
+offset_bottom = 27.0
+
 [connection signal="timeout" from="spawnTimer" to="." method="_on_spawn_timer_timeout"]
