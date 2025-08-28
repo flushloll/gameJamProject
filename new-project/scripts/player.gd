@@ -152,7 +152,7 @@ func perform_stomp() -> void:
 	elif not killed.has(true):
 		Global.isStomping = false
 		can_stomp = false
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(6).timeout
 		can_stomp = true
 
 	# Add effects

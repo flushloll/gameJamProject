@@ -1377,8 +1377,11 @@ transform = Transform3D(50.9777, 26.3204, 44.2718, -36.946, 14.1591, 77.4081, 14
 mesh = SubResource("ArrayMesh_e65yx")
 skeleton = NodePath("")
 
-[node name="Label3D" type="Label3D" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 4.98504, 6.75391, -18.0087)
+[node name="InGameText" type="Node3D" parent="SubViewport/Asset_pack"]
+transform = Transform3D(1.06263, -1.00589, 1.73904, 0.00343523, 1.96824, 1.13636, -2.009, -0.528688, 0.921787, -11.476, 9.61813, -5.25332)
+
+[node name="Label3D" type="Label3D" parent="SubViewport/Asset_pack/InGameText"]
+transform = Transform3D(0.938402, 0.174081, -0.298493, -0.174001, 0.984374, 0.027063, 0.29854, 0.0265412, 0.954028, 20.3794, 2.99594, 5.80854)
 pixel_size = 0.02
 text = "WASD + SPACEBAR to move.
 LEFT CLICK to swing.
@@ -1387,16 +1390,19 @@ ONE to switch to MELEE.
 TWO to switch to GUN.
 
 Press  E to spawn chickens.
+
+Press C in the air to STOMP
+
+Killing an enemy with your STOMP
+recharges it
 "
 font = ExtResource("14_fhp6j")
 font_size = 64
 
-[node name="Label3D2" type="Label3D" parent="SubViewport"]
-transform = Transform3D(0.938401, -0.174, 0.29854, 0.0015115, 0.866024, 0.5, -0.345543, -0.468749, 0.812941, -15.3518, 4.75097, -14.2844)
+[node name="Label3D2" type="Label3D" parent="SubViewport/Asset_pack/InGameText"]
+transform = Transform3D(1, -1.49012e-08, -2.98023e-08, 1.49012e-08, 1, -2.98023e-08, -5.96046e-08, -2.98023e-08, 1, 9.53674e-07, -9.53674e-07, 0)
 pixel_size = 0.015
 text = "STORE/KITCHEN
 
 (not set up yet)"
 font = ExtResource("14_fhp6j")
-
-[node name="Label3D3" type="Label3D" parent="SubViewport"]
