@@ -100,6 +100,10 @@ func take_damage():
 		return
 	#playerCamera.add_trauma(0.4)  # Amount between 0.1 (light) and 1.0 (extreme)
 	flash_red()
+	if Global.isStomping:
+		current_health -= randf_range(56, 64)
+		Global.isStomping = false
+		return
 	current_health -= Global.WeaponDamage
 	print("%s took %d damage. Health: %d" % [name, Global.WeaponDamage, current_health])
 

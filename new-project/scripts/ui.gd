@@ -23,7 +23,7 @@ func _process(delta: float) -> void:
 			weapon1.texture = knifeImage
 			ammocounter.hide()
 			cursor.texture = blueCursor
-			cursor.scale = Vector2(0.3, 0.3)
+			cursor.scale = Vector2(0.1, 0.1)
 			
 		elif current_weapon_type == "FirstGun":
 			weapon1.texture = firingCursor

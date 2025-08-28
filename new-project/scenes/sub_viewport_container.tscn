@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://b66shliqjpvqa" path="res://assets/WoodenPack Textures/stub_texture.png" id="11_8pj23"]
 [ext_resource type="Texture2D" uid="uid://bdialicv581pu" path="res://assets/WoodenPack Textures/squash_textures.png" id="12_4wffk"]
 [ext_resource type="Texture2D" uid="uid://cqkydgyo084be" path="res://assets/WoodenPack Textures/watermelon_textures.png" id="13_8je7q"]
-[ext_resource type="FontFile" uid="uid://bb7n6p453xtwc" path="res://ui/ChiknScrach-Regular.ttf.otf" id="14_fhp6j"]
+[ext_resource type="FontFile" uid="uid://b5b3polo64e17" path="res://ui/ChiknScrach-Regular.ttf (2).otf" id="14_fhp6j"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tyffc"]
 sky_top_color = Color(0.245337, 0.443723, 0.752067, 1)
@@ -1395,6 +1395,7 @@ font_size = 64
 transform = Transform3D(0.938401, -0.174, 0.29854, 0.0015115, 0.866024, 0.5, -0.345543, -0.468749, 0.812941, -15.3518, 4.75097, -14.2844)
 pixel_size = 0.015
 text = "STORE/KITCHEN
+s
 (not set up yet)"
 font = ExtResource("14_fhp6j")
 

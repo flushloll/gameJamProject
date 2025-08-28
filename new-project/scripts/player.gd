@@ -10,6 +10,13 @@ extends CharacterBody3D
 @export var ground_friction: float = 10.0
 @export var mouse_sensitivity: float = 0.1
 
+var is_stomping: bool = false
+@export var stomp_speed: float = -30.0
+@export var stomp_radius: float = 5.0
+@export var stomp_damage: int = 20
+@onready var stompsfx = get_node("/root/Main/StompSfx")
+@onready var fallingsfx = get_node("/root/Main/FallingSfx")
+
 # === Node References ===
 @onready var head: Node3D = $Head
 #@onready var cam: Camera3D = $Head/SpringArm3D/Camera3D
@@ -45,6 +52,10 @@ func _process(delta) -> void:
 	# === 1. Gravity ===
 	if not is_on_floor():
 		velocity.y -= gravity * delta
+		if Input.is_action_just_pressed("stomp"):
+				is_stomping = true
+				fallingsfx.play()
+				velocity.y = stomp_speed   # force you downward fast
 	else:
 		if absf(velocity.y) < 0.01:
 			velocity.y = 0.0
@@ -107,7 +118,29 @@ func _process(delta) -> void:
 	# === 6. Apply movement & collision ===
 	move_and_slide()
 	
+	if is_stomping and is_on_floor():
+		perform_stomp()
+	
 	var head_rot = head.rotation_degrees.x
 	head.rotation_degrees.x = head_rot
 	
-	
+func perform_stomp() -> void:
+	Global.isStomping = true
+	is_stomping = false
+	var space_state_forstomp = get_world_3d().direct_space_state
+	var query_forstomp = PhysicsShapeQueryParameters3D.new()
+	query_forstomp.shape = SphereShape3D.new()
+	query_forstomp.shape.radius = stomp_radius
+	query_forstomp.transform = Transform3D(Basis(), global_position)
+
+	var results = space_state_forstomp.intersect_shape(query_forstomp)
+
+	for r in results:
+		fallingsfx.stop()
+		stompsfx.play()
+		if r.collider.has_method("take_damage"):
+			r.collider.take_damage()
+			Global.isStomping = false
+
+	# Add effects
+	print("STOMP landed! Hit: ", results.size(), " enemies")

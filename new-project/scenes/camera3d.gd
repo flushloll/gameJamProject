@@ -19,6 +19,7 @@ func _process(delta):
 		can_shake = false
 		await get_tree().create_timer(0.58).timeout
 		apply_shake()
+		await get_tree().create_timer(1 - 0.58).timeout
 		can_shake = true
 		
 	if shake_strength > 0:
