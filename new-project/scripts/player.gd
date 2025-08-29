@@ -9,6 +9,7 @@ extends CharacterBody3D
 @export var ground_accel: float = 12.0
 @export var ground_friction: float = 10.0
 @export var mouse_sensitivity: float = 0.1
+@onready var camPlayer = $Camera3D
 
 var is_falling: bool = false
 @export var stomp_speed: float = -30.0
@@ -130,6 +131,7 @@ func _process(delta) -> void:
 func perform_stomp() -> void:
 	Global.isStomping = true
 	is_falling = false
+	camPlayer.apply_shake("stomp")
 	var killed: Array =  []
 	var space_state_forstomp = get_world_3d().direct_space_state
 	var query_forstomp = PhysicsShapeQueryParameters3D.new()

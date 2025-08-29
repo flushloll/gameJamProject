@@ -11,14 +11,19 @@ var can_shake = true
 func _ready():
 	original_local_position = transform.origin  # store local position
 	
-func apply_shake():
-	shake_strength = randomStrength
+func apply_shake(shakeStrengthBasedOnInput):
+	shakeStrengthBasedOnInput = str(shakeStrengthBasedOnInput)
+	if shakeStrengthBasedOnInput == "1":
+		shake_strength = randomStrength
+	elif shakeStrengthBasedOnInput == "stomp":
+		shake_strength = randomStrength * 3.3
+		
 
 func _process(delta):
 	if Input.is_action_just_pressed("attack") and Global.WeaponTypeNameGlobal == "BaseWeapon" and can_shake:
 		can_shake = false
 		await get_tree().create_timer(0.58).timeout
-		apply_shake()
+		apply_shake(1)
 		await get_tree().create_timer(1 - 0.58).timeout
 		can_shake = true
 		

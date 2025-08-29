@@ -1,0 +1,113 @@
+[gd_scene load_steps=16 format=3 uid="uid://ur6a24h4lsyf"]
+
+[ext_resource type="Script" uid="uid://cbh6mwdbhp7jq" path="res://scripts/main.gd" id="1_gqmmt"]
+[ext_resource type="AudioStream" uid="uid://c4myk46h5nng0" path="res://musicandsfx/kitchen-blog-positive-travel-happy-187696.mp3" id="3_tipki"]
+[ext_resource type="AudioStream" uid="uid://7go17pgvvwf0" path="res://musicandsfx/pistol-shot-233473.mp3" id="4_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://cswlc83di6gbp" path="res://scenes/sub_viewport_container.tscn" id="4_tbgi4"]
+[ext_resource type="AudioStream" uid="uid://dduw1q4dnxlpw" path="res://musicandsfx/clean-revolver-reload-6889.mp3" id="5_tipki"]
+[ext_resource type="AudioStream" uid="uid://biwmx5wp3npfh" path="res://musicandsfx/chicken-noise-196746.mp3" id="6_85g3d"]
+[ext_resource type="AudioStream" uid="uid://bdkl1mos75q13" path="res://musicandsfx/error-sound-39539.mp3" id="6_ya4ey"]
+[ext_resource type="AudioStream" uid="uid://b1fggablddkt2" path="res://musicandsfx/simple-whoosh-382724.mp3" id="7_choun"]
+[ext_resource type="AudioStream" uid="uid://ba0agmbtotc18" path="res://musicandsfx/door-slam-172171.mp3" id="9_trceg"]
+[ext_resource type="Texture2D" uid="uid://hx5nkjqrfv4n" path="res://ui/knifeImage.png" id="9_ya4ey"]
+[ext_resource type="AudioStream" uid="uid://jsg6wyrahvdl" path="res://musicandsfx/howling-wind-73982.mp3" id="10_a8y0u"]
+[ext_resource type="FontFile" uid="uid://b5b3polo64e17" path="res://ui/ChiknScrach-Regular.ttf (2).otf" id="14_a8y0u"]
+[ext_resource type="Script" uid="uid://b2jga8epi11h0" path="res://scripts/ui.gd" id="16_jbj1t"]
+[ext_resource type="Texture2D" uid="uid://dsft2rujs1i0c" path="res://ui/cursorBlue.png" id="16_muem4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_tefeu"]
+font = ExtResource("14_a8y0u")
+font_size = 32
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_gqmmt")
+
+[node name="SubViewportContainer" parent="." instance=ExtResource("4_tbgi4")]
+
+[node name="spawnTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_tipki")
+volume_db = -38.0
+autoplay = true
+
+[node name="ShootSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_o6xl0")
+volume_db = -32.0
+
+[node name="ReloadSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_tipki")
+volume_db = -30.0
+
+[node name="ErrorReloadSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_ya4ey")
+volume_db = -27.0
+
+[node name="ChickenDeadSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_85g3d")
+volume_db = -28.0
+
+[node name="SwingSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_choun")
+volume_db = -30.01
+
+[node name="StompSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_trceg")
+volume_db = -34.557
+
+[node name="FallingSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_a8y0u")
+volume_db = -35.0
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("16_jbj1t")
+
+[node name="Control2" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SecondWeaponLoadout" type="Sprite2D" parent="UI/Control2"]
+
+[node name="Control1" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 45.0
+offset_top = 554.0
+offset_right = 85.0
+offset_bottom = 594.0
+
+[node name="FirstWeaponLoadout" type="Sprite2D" parent="UI/Control1"]
+position = Vector2(78, -31)
+scale = Vector2(1.6, 1.6)
+texture = ExtResource("9_ya4ey")
+
+[node name="Cursor" type="Sprite2D" parent="UI"]
+position = Vector2(99, 87)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("16_muem4")
+
+[node name="AmmoCounter" type="Label" parent="UI"]
+anchors_preset = -1
+anchor_left = 0.789063
+anchor_top = 0.904321
+anchor_right = 0.971354
+anchor_bottom = 0.973765
+offset_left = -72.0005
+offset_top = 2.0
+offset_right = 13.0002
+offset_bottom = 2.00024
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "30/30"
+label_settings = SubResource("LabelSettings_tefeu")
+metadata/_edit_use_anchors_ = true
+
+[node name="ProgressBar" type="ProgressBar" parent="UI"]
+offset_right = 4.0
+offset_bottom = 27.0
+
+[connection signal="timeout" from="spawnTimer" to="." method="_on_spawn_timer_timeout"]

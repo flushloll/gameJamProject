@@ -49,7 +49,7 @@ func _process(delta):
 	weaponTypeName = Global.WeaponTypeNameGlobal
 	if Input.is_action_just_pressed("attack"):
 		start_attack_animation()
-	if Input.is_action_just_pressed("reload"):
+	if Input.is_action_just_pressed("reload") and weaponTypeName == "FirstGun":
 		reload_weapon()
 	
 	if is_reloading:
@@ -179,10 +179,10 @@ func finish_reload():
 func randomWeaponDamage():
 	var randomGeneratedWeaponDamage
 	if weaponTypeName == "FirstGun":
-		randomGeneratedWeaponDamage = 54 * randf_range(1.7, 2.8)
+		randomGeneratedWeaponDamage = 47 * randf_range(1.7, 2.8)
 		return randomGeneratedWeaponDamage
 	elif weaponTypeName == "BaseWeapon":
-		randomGeneratedWeaponDamage = 58 * randf_range(1.7, 2.8)
+		randomGeneratedWeaponDamage = 41 * randf_range(1.7, 2.8)
 		return randomGeneratedWeaponDamage
 	
 	

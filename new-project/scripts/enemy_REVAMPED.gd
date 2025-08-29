@@ -101,7 +101,7 @@ func take_damage():
 	#playerCamera.add_trauma(0.4)  # Amount between 0.1 (light) and 1.0 (extreme)
 	flash_red()
 	if Global.isStomping:
-		var stompDeduction = randf_range(56, 64)
+		var stompDeduction = randi_range(56, 64)
 		current_health -= stompDeduction
 		if current_health <= 0:
 			die()
