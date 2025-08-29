@@ -3,6 +3,7 @@ extends Node3D
 var enemySpawn = load("res://scenes/enemy.tscn")
 @onready var timer = $spawnTimer
 @onready var cursor = $UI/Cursor
+@onready var UI = preload("res://scenes/ui.tscn")
 
 func spawn_enemy():
 	var enemyInstance = enemySpawn.instantiate()

@@ -1039,9 +1039,6 @@ shadow_enabled = true
 [node name="Enemy" parent="SubViewport" instance=ExtResource("2_fhp6j")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.94598, 3.91163, -4.29034)
 visible = false
-speed = 5.0
-wander_radius = 6
-max_health = 100
 
 [node name="NavigationRegion3D" parent="SubViewport" instance=ExtResource("3_lyn8a")]
 

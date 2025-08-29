@@ -1,0 +1,68 @@
+[gd_scene load_steps=10 format=3 uid="uid://ju4k7hsib5qh"]
+
+[ext_resource type="Curve" uid="uid://fphs1n6j23p" path="res://scenes/scaleCurve.tres" id="1_hnydv"]
+[ext_resource type="Texture2D" uid="uid://63jfax766wbk" path="res://assets/Chicken/elegant-white-feather-free-png.png" id="2_plw30"]
+[ext_resource type="Script" uid="uid://badrpulnkmnu3" path="res://scenes/feathers_particle.gd" id="3_peheb"]
+
+[sub_resource type="Curve" id="Curve_c4w8v"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.996845, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_xwavj"]
+curve_y = SubResource("Curve_c4w8v")
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_nenq2"]
+curve_x = ExtResource("1_hnydv")
+curve_y = ExtResource("1_hnydv")
+curve_z = ExtResource("1_hnydv")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_md0e3"]
+emission_shape_offset = Vector3(0, 1, 0)
+emission_shape = 1
+emission_sphere_radius = 3.0
+angle_min = -160.0
+angle_max = 160.0
+direction = Vector3(0, 1, 1)
+spread = 20.0
+flatness = 0.5
+initial_velocity_min = 4.0
+initial_velocity_max = 7.0
+angular_velocity_min = -30.0
+angular_velocity_max = -30.0
+directional_velocity_min = 0.699984
+directional_velocity_max = 1.29998
+directional_velocity_curve = SubResource("CurveXYZTexture_xwavj")
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -2.23517e-06
+linear_accel_max = -2.23517e-06
+scale_min = 0.5
+scale_max = 1.6
+scale_curve = SubResource("CurveXYZTexture_nenq2")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5uy6h"]
+transparency = 2
+alpha_scissor_threshold = 0.36
+alpha_antialiasing_mode = 0
+blend_mode = 1
+albedo_texture = ExtResource("2_plw30")
+albedo_texture_force_srgb = true
+emission_enabled = true
+emission = Color(0.59, 0.59, 0.59, 1)
+emission_energy_multiplier = 0.2
+billboard_keep_scale = true
+proximity_fade_distance = 17.65
+distance_fade_max_distance = 1.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_4ra3w"]
+material = SubResource("StandardMaterial3D_5uy6h")
+
+[node name="FeathersParticle" type="GPUParticles3D"]
+transform = Transform3D(0.808448, -0.305858, 0.502854, 0.35385, 0.935302, 0, -0.47032, 0.177935, 0.864371, 0, 0, 0)
+emitting = false
+amount = 3
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_md0e3")
+draw_pass_1 = SubResource("QuadMesh_4ra3w")
+script = ExtResource("3_peheb")

@@ -123,7 +123,6 @@ func die():
 	is_dead = true
 	$HitMarker.display_damage("KILL")
 	$FeathersParticle.emitting = true
-	$FeathersParticle2.emitting = true
 	chickendeadsfx.play()
 	# animation_player.play("Death")
 	set_physics_process(false)

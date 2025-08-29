@@ -12,6 +12,7 @@ func display_damage(amount):
 	timer = 0.0
 	DamageLabel.modulate.a = 1.0
 	if str(amount) != "KILL":
+		DamageLabel.font_size = 16
 		DamageLabel.modulate = Color(
 		randi_range(180, 255) / 255.0, # red
 		randi_range(100, 255) / 255.0, # green
@@ -20,6 +21,7 @@ func display_damage(amount):
 		)
 		DamageLabel.outline_modulate = Color("e39b56")
 	else:
+		DamageLabel.font_size = 32
 		DamageLabel.outline_modulate = Color(randi_range(172, 202) / 255.0, randi_range(110,140) / 255.0, randi_range(53,83) / 255.0)
 		DamageLabel.modulate = Color(randi_range(152,182) / 255.0, randi_range(139,169) / 255.0, randi_range(71,101) / 255.0)
 	

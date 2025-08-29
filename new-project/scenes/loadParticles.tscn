@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://caa6hxrno6d1e"]
+
+[node name="Node3D" type="Node3D"]
+visible = false
