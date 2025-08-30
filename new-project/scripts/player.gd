@@ -10,6 +10,7 @@ extends CharacterBody3D
 @export var ground_friction: float = 10.0
 @export var mouse_sensitivity: float = 0.1
 @onready var camPlayer = $Camera3D
+@onready var spotlight = $Camera3D/SpotLight3D
 
 var is_falling: bool = false
 @export var stomp_speed: float = -30.0
@@ -75,6 +76,8 @@ func _process(delta) -> void:
 	var query = PhysicsRayQueryParameters3D.create(from, to)
 
 	var result = space_state.intersect_ray(query)
+	var meshRoofBarn = $"../Barns/OpenBarn2/OpenBarn"
+	var shader_mat = meshRoofBarn.material_override as ShaderMaterial
 
 	if result:
 		var target: Vector3 = result.position
