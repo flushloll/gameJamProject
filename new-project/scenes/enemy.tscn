@@ -47,7 +47,6 @@ collision_mask = 0
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 
 [node name="FeathersParticle" parent="." instance=ExtResource("3_c4w8v")]
-transform = Transform3D(0.808448, -0.305858, 0.502854, 0.35385, 0.935302, 0, -0.47032, 0.177935, 0.864371, 0, 0, 0)
 
 [node name="HitMarker" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.99124, 0)

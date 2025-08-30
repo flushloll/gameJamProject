@@ -11,6 +11,7 @@ extends CharacterBody3D
 @export var wander_radius = 6 # How far the NPC will wander from its starting point
 @onready var player = get_node("/root/Main/SubViewportContainer/SubViewport/Player")
 @onready var chickendeadsfx = get_node("/root/Main/ChickenDeadSfx")
+@onready var feathers = $FeathersParticle
 
 @export var max_health: int = 100
 var current_health: int
@@ -21,7 +22,7 @@ func _ready():
 	add_to_group("Enemy")
 	set_new_random_target()
 	current_health = max_health
-	
+	feathers.emitting = false
 func navigationCooldown():
 	await get_tree().create_timer(randf_range(0.4,2)).timeout
 	canMove = true
@@ -122,7 +123,9 @@ func die():
 		return
 	is_dead = true
 	$HitMarker.display_damage("KILL")
-	$FeathersParticle.emitting = true
+	feathers.emitting = false   # reset
+	feathers.restart()          # force restart if it was already used
+	feathers.emitting = true    # now play once
 	chickendeadsfx.play()
 	# animation_player.play("Death")
 	set_physics_process(false)

@@ -8,3 +8,4 @@ var WeaponDamage: int
 var WeaponTypeNameGlobal: String = "BaseWeapon"
 var collider
 var isStomping
+var playerCamRotation = Vector3(-90.0, -90.0 + 30.2, 0.0 + 20.7)
