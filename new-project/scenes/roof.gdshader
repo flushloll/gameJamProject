@@ -18,9 +18,10 @@ void fragment() {
 	vec3 to_player = normalize(player_position - NODE_POSITION_WORLD);
 	float facing = dot(to_player, camera_forward);
 	
+	ALBEDO = vec3(0,0,0);
+	
 	if (facing < 0.0)
 	{
     	ALPHA = outside_circle;
-
 	}
 }

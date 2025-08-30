@@ -23,7 +23,7 @@ autostart = true
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_tipki")
-volume_db = -50.0
+volume_db = -38.0
 autoplay = true
 
 [node name="ShootSfx" type="AudioStreamPlayer" parent="."]
