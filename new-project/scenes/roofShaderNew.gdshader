@@ -18,6 +18,9 @@ void fragment() {
 	if (value < dither){
 		ALPHA = 0.0;
 	}
+	if (value >= 1.0){
+		discard;
+	}
 	//if (value >= dither){
 		//discard;
 	//}

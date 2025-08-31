@@ -149,13 +149,13 @@ script = ExtResource("3_tuyoq")
 layers = 2
 mesh = SubResource("CapsuleMesh_5t4e2")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." groups=["Player"]]
 shape = SubResource("CylinderShape3D_20vo2")
 
 [node name="Head" type="Node3D" parent="."]
 
 [node name="GunCamera" type="Camera3D" parent="Head"]
-transform = Transform3D(0.973981, -0.0929676, -0.206683, 0.128698, 0.977561, 0.166769, 0.186541, -0.189029, 0.96409, 0.349, 0.286454, -0.389)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.349, 0.286454, -0.389)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="Head/GunCamera"]
 transform = Transform3D(0.973981, 0.128698, 0.186541, -0.0929676, 0.977561, -0.189029, -0.206683, 0.166769, 0.96409, -0.304221, -0.321113, 0.399392)
@@ -194,7 +194,7 @@ current = true
 script = ExtResource("7_d2wvv")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, 0, 16.203, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 current = true
 script = ExtResource("7_smehm")
 
@@ -203,7 +203,7 @@ extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_fjrip")
 
 [node name="ShootCast" type="RayCast3D" parent="."]
-transform = Transform3D(11.6878, -2.4802, 1.11561, 1.54438, 2.00123, -11.7307, 2.23849, 11.5691, 2.26835, 0.349, -0.045, -0.389)
+transform = Transform3D(11.6878, -2.48019, 1.11561, 1.54438, 2.00123, -11.7307, 2.23849, 11.5691, 2.26835, 0.349, -0.045, -0.389)
 target_position = Vector3(0, -1000, 0)
 collision_mask = 15
 collide_with_areas = true

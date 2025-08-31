@@ -1,8 +1,26 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://clpi8qoa8w5sq"]
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://clpi8qoa8w5sq"]
+
+[ext_resource type="Shader" uid="uid://cyeoni7voqvya" path="res://openBarnTransparency.gdshader" id="1_4f511"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8i20e"]
+render_priority = 0
+shader = ExtResource("1_4f511")
+shader_parameter/albedo = Color(0, 0, 0, 1)
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 0.0
+shader_parameter/roughness = 0.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/specular = 0.0
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(0, 0, 0)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(0, 0, 0)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
 
 [resource]
 resource_name = "RoofBlack"
 render_priority = 1
+next_pass = SubResource("ShaderMaterial_8i20e")
 cull_mode = 2
 albedo_color = Color(0.346657, 0.346657, 0.346657, 1)
 roughness = 0.5

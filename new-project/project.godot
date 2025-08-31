@@ -26,10 +26,15 @@ settings/addon_root_folder="res://addons/debug_draw_3d"
 
 enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
 
+[filesystem]
+
+import/blender/enabled=false
+
 [global_group]
 
 Weapon=""
 Swinging=""
+Player=""
 
 [input]
 
@@ -117,4 +122,8 @@ player_on_screen_position={
 dither_texture={
 "type": "sampler2D",
 "value": "res://shaders/ditherTextureSmall.png"
+}
+player_is_under_roof={
+"type": "bool",
+"value": false
 }
