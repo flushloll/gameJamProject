@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://clpi8qoa8w5sq"]
+
+[resource]
+resource_name = "RoofBlack"
+render_priority = 1
+cull_mode = 2
+albedo_color = Color(0.346657, 0.346657, 0.346657, 1)
+roughness = 0.5

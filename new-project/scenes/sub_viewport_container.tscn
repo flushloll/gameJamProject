@@ -17,8 +17,10 @@
 [ext_resource type="Script" uid="uid://dra5vxyvn1qm7" path="res://scenes/in_game_text.gd" id="14_lyn8a"]
 [ext_resource type="PackedScene" uid="uid://bhthlnrx1ha03" path="res://assets/glTF/CommonTree_1.gltf" id="16_vv30q"]
 [ext_resource type="PackedScene" uid="uid://bxvr211cis3if" path="res://assets/glTF/CommonTree_4.gltf" id="17_016sp"]
-[ext_resource type="Script" uid="uid://cqo8kcx03ysbj" path="res://scenes/transparency.gd" id="17_flpa8"]
 [ext_resource type="PackedScene" uid="uid://cd378pcc650ah" path="res://assets/glTF/Grass_Common_Short.gltf" id="19_flpa8"]
+[ext_resource type="Script" uid="uid://lbau6s6v8knh" path="res://scenes/transparencyNew.gd" id="19_q8nmi"]
+[ext_resource type="Material" uid="uid://bykisi7u4iyw" path="res://scenes/transparencyNew.tres" id="19_tvr1o"]
+[ext_resource type="Material" uid="uid://clpi8qoa8w5sq" path="res://scenes/defaultOpenBarnRoof.tres" id="20_q8nmi"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_flpa8"]
 sky_top_color = Color(0.245337, 0.443723, 0.752067, 1)
@@ -1015,7 +1017,9 @@ shadow_mesh = SubResource("ArrayMesh_ee6rc")
 
 [sub_resource type="BoxMesh" id="BoxMesh_03lu3"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_flpa8"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q8nmi"]
+render_priority = 1
+next_pass = ExtResource("19_tvr1o")
 albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bbnw"]
@@ -1040,12 +1044,6 @@ roughness = 0.5
 resource_name = "Brown"
 cull_mode = 2
 albedo_color = Color(0.566656, 0.342176, 0.239322, 1)
-roughness = 0.5
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xfvjq"]
-resource_name = "RoofBlack"
-cull_mode = 2
-albedo_color = Color(0.346657, 0.346657, 0.346657, 1)
 roughness = 0.5
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_0x7w5"]
@@ -1163,7 +1161,7 @@ _surfaces = [{
 "index_count": 444,
 "index_data": PackedByteArray("TgBPAC8ALwBPAFAATgAuAE8ALwBQAFEAUgAuAE4AUQBQAB8AUgBTAC4AUQAfAFQAHgBTAFIAVAAfAFUAHgAwAFMAVABVAFYAIAAwAB4AVgBVADEAIAAOADAAVgAxAFcAVwAxAA8AVwAPAA0AIAAyAA4AIABYADIAWABZADIAWABaAFkAWgBbAFkAWgBcAFsAXAA0AFsAXAAzADQAMwA1ADQAMwBdADUAXQBeADUAXQBfAF4AXwBgAF4AXwBhAGAAYQAhAGAAYQBiACEAYgAQACEAYgARABAAYwADAAAAYwBkAAMAZQBmAGcAZQBoAGYAaQACAGoAaQABAAIAawAJACgAbAAoAAkAawBAAAkAbAAJAG0AbgBAAGsAbwBsAG0AbgBwAEAAbwBtACoAcQBwAG4AcgBvACoAcQBzAHAAcgAqAEEAQgBzAHEAQwByAEEAQgBEAHMAQwBBAHQARABCAHUAdAB2AEMARAB1ACkAdABFAHYAKQB1AHcARQB4AHYAKQB3AHkARQB6AHgAeQB3AHsAegB8AHgAeQB7AH0AegBGAHwAfQB7AH4ARgBHAHwAfQB+ACsAKwB+AAgAKwAIAAwARgB/AEcAfwAKAEcAfwALAAoABAAFAAYABAAHAAUAgAASABMAgACBABIAggCDAIQAggCFAIMAhgCHAIgAhgCJAIcAigCLAIwAjACLAI0AigCOAIsAPACOAIoAPAA7AI4AjACNAI8AjwCNAJAAjwCQAJEAkgCTACMAkgAkAJMAlAAiADYAlACVACIAJwCWACYAJwAlAJYAlwA5AJgAlwA6ADkAmQCaADgAmQA3AJoAmwCcAJ0AmwCeAJwAnwCgAKEAnwCiAKAAowCkAKUAowCmAKQApwAdAKgApwAaAB0AqQCqAKsAqQCsAKoArQAbABwArQCuABsAFgAXABgAFgAZABcAPwAVAK8APwAUABUAsACxALIAsACzALEAtAC1ALYAtAC3ALUAuAC5ALoAPgC4ALoAPgC6AD0AuAC7ALkAuwC8ALkAuwC9ALwAvQC+ALwAvQC/AL4ASQDAAEoASQDBAMAAwgDDAEgAwgAsAMMAxADFAMYAxADHAMUAyADJAE0AyAAtAMkASwBMAMoASwDLAEwAzADNAM4AzADPAM0A0ADRANIA0ADTANEA1ADVANYA1ADXANUA"),
 "lods": [0.0831144, PackedByteArray("HgAuAC8AHgAwAC4ALwAuAB8AIAAwAB4ALwAfADEALwAxAA8ALwAPAA0AIAAOADAAIAAyAA4AIAAzADIAMwA0ADIAMwA1ADQAMwARADUAEQAhADUAEQAQACEANgADAAAANgAiAAMAIwAiADYAIwAkACIANwAkACMANwA4ACQANwA5ADgANwA6ADkAOgACADkAOgABAAIAJQA7ADwAPAA7ABMAEwA7ABIAJQA8ACYAJwAlACYAJwAmAD0APQAmAD4APgAVAD0APgA/ABUAPwAUABUAKABAAAkAKAAJACoAKAAqAEEAQgBAACgAQwAoAEEAQgBEAEAAQQBFAEMARABCACkARQBGAEMAKQBCAAgAKQAIACsAKwAIAAwARgBHAEMARgAKAEcARgALAAoABAAFAAYABAAHAAUALAAdAEgALAAaAB0ASQAsAEgASQBIAEoASwBJAEoASwBKAEwASwBMAC0ASwAtAE0ATQAtABsATQAbABwAFgAXABgAFgAZABcA"), 0.512757, PackedByteArray("HgAfAA0ADQAfAA8AHgAOAB8AIAAOAB4AIAAhAA4AIAARACEAEQAQACEAAAAiAAMAIwAiAAAAIwAkACIAIwABACQAAQACACQAJQASACYAJgASABMAJwAlACYAJwAmABQAFAAVACcAKAApAAkAKAAJACoACgAoACoAKgALAAoAKQAoAAgAKQAIACsAKwAIAAwABAAFAAYABAAHAAUALAAaAB0ALAAdAC0ALAAtABwAHAAtABsAFgAXABgAFgAZABcA"), 2.18497, PackedByteArray("AAABAAIAAAACAAMABAAFAAYABAAHAAUACAAJAAoACQALAAoACAAMAAkADQAOAA8ADQAQAA4ADQARABAAEgATABQAFAAVABIAFgAXABgAFgAZABcAGgAbABwAGgAdABsA")],
-"material": SubResource("StandardMaterial3D_xfvjq"),
+"material": ExtResource("20_q8nmi"),
 "name": "RoofBlack",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
@@ -1172,10 +1170,6 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_0x7w5")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yilbv"]
-transparency = 1
-albedo_color = Color(1, 1, 1, 0)
 
 [node name="SubViewportContainer" type="SubViewportContainer"]
 texture_filter = 1
@@ -1628,12 +1622,12 @@ transform = Transform3D(-0.119559, 0, -0.0829655, 0, 0.145525, 0, 0.0829655, 0, 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport"]
 transform = Transform3D(2.87107, -0.0103079, 0.0111008, 0.0103039, 2.87109, 0.00104672, -0.0111045, -0.0010068, 2.87109, 0, 8.02647, 0)
 mesh = SubResource("BoxMesh_03lu3")
-surface_material_override/0 = SubResource("StandardMaterial3D_flpa8")
-script = ExtResource("17_flpa8")
+surface_material_override/0 = SubResource("StandardMaterial3D_q8nmi")
+script = ExtResource("19_q8nmi")
 
 [node name="OpenBarn" type="MeshInstance3D" parent="SubViewport"]
 transform = Transform3D(0.0637702, -0.00953777, -2.87779, 0.010508, 2.87848, -0.00930723, 2.87779, -0.0102992, 0.0638042, 30.1948, 0, 1.49012e-08)
 mesh = SubResource("ArrayMesh_x2y7e")
 skeleton = NodePath("")
-surface_material_override/4 = SubResource("StandardMaterial3D_yilbv")
-script = ExtResource("17_flpa8")
+surface_material_override/4 = ExtResource("19_tvr1o")
+script = ExtResource("19_q8nmi")

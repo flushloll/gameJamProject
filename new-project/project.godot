@@ -107,3 +107,14 @@ change_view={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+
+[shader_globals]
+
+player_on_screen_position={
+"type": "vec2",
+"value": Vector2(0, 0)
+}
+dither_texture={
+"type": "sampler2D",
+"value": "res://shaders/ditherTextureSmall.png"
+}

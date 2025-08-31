@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bykisi7u4iyw"]
+
+[ext_resource type="Shader" uid="uid://d34u74ij4ydtu" path="res://scenes/roofShaderNew.gdshader" id="2_xqxcp"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("2_xqxcp")
