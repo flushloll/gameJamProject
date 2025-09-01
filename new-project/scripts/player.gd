@@ -9,6 +9,7 @@ extends CharacterBody3D
 @export var ground_accel: float = 12.0
 @export var ground_friction: float = 10.0
 @export var mouse_sensitivity: float = 0.1
+@onready var cam_view: int = 1
 @onready var camPlayer = $Camera3D
 
 var is_falling: bool = false
@@ -34,7 +35,6 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
 func _unhandled_input(event: InputEvent) -> void:
-	# Handle mouse look
 	if event is InputEventMouseMotion: #and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		_yaw   -= event.relative.x * mouse_sensitivity
 		_pitch -= event.relative.y * mouse_sensitivity
@@ -50,6 +50,29 @@ func _unhandled_input(event: InputEvent) -> void:
 			#else Input.MOUSE_MODE_CAPTURED
 		#)
 
+func camViewSwitchToFPS():
+	var gun_cam = $Head/GunCamera
+	gun_cam.make_current()
+	head.rotation_degrees.y = _yaw
+	head.rotation_degrees.x = _pitch
+	Global.cameraFollowsCursor = false
+		#position = Vector3(-8.77, 5.846, 0.0)
+		#rotation_degrees = Vector3(-30.0, -90.0, 0.0)
+		#original_local_position = position
+	#elif Input.is_action_just_pressed("change_view") and cam_view == 2:
+		#cam_view = 3
+		#position = Vector3(-8.0, 12.0, -8.0)
+		#rotation_degrees = Vector3(-45.0, -135.0, 0.0)
+		#original_local_position = position
+func camViewSwitchToTopView():
+	cam_view = 1
+	var topdown_cam = $Camera3D
+	topdown_cam.make_current()
+	Global.cameraFollowsCursor = true
+		#position = Vector3(0.0, 0.0, 0.0)
+		#rotation_degrees = Vector3(0.0, 0.0, 0.0)
+		#original_local_position = position
+
 func _process(delta) -> void:
 	# === 1. Gravity ===
 	if not is_on_floor():
@@ -64,19 +87,18 @@ func _process(delta) -> void:
 			velocity.y = 0.0
 			is_falling = false
 			
-			
-	var cam: Camera3D = $Camera3D
+	var camFollowsCursor: Camera3D = $Camera3D
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
 	
-	var from: Vector3 = cam.project_ray_origin(mouse_pos)
-	var to: Vector3 = from + cam.project_ray_normal(mouse_pos) * 1000.0
+	var from: Vector3 = camFollowsCursor.project_ray_origin(mouse_pos)
+	var to: Vector3 = from + camFollowsCursor.project_ray_normal(mouse_pos) * 1000.0
 
 	var space_state = get_world_3d().direct_space_state
 	var query = PhysicsRayQueryParameters3D.create(from, to)
 
 	var result = space_state.intersect_ray(query)
-
-	if result:
+	
+	if result and Global.cameraFollowsCursor:
 		var target: Vector3 = result.position
 		var shoot_cast = $ShootCast
 		shoot_cast.target_position = shoot_cast.to_local(result.position)
@@ -87,8 +109,26 @@ func _process(delta) -> void:
 
 # Instead of using basis (camera/player rotation),
 # lock movement to fixed world axes.
-	var forward: Vector3 = Vector3.FORWARD   # (0, 0, -1)
-	var right: Vector3 = Vector3.RIGHT       # (1, 0, 0)
+
+	var forward: Vector3
+	
+	var right: Vector3
+	
+	if Global.cameraFollowsCursor:
+	# Original logic: fixed world axes
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		forward = Vector3.FORWARD
+		right = Vector3.RIGHT
+	else:
+	# FPS logic: move relative to camera horizontal rotation
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		var cam_basis: Basis = head.global_transform.basis
+		forward = -cam_basis.z
+		forward.y = 0
+		forward = forward.normalized()
+		right = cam_basis.x
+		right.y = 0
+		right = right.normalized()
 
 	# Build desired horizontal movement direction
 	var desired_dir: Vector3 = (right * input2d.x + forward * input2d.y).normalized()

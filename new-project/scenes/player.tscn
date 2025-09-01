@@ -1,8 +1,7 @@
-[gd_scene load_steps=22 format=3 uid="uid://cufpjto4q3vgs"]
+[gd_scene load_steps=21 format=3 uid="uid://cufpjto4q3vgs"]
 
 [ext_resource type="Script" uid="uid://chm5k84ccin4l" path="res://scripts/player.gd" id="1_dqkch"]
 [ext_resource type="Script" uid="uid://j8ebjmgt8dkg" path="res://scripts/init_weapon.gd" id="2_qlg0r"]
-[ext_resource type="Script" uid="uid://bdnnqe0c2tsau" path="res://scripts/whoosh_sound.gd" id="3_tuyoq"]
 [ext_resource type="Script" uid="uid://cke5kylvsk2pm" path="res://scripts/weaponcollisionREVAMPED.gd" id="4_dqkch"]
 [ext_resource type="Resource" uid="uid://dv880iu5xh4nj" path="res://weapons/baseweapon.tres" id="4_y4r1p"]
 [ext_resource type="Shader" uid="uid://bfflau1gr83ug" path="res://scenes/postprocessing.gdshader" id="6_tuyoq"]
@@ -98,10 +97,10 @@ tracks/0/path = NodePath("Head/GunCamera/SpringArm3D/Weapon/WeaponMesh:rotation"
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.266667, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.266667, 0.466667, 0.5, 0.566667, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(-0.167552, -0.211185, 0.1309), Vector3(0.644027, -0.211185, 0.1309), Vector3(1.59523, 1.50273, 0.1309), Vector3(-0.167552, -0.211185, 0.1309)]
+"values": [Vector3(-0.167552, -0.211185, 0.1309), Vector3(0.644027, -0.211185, 0.1309), Vector3(1.59523, 1.50273, 0.1309), Vector3(1.59523, 1.50273, 0.1309), Vector3(1.18508, 0.359538, 0.1309), Vector3(-0.167552, -0.211185, 0.1309)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -110,7 +109,7 @@ tracks/1/path = NodePath("Head/GunCamera/SpringArm3D/Weapon/WeaponMesh:position"
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.433333, 0.5, 1),
+"times": PackedFloat32Array(0, 0.2, 0.433333, 0.5, 0.8),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector3(0.349, -0.045, -0.389), Vector3(0.349, 0.14, -0.389), Vector3(0.349, 0.06, -0.454), Vector3(0.334, -0.055, -0.429), Vector3(0.349, -0.045, -0.389)]
@@ -140,11 +139,6 @@ script = ExtResource("1_dqkch")
 jump_force = 6.0
 air_control = 12.0
 
-[node name="WhooshSound" type="Node3D" parent="."]
-script = ExtResource("3_tuyoq")
-
-[node name="AudioStreamPlayer" type="Node3D" parent="WhooshSound"]
-
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 layers = 2
 mesh = SubResource("CapsuleMesh_5t4e2")
@@ -156,9 +150,11 @@ shape = SubResource("CylinderShape3D_20vo2")
 
 [node name="GunCamera" type="Camera3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.349, 0.286454, -0.389)
+current = true
+fov = 90.0
 
 [node name="SpringArm3D" type="SpringArm3D" parent="Head/GunCamera"]
-transform = Transform3D(0.973981, 0.128698, 0.186541, -0.0929676, 0.977561, -0.189029, -0.206683, 0.166769, 0.96409, -0.304221, -0.321113, 0.399392)
+transform = Transform3D(0.973981, 0.128698, 0.186541, -0.0929676, 0.977561, -0.189029, -0.206683, 0.166769, 0.96409, -0.235591, -0.338122, -0.10247)
 spring_length = 0.0
 
 [node name="Weapon" type="Node3D" parent="Head/GunCamera/SpringArm3D"]
@@ -182,6 +178,11 @@ transform = Transform3D(6.03869, -0.64092, -1.48522, 0.797932, 6.73931, 1.1984, 
 layers = 2
 mesh = ExtResource("6_ur7pv")
 
+[node name="FPSCast" type="RayCast3D" parent="Head/GunCamera"]
+transform = Transform3D(40, 0, 0, 0, 40, 0, 0, 0, 40, 0, 0, 0)
+target_position = Vector3(0, 0, -1)
+collision_mask = 4
+
 [node name="PlayerAnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 libraries = {
@@ -190,12 +191,10 @@ libraries = {
 
 [node name="Camera3D2" type="Camera3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, 1, -1, 4.37114e-08, -4.37114e-08, 0, 16.203, 0)
-current = true
 script = ExtResource("7_d2wvv")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-current = true
+transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, 0, 16.203, 0)
 script = ExtResource("7_smehm")
 
 [node name="PostProcessing" type="MeshInstance3D" parent="Camera3D"]

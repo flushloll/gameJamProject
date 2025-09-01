@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://dymx22377n8n"]
+[gd_scene load_steps=7 format=3 uid="uid://dymx22377n8n"]
 
 [ext_resource type="Script" uid="uid://b2jga8epi11h0" path="res://scripts/ui.gd" id="1_gdt2y"]
 [ext_resource type="Texture2D" uid="uid://hx5nkjqrfv4n" path="res://ui/knifeImage.png" id="2_wm3ai"]
-[ext_resource type="Texture2D" uid="uid://dsft2rujs1i0c" path="res://ui/cursorBlue.png" id="3_8dubc"]
+[ext_resource type="Texture2D" uid="uid://cdmh6jcvkwkkh" path="res://ui/whitedot.tres" id="3_gdt2y"]
 [ext_resource type="FontFile" uid="uid://b5b3polo64e17" path="res://ui/ChiknScrach-Regular.ttf (2).otf" id="4_p7vwb"]
+[ext_resource type="Script" uid="uid://xr00ksmy0s5p" path="res://scenes/center_cursor.gd" id="5_wm3ai"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_tefeu"]
 font = ExtResource("4_p7vwb")
@@ -36,7 +37,7 @@ texture = ExtResource("2_wm3ai")
 [node name="Cursor" type="Sprite2D" parent="."]
 position = Vector2(99, 87)
 scale = Vector2(0.1, 0.1)
-texture = ExtResource("3_8dubc")
+texture = ExtResource("3_gdt2y")
 
 [node name="AmmoCounter" type="Label" parent="."]
 anchors_preset = -1
@@ -57,3 +58,9 @@ metadata/_edit_use_anchors_ = true
 [node name="ProgressBar" type="ProgressBar" parent="."]
 offset_right = 4.0
 offset_bottom = 27.0
+
+[node name="CenterCursor" type="Sprite2D" parent="."]
+scale = Vector2(0.025, 0.025)
+texture = ExtResource("3_gdt2y")
+offset = Vector2(1320, -640)
+script = ExtResource("5_wm3ai")

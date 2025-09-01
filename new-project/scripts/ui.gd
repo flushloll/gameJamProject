@@ -4,6 +4,7 @@ extends CanvasLayer
 @onready var redCursor = load("res://ui/cursorRed.png")
 @onready var firingCursor = load("res://ui/firingCursor.png")
 @onready var knifeImage = load("res://ui/knifeImage.png")
+@onready var centerCursor = $CenterCursor
 @onready var ammocounter = $AmmoCounter
 @onready var cursor = $Cursor
 @onready var subViewport = $"../SubViewportContainer/SubViewport"
@@ -16,26 +17,33 @@ var current_weapon_type = ""
 func _process(delta: float) -> void:
 	cursor.position = get_viewport().get_mouse_position()
 
-	if Global.WeaponTypeNameGlobal != current_weapon_type:
-		current_weapon_type = Global.WeaponTypeNameGlobal
-		weapon1.self_modulate.a = 1  # reset alpha only on weapon change
-		if current_weapon_type == "BaseWeapon":
-			weapon1.texture = knifeImage
-			ammocounter.hide()
-			cursor.texture = blueCursor
-			cursor.scale = Vector2(0.1, 0.1)
+	if Global.cameraFollowsCursor:
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+		cursor.show()
+		centerCursor.hide()
+		if Global.WeaponTypeNameGlobal != current_weapon_type:
+			current_weapon_type = Global.WeaponTypeNameGlobal
+			weapon1.self_modulate.a = 1  # reset alpha only on weapon change
+			if current_weapon_type == "BaseWeapon":
+				weapon1.texture = knifeImage
+				ammocounter.hide()
+				cursor.texture = blueCursor
+				cursor.scale = Vector2(0.1, 0.1)
 			
-		elif current_weapon_type == "FirstGun":
-			weapon1.texture = firingCursor
-			ammocounter.show()
-			cursor.texture = redCursor
-			cursor.scale = Vector2(0.1, 0.1)
+			elif current_weapon_type == "FirstGun":
+				weapon1.texture = firingCursor
+				ammocounter.show()
+				cursor.texture = redCursor
+				cursor.scale = Vector2(0.1, 0.1)
 			
-		if Global.WeaponTypeNameGlobal == "FirstGun" and Global.collider:
-			if Global.collider.is_in_group("Enemies"):
-				cursor.texture = firingCursor  # enemy detected
-			else:
-				cursor.texture = redCursor  # not an enemy
+			if Global.WeaponTypeNameGlobal == "FirstGun" and Global.collider:
+				if Global.collider.is_in_group("Enemies"):
+					cursor.texture = firingCursor  # enemy detected
+				else:
+					cursor.texture = redCursor  # not an enemy
+	else:
+			cursor.hide()
+			centerCursor.visible = true
 
 	# Fade the weapon over time
 	fadeWeapon1(delta)

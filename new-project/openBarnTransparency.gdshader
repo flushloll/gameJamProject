@@ -45,14 +45,14 @@ void fragment() {
 	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
 	ROUGHNESS = roughness_tex * roughness;
 	
-	float value = clamp(
-	(
-		(FRAGCOORD.x - player_on_screen_position.x) * (FRAGCOORD.x - player_on_screen_position.x) +
-		(FRAGCOORD.y - player_on_screen_position.y) * (FRAGCOORD.y - player_on_screen_position.y)
-	)/ (PLAYER_TRANSPARENCY_SIZE * 100.0) - 3.0,
-	0.0,
-	1.0
-	);
+	//float value = clamp(
+	//(
+		//(FRAGCOORD.x - player_on_screen_position.x) * (FRAGCOORD.x - player_on_screen_position.x) +
+		//(FRAGCOORD.y - player_on_screen_position.y) * (FRAGCOORD.y - player_on_screen_position.y)
+	//)/ (PLAYER_TRANSPARENCY_SIZE * 100.0) - 3.0,
+	//0.0,
+	//1.0
+	//);
 	
 	float dither = texture(dither_texture, vec2(FRAGCOORD.xy) / vec2(textureSize(dither_texture, 0))).r;
 	if(player_is_under_roof){

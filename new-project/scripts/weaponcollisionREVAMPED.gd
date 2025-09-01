@@ -23,7 +23,7 @@ var weaponTypeName
 var reload_timer_time : float
 @onready var gui = $"../../../../../../../../../UI"
 @onready var shoot_cast = $"../../../../../../ShootCast"
-@onready var laserbeam = $"../../../../../../LaserBeam"
+@onready var FPS_shoot_cast = $"../../../../FPSCast"
 
 var is_reloading : bool
 var can_shoot: bool = true
@@ -102,14 +102,6 @@ func no_more_ammo():
 		
 func shoot():
 	
-	#var GunCamera : Camera3D = $"../.."
-	#var mouse_pos = get_viewport().get_mouse_position()
-	#var ray_origin = GunCamera.project_ray_origin(mouse_pos)
-	#var ray_dir = GunCamera.project_ray_normal(mouse_pos)
-	#var ray_target = ray_origin + ray_dir * 1000  # Ray length
-	
-	#if Engine.has_singleton("DebugDraw3D"):
-		#DebugDraw3D.draw_line(shoot_cast.x, shoot_cast.y, Color.RED, 0.15)
 	if is_reloading:
 		is_reloading = false
 		if current_ammo <= 0:
@@ -119,6 +111,7 @@ func shoot():
 			return  # cancel reload if player shoots		
 	if not can_shoot or no_more_ammo():
 		return  # can't shoot right now
+	
 	
 	can_shoot = false
 	#
@@ -135,11 +128,12 @@ func shoot():
 	#laserbeam.show_laser(origin, target)
 #
 	animation_player.play("shootrevolver")
-	current_ammo -= 1
 	shootsfx.play()
+	current_ammo -= 1
+	
 	ammo_text.text = "%d/%d" % [current_ammo, reserve_ammo]
 	
-	if shoot_cast.is_colliding():
+	if shoot_cast.is_colliding and Global.cameraFollowsCursor:
 		var collider = shoot_cast.get_collider()
 		Global.collider = shoot_cast.get_collider()
 		
@@ -151,7 +145,20 @@ func shoot():
 			collider.take_damage()
 			print("Hit enemy: ", collider.name)
 		else:
-			print("Hit something else: ", shoot_cast.get_collision_point())
+			print("Hit something else TOP: ", shoot_cast.get_collision_point())
+	elif FPS_shoot_cast.is_colliding() and not Global.cameraFollowsCursor:
+		var colliderFPS = FPS_shoot_cast.get_collider()
+		Global.collider = FPS_shoot_cast.get_collider()
+		
+		while colliderFPS and not colliderFPS.is_in_group("Enemies") and colliderFPS.get_parent() != null:
+			colliderFPS = colliderFPS.get_parent()
+		
+		if colliderFPS and colliderFPS.has_method("take_damage"):
+			Global.WeaponDamage = randomWeaponDamage()
+			colliderFPS.take_damage()
+			print("Hit enemy: ", colliderFPS.name)
+		else:
+			print("Hit something else FPS: ", FPS_shoot_cast.get_collision_point())
 	else:
 		print("Missed")
 	
