@@ -10,7 +10,10 @@ extends CharacterBody3D
 @export var ground_friction: float = 10.0
 @export var mouse_sensitivity: float = 0.1
 @onready var cam_view: int = 1
-@onready var camPlayer = $Camera3D
+@onready var camTop = $Camera3D
+@onready var gun_cam = $Head/GunCamera
+@onready var original_local_cam_top_position = camTop.transform.origin
+@onready var original_local_cam_gun_position = gun_cam.transform.origin
 
 var is_falling: bool = false
 @export var stomp_speed: float = -30.0
@@ -20,9 +23,14 @@ var is_falling: bool = false
 @onready var fallingsfx = get_node("/root/Main/FallingSfx")
 @onready var can_stomp = true
 
-# === Node References ===
 @onready var head: Node3D = $Head
-#@onready var cam: Camera3D = $Head/SpringArm3D/Camera3D
+@export var randomStrength: float = 0.2  # subtle shake
+@export var shakeFade: float = 5.0
+
+var rng = RandomNumberGenerator.new()
+var shake_strength: float = 0.0
+var can_shake = true
+var camera_rot_tempSaved
 
 # === Rotation state ===
 var _yaw: float = 0.0
@@ -51,8 +59,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		#)
 
 func camViewSwitchToFPS():
-	var gun_cam = $Head/GunCamera
 	gun_cam.make_current()
+	$Sketchfab_Scene.hide()
+	$MeshInstance3D.hide()
 	head.rotation_degrees.y = _yaw
 	head.rotation_degrees.x = _pitch
 	Global.cameraFollowsCursor = false
@@ -65,6 +74,8 @@ func camViewSwitchToFPS():
 		#rotation_degrees = Vector3(-45.0, -135.0, 0.0)
 		#original_local_position = position
 func camViewSwitchToTopView():
+	$MeshInstance3D.visible = true
+	$Sketchfab_Scene.visible = true
 	cam_view = 1
 	var topdown_cam = $Camera3D
 	topdown_cam.make_current()
@@ -168,10 +179,39 @@ func _process(delta) -> void:
 	var head_rot = head.rotation_degrees.x
 	head.rotation_degrees.x = head_rot
 	
+	if Input.is_action_just_pressed("attack") and Global.WeaponTypeNameGlobal == "BaseWeapon" and can_shake:
+		can_shake = false
+		await get_tree().create_timer(0.58).timeout
+		apply_shake(1)
+		await get_tree().create_timer(1 - 0.58).timeout
+		can_shake = true
+		
+	if shake_strength > 0:
+		shake_strength = lerpf(shake_strength, 0, shakeFade * delta)
+		var offset = random_offset()
+		if Global.cameraFollowsCursor:	
+			var new_transform = camTop.transform
+			new_transform.origin = original_local_cam_top_position + offset
+			camTop.transform = new_transform
+		elif not Global.cameraFollowsCursor:
+			var new_transform = gun_cam.transform
+			new_transform.origin = original_local_cam_gun_position + offset
+			gun_cam.transform = new_transform
+		else:
+			var new_transformTOP = camTop.transform
+			new_transformTOP.origin = original_local_cam_top_position
+			camTop.transform = new_transformTOP
+			var new_transformFPS = gun_cam.transform
+			new_transformFPS.origin = original_local_cam_gun_position + offset
+			gun_cam.transform = new_transformFPS
+			
+	
 func perform_stomp() -> void:
 	Global.isStomping = true
 	is_falling = false
-	camPlayer.apply_shake("stomp")
+	apply_shake("stomp")
+
+		
 	var killed: Array =  []
 	var space_state_forstomp = get_world_3d().direct_space_state
 	var query_forstomp = PhysicsShapeQueryParameters3D.new()
@@ -199,3 +239,16 @@ func perform_stomp() -> void:
 
 	# Add effects
 	print("STOMP landed! Hit: ", results.size(), " enemies")
+
+func apply_shake(shakeStrengthBasedOnInput):
+	shakeStrengthBasedOnInput = str(shakeStrengthBasedOnInput)
+	if shakeStrengthBasedOnInput == "1":
+		shake_strength = randomStrength
+	elif shakeStrengthBasedOnInput == "stomp":
+		shake_strength = randomStrength * 3.3
+
+func random_offset() -> Vector3:
+	return Vector3(
+		rng.randf_range(-shake_strength, shake_strength),
+		rng.randf_range(-shake_strength, shake_strength),
+		rng.randf_range(-shake_strength, shake_strength))

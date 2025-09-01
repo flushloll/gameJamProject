@@ -143,6 +143,9 @@ air_control = 12.0
 layers = 2
 mesh = SubResource("CapsuleMesh_5t4e2")
 
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("10_y4r1p")]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 0, 1.2, 0)
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." groups=["Player"]]
 shape = SubResource("CylinderShape3D_20vo2")
 
@@ -154,7 +157,7 @@ current = true
 fov = 90.0
 
 [node name="SpringArm3D" type="SpringArm3D" parent="Head/GunCamera"]
-transform = Transform3D(0.973981, 0.128698, 0.186541, -0.0929676, 0.977561, -0.189029, -0.206683, 0.166769, 0.96409, -0.235591, -0.338122, -0.10247)
+transform = Transform3D(0.973981, 0.128698, 0.186541, -0.0929676, 0.977561, -0.189029, -0.206683, 0.166769, 0.96409, -0.00854722, -0.338122, -0.10247)
 spring_length = 0.0
 
 [node name="Weapon" type="Node3D" parent="Head/GunCamera/SpringArm3D"]
@@ -211,6 +214,3 @@ collide_with_areas = true
 transform = Transform3D(0.973827, -0.207257, 0.0933011, 0.129231, 0.167205, -0.977415, 0.186976, 0.963892, 0.189613, 0.348999, -0.0449991, -0.389)
 skeleton = NodePath("../Head/GunCamera/SpringArm3D/Weapon")
 script = ExtResource("7_ur7pv")
-
-[node name="Sketchfab_Scene" parent="." instance=ExtResource("10_y4r1p")]
-transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 0, 1.2, 0)

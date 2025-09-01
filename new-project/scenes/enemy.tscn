@@ -49,12 +49,13 @@ collision_mask = 0
 [node name="FeathersParticle" parent="." instance=ExtResource("3_c4w8v")]
 
 [node name="HitMarker" type="Node3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.99124, 0)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1, 0)
 script = ExtResource("3_4ra3w")
 
 [node name="DamageLabel" type="Label3D" parent="HitMarker"]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 pixel_size = 0.0185
+billboard = 1
 modulate = Color(0.457828, 0.433537, 0.325499, 1)
 outline_modulate = Color(0.890196, 0.607843, 0.337255, 1)
 font = ExtResource("3_5uy6h")
