@@ -62,5 +62,4 @@ offset_bottom = 27.0
 [node name="CenterCursor" type="Sprite2D" parent="."]
 scale = Vector2(0.025, 0.025)
 texture = ExtResource("3_gdt2y")
-offset = Vector2(1320, -640)
 script = ExtResource("5_wm3ai")

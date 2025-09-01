@@ -23,7 +23,7 @@ var weaponTypeName
 var reload_timer_time : float
 @onready var gui = $"../../../../../../../../../UI"
 @onready var shoot_cast = $"../../../../../../ShootCast"
-@onready var FPS_shoot_cast = $"../../../../FPSCast"
+@onready var FPS_shoot_cast = $"../../../FPSCast"
 
 var is_reloading : bool
 var can_shoot: bool = true

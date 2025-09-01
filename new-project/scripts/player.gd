@@ -11,7 +11,7 @@ extends CharacterBody3D
 @export var mouse_sensitivity: float = 0.1
 @onready var cam_view: int = 1
 @onready var camTop = $Camera3D
-@onready var gun_cam = $Head/GunCamera
+@onready var gun_cam = $Head/SpringArm3D/GunCamera
 @onready var original_local_cam_top_position = camTop.transform.origin
 @onready var original_local_cam_gun_position = gun_cam.transform.origin
 
@@ -24,6 +24,7 @@ var is_falling: bool = false
 @onready var can_stomp = true
 
 @onready var head: Node3D = $Head
+@onready var FPS_shoot_cast = $Head/SpringArm3D/GunCamera/FPSCast
 @export var randomStrength: float = 0.2  # subtle shake
 @export var shakeFade: float = 5.0
 
@@ -35,7 +36,8 @@ var camera_rot_tempSaved
 # === Rotation state ===
 var _yaw: float = 0.0
 var _pitch: float = 0.0
-const PITCH_LIMIT := 89.0
+@export var PITCH_LIMIT_DOWN := -70
+@export var PITCH_LIMIT_UP := 89
 
 func _ready() -> void:
 	# Lock mouse for camera control
@@ -46,9 +48,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion: #and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		_yaw   -= event.relative.x * mouse_sensitivity
 		_pitch -= event.relative.y * mouse_sensitivity
-		_pitch = clamp(_pitch, -PITCH_LIMIT, PITCH_LIMIT)
-		head.rotation_degrees.y = _yaw             # body rotation (yaw)
-		head.rotation_degrees.x = _pitch      # head rotation (pitch)
+		_pitch = clamp(_pitch, PITCH_LIMIT_DOWN, PITCH_LIMIT_UP)
+	if Global.cameraFollowsCursor:
+		head.rotation_degrees.y = _yaw
+	else:
+		head.rotation_degrees.x = _pitch  # only pitch
 
 	# Toggle mouse lock (Escape key or mapped input)
 	#if event.is_action_pressed("toggle_mouse"):
@@ -59,10 +63,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		#)
 
 func camViewSwitchToFPS():
+	cam_view = 2
 	gun_cam.make_current()
-	$Sketchfab_Scene.hide()
-	$MeshInstance3D.hide()
-	head.rotation_degrees.y = _yaw
+	rotation_degrees.y = _yaw
 	head.rotation_degrees.x = _pitch
 	Global.cameraFollowsCursor = false
 		#position = Vector3(-8.77, 5.846, 0.0)
@@ -74,12 +77,10 @@ func camViewSwitchToFPS():
 		#rotation_degrees = Vector3(-45.0, -135.0, 0.0)
 		#original_local_position = position
 func camViewSwitchToTopView():
-	$MeshInstance3D.visible = true
-	$Sketchfab_Scene.visible = true
 	cam_view = 1
-	var topdown_cam = $Camera3D
-	topdown_cam.make_current()
+	camTop.make_current()
 	Global.cameraFollowsCursor = true
+	$Camera3D.global_rotation_degrees = Vector3(-90.0, 0.0, 0.0)
 		#position = Vector3(0.0, 0.0, 0.0)
 		#rotation_degrees = Vector3(0.0, 0.0, 0.0)
 		#original_local_position = position
@@ -131,17 +132,22 @@ func _process(delta) -> void:
 		forward = Vector3.FORWARD
 		right = Vector3.RIGHT
 	else:
-	# FPS logic: move relative to camera horizontal rotation
+		FPS_shoot_cast.global_transform = gun_cam.global_transform
+		#FPS_shoot_cast.global_transform.origin += Vector3(0.5, 0.25, 0.0) 
+		FPS_shoot_cast.target_position = Vector3(0, 0, -1000)
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		var cam_basis: Basis = head.global_transform.basis
+		var cam_basis: Basis = $Head/SpringArm3D/GunCamera.global_transform.basis
 		forward = -cam_basis.z
 		forward.y = 0
 		forward = forward.normalized()
 		right = cam_basis.x
 		right.y = 0
 		right = right.normalized()
-
-	# Build desired horizontal movement direction
+		if not Global.cameraFollowsCursor:
+			rotation_degrees.y = _yaw  # body follows mouse X
+			head.rotation_degrees.x = _pitch  # head follows mouse Y
+			# Build desired horizontal movement direction
+			
 	var desired_dir: Vector3 = (right * input2d.x + forward * input2d.y).normalized()
 
 	# === 3. Target horizontal velocity ===

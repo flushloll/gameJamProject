@@ -1033,7 +1033,7 @@ shader_parameter/uv2_scale = Vector3(0, 0, 0)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q8nmi"]
-size = Vector3(20, 20, 20)
+size = Vector3(15.75, 20, 15.75)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bbnw"]
 resource_name = "DarkRed"
@@ -1674,7 +1674,7 @@ script = ExtResource("19_q8nmi")
 roof_shader_material = SubResource("ShaderMaterial_4wffk")
 
 [node name="BarnCollision" type="CollisionShape3D" parent="SubViewport/BarnRoom"]
-transform = Transform3D(0.3483, -9.45874e-11, 0, -4.86671e-09, 0.348298, -1.45519e-11, 1.21072e-07, 2.18279e-11, 0.348297, 0, 0, 0)
+transform = Transform3D(0.348296, 1.43191e-08, 3.9814e-08, 7.10133e-09, 0.348298, 1.11231e-09, 1.52038e-07, -1.32786e-10, 0.348297, 0, 0, 0)
 shape = SubResource("BoxShape3D_q8nmi")
 
 [node name="OpenBarn" type="MeshInstance3D" parent="SubViewport/BarnRoom/BarnCollision"]
