@@ -1,0 +1,37 @@
+[gd_resource type="ShaderMaterial" load_steps=10 format=3 uid="uid://c0ml2mwg50l7c"]
+
+[ext_resource type="Shader" uid="uid://ykr4towq1siq" path="res://experimental/landscaper/grass_shader.gdshader" id="1_v6gx3"]
+[ext_resource type="Texture2D" uid="uid://m77kx8np7uxw" path="res://experimental/landscaper/default_grass_v0.svg" id="4_ktpq3"]
+[ext_resource type="Texture2D" uid="uid://cciwddrj8g86g" path="res://experimental/landscaper/default_grass_v1.svg" id="5_l82ry"]
+[ext_resource type="Texture2D" uid="uid://75v3htafttix" path="res://experimental/landscaper/default_grass_v2.svg" id="6_cl3p8"]
+
+[sub_resource type="Gradient" id="Gradient_vob0t"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_v3e6g"]
+gradient = SubResource("Gradient_vob0t")
+fill_from = Vector2(0.482906, 0)
+fill_to = Vector2(0.525641, 1)
+
+[sub_resource type="Gradient" id="Gradient_ef81g"]
+offsets = PackedFloat32Array(0, 0.997691, 1)
+colors = PackedColorArray(5.10186e-06, 0.93343, 0.28895, 1, 0.525375, 0.77744, 3.85046e-07, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_j53h1"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_v6gx3"]
+seamless = true
+color_ramp = SubResource("Gradient_ef81g")
+noise = SubResource("FastNoiseLite_j53h1")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_v6gx3")
+shader_parameter/enable_details = true
+shader_parameter/billboard_y = false
+shader_parameter/detail_color = Color(0.2, 0.2, 0.2, 1)
+shader_parameter/world_size = Vector2(1, 1)
+shader_parameter/world_position = Vector2(0, 0)
+shader_parameter/grass_color = SubResource("NoiseTexture2D_v6gx3")
+shader_parameter/terrain_color = SubResource("NoiseTexture2D_v6gx3")
+shader_parameter/gradient_mask = SubResource("GradientTexture2D_v3e6g")
+shader_parameter/variants = Array[Texture2D]([ExtResource("4_ktpq3"), ExtResource("5_l82ry"), ExtResource("6_cl3p8")])

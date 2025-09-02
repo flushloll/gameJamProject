@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cnxy5ixjdbinx"]
+
+[ext_resource type="Shader" uid="uid://4fb0ns4mwaqa" path="res://shaders/toon/outline.gdshader" id="1_5fd0w"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_5fd0w")

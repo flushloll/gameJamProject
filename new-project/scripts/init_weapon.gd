@@ -14,6 +14,7 @@ extends Node3D
 @onready var weapon = %Weapon
 var baseweapon = load("res://weapons/baseweapon.tres")
 var firstgun = load("res://weapons/firstgun.tres")
+var buffered_weapon_input: bool = false
 
 func _ready() -> void:
 	WEAPON_TYPE = baseweapon
@@ -26,16 +27,28 @@ func _ready() -> void:
 		
 func _process(delta):
 	if not Engine.is_editor_hint():
-		if Input.is_action_pressed("toWeapon1"):
+		if Input.is_action_pressed("toWeapon1") and Global.can_switch:
 			WEAPON_TYPE = baseweapon
 			Global.WeaponTypeNameGlobal = "BaseWeapon"
 			playeranimationplayer.stop()
 			load_weapon()
-		if Input.is_action_pressed("toWeapon2"):
-			WEAPON_TYPE = firstgun
-			Global.WeaponTypeNameGlobal = "FirstGun"
-			playeranimationplayer.stop()
-			load_weapon()
+		if Input.is_action_just_pressed("toWeapon2"):
+			if Global.can_switch:
+				switch_to_weapon2()
+			else:
+				buffered_weapon_input = true
+
+	# Check if buffered input can now be applied
+		if buffered_weapon_input and Global.WeaponTypeNameGlobal == "BaseWeapon" and Global.can_switch:
+			switch_to_weapon2()
+			buffered_weapon_input = false
+		
+func switch_to_weapon2():
+	WEAPON_TYPE = firstgun
+	Global.can_switch = true
+	Global.WeaponTypeNameGlobal = "FirstGun"
+	playeranimationplayer.stop()
+	load_weapon()
 	
 func load_weapon() -> void:
 	

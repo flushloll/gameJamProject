@@ -43,6 +43,9 @@ func _ready():
 	current_ammo = mag_size
 	ammo_text.text = "%d/%d" % [current_ammo, reserve_ammo]
 	
+	weaponMesh.position = Vector3(0.349, -0.045, -0.389)
+	weaponMesh.rotation_degrees = Vector3(-90.0, -12.1, 7.5)
+	
 	print(can_reload())
 		
 func _process(delta):
@@ -60,28 +63,21 @@ func _process(delta):
 	
 	if current_ammo_depleted() == true and can_reload() == true:
 		reload_weapon()
-	
-func attack() -> void:
-	can_swing = false
-	Global.WeaponDamage = randomWeaponDamage()
+		
+func swingsfxplay():
 	swingsfx.play()
 	
+func enemiestakedamage():
+	Global.WeaponDamage = randomWeaponDamage()
 	for body in WeaponAreaShape3D.get_overlapping_bodies():
-		if body.is_in_group("Enemies"):
+		if body.is_in_group("Enemies") and Global.WeaponTypeNameGlobal == "BaseWeapon":
 			body.take_damage()
-			
-	await get_tree().create_timer(Global.WeaponCollisionCooldown).timeout
-	can_swing = true
 	
 # Called by the player when attack input is detected
 func start_attack_animation():
-	
 	if weaponTypeName == "BaseWeapon":
-	#whooshSoundReference.start_whoosh_sound()
+		Global.can_switch = false
 		animation_player.play("swinganim")
-		await get_tree().create_timer(0.58).timeout
-		if can_swing:
-			attack()
 	elif weaponTypeName == "FirstGun" and no_more_ammo() == false and can_shoot == true:
 		animation_player.stop()
 		weaponMesh.position = Vector3()
@@ -103,7 +99,6 @@ func no_more_ammo():
 func shoot():
 	
 	if is_reloading:
-		is_reloading = false
 		if current_ammo <= 0:
 			errorreloadsfx.play()
 			return
@@ -191,5 +186,10 @@ func randomWeaponDamage():
 	elif weaponTypeName == "BaseWeapon":
 		randomGeneratedWeaponDamage = 41 * randf_range(1.7, 2.8)
 		return randomGeneratedWeaponDamage
-	
-	
+
+func turnOnCanSwitch():
+	Global.can_switch = true
+
+func emitRevolverParticle():
+	$"../../WeaponMesh/RevolverParticle".emitting = true
+	$"../../WeaponMesh/RevolverParticle".restart()

@@ -26,11 +26,11 @@ var is_falling: bool = false
 @onready var head: Node3D = $Head
 @onready var FPS_shoot_cast = $Head/SpringArm3D/GunCamera/FPSCast
 @export var randomStrength: float = 0.2  # subtle shake
-@export var shakeFade: float = 5.0
+@export var shakeFade: float = 10.0
 
 var rng = RandomNumberGenerator.new()
 var shake_strength: float = 0.0
-var can_shake = true
+@export var can_shake = true
 var camera_rot_tempSaved
 
 # === Rotation state ===
@@ -184,13 +184,6 @@ func _process(delta) -> void:
 	
 	var head_rot = head.rotation_degrees.x
 	head.rotation_degrees.x = head_rot
-	
-	if Input.is_action_just_pressed("attack") and Global.WeaponTypeNameGlobal == "BaseWeapon" and can_shake:
-		can_shake = false
-		await get_tree().create_timer(0.58).timeout
-		apply_shake(1)
-		await get_tree().create_timer(1 - 0.58).timeout
-		can_shake = true
 		
 	if shake_strength > 0:
 		shake_strength = lerpf(shake_strength, 0, shakeFade * delta)
