@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://b6d21okt5bsje"]
+
+[ext_resource type="Material" uid="uid://cnxy5ixjdbinx" path="res://shaders/toon/outline-cel-shading.tres" id="1_j1glj"]
+[ext_resource type="Shader" uid="uid://cj24kf60bwk3r" path="res://shaders/toon/pumpkins.gdshader" id="2_3eb4y"]
+[ext_resource type="Texture2D" uid="uid://drvgdkvlayqoi" path="res://assets/watermelon.jpg" id="3_3eb4y"]
+
+[resource]
+render_priority = 0
+next_pass = ExtResource("1_j1glj")
+shader = ExtResource("2_3eb4y")
+shader_parameter/color = Color(0.326223, 0.557936, 0.268147, 1)
+shader_parameter/base_texture = ExtResource("3_3eb4y")
+shader_parameter/specular = Color(0.3, 0.3, 0.3, 0.5)
+shader_parameter/fresnel = Color(0.2, 0.2, 0.2, 0.3)
+shader_parameter/uv_scale = Vector2(1, 1)
+shader_parameter/uv_offset = Vector2(0, 0)

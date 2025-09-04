@@ -8,7 +8,8 @@ extends CharacterBody3D
 @export var air_control: float = 0.4
 @export var ground_accel: float = 12.0
 @export var ground_friction: float = 10.0
-@export var mouse_sensitivity: float = 0.1
+@export var mouse_sensitivityX: float = 0.07
+@export var mouse_sensitivityY: float = 0.07
 @onready var cam_view: int = 1
 @onready var camTop = $Camera3D
 @onready var gun_cam = $Head/SpringArm3D/GunCamera
@@ -37,17 +38,17 @@ var camera_rot_tempSaved
 var _yaw: float = 0.0
 var _pitch: float = 0.0
 @export var PITCH_LIMIT_DOWN := -70
-@export var PITCH_LIMIT_UP := 89
+@export var PITCH_LIMIT_UP := 75
 
 func _ready() -> void:
+	
 	# Lock mouse for camera control
-	await get_tree().create_timer(0.01).timeout
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion: #and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		_yaw   -= event.relative.x * mouse_sensitivity
-		_pitch -= event.relative.y * mouse_sensitivity
+		_yaw   -= event.relative.x * mouse_sensitivityX
+		_pitch -= event.relative.y * mouse_sensitivityY
 		_pitch = clamp(_pitch, PITCH_LIMIT_DOWN, PITCH_LIMIT_UP)
 	if Global.cameraFollowsCursor:
 		head.rotation_degrees.y = _yaw

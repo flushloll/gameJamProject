@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://bej0co0wt2vvy"]
+
+[ext_resource type="Material" uid="uid://cnxy5ixjdbinx" path="res://shaders/toon/outline-cel-shading.tres" id="1_8lo0w"]
+[ext_resource type="Shader" uid="uid://cpy8bab60umvb" path="res://shaders/toon/chicken.gdshader" id="2_8lo0w"]
+
+[resource]
+render_priority = 0
+next_pass = ExtResource("1_8lo0w")
+shader = ExtResource("2_8lo0w")
+shader_parameter/color = Color(0.561585, 0.374871, 0.249042, 1)
+shader_parameter/specular = Color(0.3, 0.3, 0.3, 0.5)
+shader_parameter/fresnel = Color(0.2, 0.2, 0.2, 0.3)
+shader_parameter/uv_scale = Vector2(1, 1)
+shader_parameter/uv_offset = Vector2(0, 0)

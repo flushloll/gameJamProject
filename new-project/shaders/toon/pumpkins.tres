@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://dtrpjlg2f86ch"]
+
+[ext_resource type="Material" uid="uid://cnxy5ixjdbinx" path="res://shaders/toon/outline-cel-shading.tres" id="1_lbt6j"]
+[ext_resource type="Shader" uid="uid://cj24kf60bwk3r" path="res://shaders/toon/pumpkins.gdshader" id="2_lbt6j"]
+
+[resource]
+render_priority = 0
+next_pass = ExtResource("1_lbt6j")
+shader = ExtResource("2_lbt6j")
+shader_parameter/color = Color(0.8681, 0.41776, 0.153748, 1)
+shader_parameter/specular = Color(0.3, 0.3, 0.3, 0.5)
+shader_parameter/fresnel = Color(0.2, 0.2, 0.2, 0.3)
+shader_parameter/uv_scale = Vector2(1, 1)
+shader_parameter/uv_offset = Vector2(0, 0)

@@ -1,15 +1,16 @@
-[gd_scene load_steps=41 format=4 uid="uid://cufpjto4q3vgs"]
+[gd_scene load_steps=43 format=4 uid="uid://cufpjto4q3vgs"]
 
 [ext_resource type="Script" uid="uid://chm5k84ccin4l" path="res://scripts/player.gd" id="1_dqkch"]
 [ext_resource type="Material" uid="uid://c7qv1a260m4mb" path="res://shaders/toon/cel-shading-playerhat.tres" id="2_3v2ag"]
 [ext_resource type="Script" uid="uid://j8ebjmgt8dkg" path="res://scripts/init_weapon.gd" id="2_qlg0r"]
 [ext_resource type="Material" uid="uid://b1cyjw7baehjk" path="res://shaders/toon/cel-shading-player.tres" id="3_3v2ag"]
 [ext_resource type="Script" uid="uid://cpkbf3ct856nl" path="res://scenes/spring_arm_3d.gd" id="3_d2wvv"]
+[ext_resource type="ArrayMesh" uid="uid://dkrmmg65wymi4" path="res://assets/egg.tres" id="3_f1ej7"]
 [ext_resource type="Script" uid="uid://cke5kylvsk2pm" path="res://scripts/weaponcollisionREVAMPED.gd" id="4_dqkch"]
 [ext_resource type="Resource" uid="uid://dv880iu5xh4nj" path="res://weapons/baseweapon.tres" id="4_y4r1p"]
 [ext_resource type="Script" uid="uid://url51jeyeph6" path="res://scenes/camera3d.gd" id="7_smehm"]
 [ext_resource type="Script" uid="uid://bq8fq82fgwp38" path="res://scenes/laser_beam.gd" id="7_ur7pv"]
-[ext_resource type="ArrayMesh" uid="uid://cyjlrfeh8sllc" path="res://assets/swordMesh/swordMesh.res" id="8_jej6c"]
+[ext_resource type="ArrayMesh" uid="uid://b4tt45gfblj05" path="res://swordMesh.res" id="8_jej6c"]
 [ext_resource type="Texture2D" uid="uid://2mxmh1iy0d1q" path="res://assets/revolverMesh/fireRevolver.png" id="9_f1ej7"]
 [ext_resource type="Script" uid="uid://fota2gqv3ab6" path="res://scenes/post_processing.gd" id="9_jej6c"]
 [ext_resource type="Material" uid="uid://d2gvx8bkyaykv" path="res://shaders/toon/cel-shading.tres" id="11_3v2ag"]
@@ -128,9 +129,9 @@ _data = {
 &"CircleAction": SubResource("Animation_qvuwh")
 }
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_5t4e2"]
-
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_20vo2"]
+height = 1.1355
+radius = 0.397461
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_d2wvv"]
 margin = 0.1
@@ -367,6 +368,15 @@ material = ExtResource("11_3v2ag")
 flip_faces = true
 size = Vector2(2, 2)
 
+[sub_resource type="Animation" id="Animation_onwwv"]
+resource_name = "Take 001"
+length = 4.95833
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dsubx"]
+_data = {
+&"Take 001": SubResource("Animation_onwwv")
+}
+
 [node name="Player" type="CharacterBody3D" groups=["Player", "Weapon"]]
 collision_layer = 2
 collision_mask = 9
@@ -376,7 +386,7 @@ air_control = 12.0
 PITCH_LIMIT_DOWN = -89
 
 [node name="Sketchfab_Scene" type="Node3D" parent="."]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 1.2, 0)
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0.302003, 0)
 
 [node name="Sketchfab_model" type="Node3D" parent="Sketchfab_Scene"]
 transform = Transform3D(0.0801072, 0, 0, 0, 1.77874e-17, 0.0801072, 0, -0.0801072, 1.77874e-17, 0, 0, 0)
@@ -412,17 +422,19 @@ libraries = {
 }
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, -0.988744, 0)
 layers = 2
-mesh = SubResource("CapsuleMesh_5t4e2")
+mesh = ExtResource("3_f1ej7")
 surface_material_override/0 = ExtResource("3_3v2ag")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." groups=["Player"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.432251, 0)
 shape = SubResource("CylinderShape3D_20vo2")
 
 [node name="Head" type="Node3D" parent="."]
 
 [node name="SpringArm3D" type="SpringArm3D" parent="Head"]
-transform = Transform3D(0.973981, 0.128698, 0.186541, -0.0929676, 0.977561, -0.189029, -0.206683, 0.166769, 0.96409, 0.398617, 1.65857, 2.2256)
+transform = Transform3D(0.973981, 0.128698, 0.186541, -0.0929676, 0.977561, -0.189029, -0.206683, 0.166769, 0.96409, 0.465, 0.97, 2.359)
 collision_mask = 15
 shape = SubResource("SphereShape3D_d2wvv")
 spring_length = 0.0
@@ -430,12 +442,12 @@ margin = 0.1
 script = ExtResource("3_d2wvv")
 
 [node name="GunCamera" type="Camera3D" parent="Head/SpringArm3D"]
-transform = Transform3D(0.973981, -0.0929672, -0.206683, 0.128698, 0.977561, 0.166768, 0.186541, -0.18903, 0.964091, 0, 0, 0)
+transform = Transform3D(0.973981, -0.092967, -0.206683, 0.128698, 0.977561, 0.166769, 0.186541, -0.18903, 0.964091, 0, 0, 0)
 current = true
 
 [node name="Weapon" type="Node3D" parent="Head/SpringArm3D/GunCamera"]
 unique_name_in_owner = true
-transform = Transform3D(1, -2.04891e-07, -1.63913e-07, -1.75089e-07, 1, 7.30157e-07, -1.3411e-07, 7.30157e-07, 0.999999, 0.203399, -1.71314, -3.17174)
+transform = Transform3D(1, -2.27243e-07, -1.93715e-07, -1.78814e-07, 1, 6.55651e-07, -7.45058e-08, 7.45058e-07, 0.999999, 0.137016, -1.02457, -3.30514)
 script = ExtResource("2_qlg0r")
 WEAPON_TYPE = ExtResource("4_y4r1p")
 
@@ -466,11 +478,12 @@ process_material = SubResource("ParticleProcessMaterial_fulsm")
 draw_pass_1 = SubResource("QuadMesh_4r5pv")
 
 [node name="FPSCast" type="RayCast3D" parent="Head/SpringArm3D/GunCamera"]
-transform = Transform3D(40, 4.76837e-07, -1.1921e-07, -1.1921e-07, 40, -4.76839e-07, 1.19208e-07, -3.63798e-12, 40, 0, 0, 0)
+transform = Transform3D(40, 4.76837e-07, -1.19211e-07, -1.19211e-07, 40, -4.76838e-07, 1.19207e-07, -2.72848e-12, 40, 0, 0, 0)
 target_position = Vector3(0, 0, -1)
 collision_mask = 4
 
 [node name="PostProcessing" type="MeshInstance3D" parent="Head/SpringArm3D/GunCamera"]
+transform = Transform3D(1, 1.1102e-15, 0, 1.1102e-15, 1, 0, 0, 0, 1, 0, 0, 0)
 visible = false
 mesh = SubResource("QuadMesh_f1ej7")
 script = ExtResource("9_jej6c")
@@ -500,3 +513,15 @@ collide_with_areas = true
 transform = Transform3D(0.973827, -0.207257, 0.0933011, 0.129231, 0.167205, -0.977415, 0.186976, 0.963892, 0.189613, 0.348999, -0.0449991, -0.389)
 skeleton = NodePath("../Head/SpringArm3D/GunCamera/Weapon")
 script = ExtResource("7_ur7pv")
+
+[node name="Egg_FBX" type="Node3D" parent="."]
+
+[node name="Sphere_001" type="MeshInstance3D" parent="Egg_FBX"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.42109e-16, 4.54747e-15, 1.62004e-14)
+mesh = ExtResource("3_f1ej7")
+skeleton = NodePath("")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Egg_FBX"]
+libraries = {
+&"": SubResource("AnimationLibrary_dsubx")
+}

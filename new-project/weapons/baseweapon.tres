@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Weapons" load_steps=3 format=3 uid="uid://dv880iu5xh4nj"]
 
-[ext_resource type="ArrayMesh" uid="uid://cyjlrfeh8sllc" path="res://assets/swordMesh/swordMesh.res" id="1_gghyt"]
+[ext_resource type="ArrayMesh" uid="uid://b4tt45gfblj05" path="res://swordMesh.res" id="1_gghyt"]
 [ext_resource type="Script" uid="uid://cdclv0yt67rps" path="res://weapons/weapons.gd" id="1_o67tw"]
 
 [resource]

@@ -39,13 +39,13 @@ shader_parameter/clouds_light_color = Color(1, 1, 1, 1)
 shader_parameter/clouds_shadow_intensity = 1.0
 shader_parameter/high_clouds_sampler = SubResource("NoiseTexture2D_dp3eg")
 shader_parameter/high_clouds_density = 0.7
-shader_parameter/top_color = Color(0.34902, 0.588235, 1, 1)
-shader_parameter/bottom_color = Color(0.217251, 0.538828, 1, 1)
-shader_parameter/sun_scatter = Color(0.298039, 0.298039, 0.298039, 1)
-shader_parameter/astro_tint = Color(0.905882, 0.788235, 0.627451, 1)
+shader_parameter/top_color = Color(0, 0.4, 1, 1)
+shader_parameter/bottom_color = Color(0.126426, 0.497708, 0.999999, 1)
+shader_parameter/sun_scatter = Color(0.23, 0.23, 0.23, 1)
+shader_parameter/astro_tint = Color(0.873431, 0.791498, 0.725106, 1)
 shader_parameter/astro_scale = 9.0
 shader_parameter/astro_intensity = 3.0
-shader_parameter/stars_intensity = 2.6
+shader_parameter/stars_intensity = 0.6
 shader_parameter/shooting_stars_intensity = 0.0
 shader_parameter/shooting_star_tint = Color(0, 0, 0, 1)
 
@@ -85,6 +85,5 @@ environment = SubResource("Environment_rfyhc")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport"]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
-light_energy = 0.4
-light_specular = 0.2
-shadow_enabled = true
+light_cull_mask = 4294963199
+shadow_normal_bias = 10.0

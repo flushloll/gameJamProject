@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 @onready var hitbox_area: Area3D = $EnemyHitBoxArea
-@onready var enemyMesh: MeshInstance3D = $MeshInstance3D
+@onready var enemyMesh: MeshInstance3D = $Skeleton3D/chicken_001
 @onready var enemycollisionshape: CollisionShape3D = $EnemyCollisionShape
 @onready var animation_player: AnimationPlayer = $EnemyAnimationPlayer
 @onready var navigation_agent = $NavigationAgent3D
@@ -130,16 +130,16 @@ func die():
 	# animation_player.play("Death")
 	set_physics_process(false)
 	# animation_player.animation_finished.connect(_on_death_animation_finished)
-	$MeshInstance3D.hide()
+	enemyMesh.hide()
 	$EnemyCollisionShape.hide()
 	$StaticBody3D.hide()
 	await get_tree().create_timer(1.6).timeout
 	queue_free() # REMOVE THIS AFTER DEATH ANIMATION IS ADDED
 		
 func flash_red():
-	var original = $MeshInstance3D.get_surface_override_material(0)
+	var original = enemyMesh.get_surface_override_material(0)
 	if original == null:
-		original = $MeshInstance3D.mesh.surface_get_material(0)
+		original = enemyMesh.mesh.surface_get_material(0)
 	var flash = original.duplicate()
 	flash.albedo_color = Color(1, 0, 0)
 	enemyMesh.material_override = flash
