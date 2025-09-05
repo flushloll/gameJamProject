@@ -26,14 +26,14 @@ uniform sampler2D DEPTH_TEXTURE : hint_depth_texture, filter_linear, repeat_disa
 varying flat mat4 model_view_matrix;
 
 struct UVNeighbors {
-	vec2 center; 
+	vec2 center;
 	vec2 left;     vec2 right;     vec2 up;          vec2 down;
 	vec2 top_left; vec2 top_right; vec2 bottom_left; vec2 bottom_right;
 };
 
 struct NeighborDepthSamples {
-	float c_d; 
-	float l_d;  float r_d;  float u_d;  float d_d; 
+	float c_d;
+	float l_d;  float r_d;  float u_d;  float d_d;
 	float tl_d; float tr_d; float bl_d; float br_d;
 };
 
@@ -88,14 +88,14 @@ float getGrazingAngleModulation(vec3 pixel_normal, vec3 view) {
 }
 
 float detectEdgesDepth(NeighborDepthSamples depth_samples, vec3 pixel_normal, vec3 view) {
-	float n_total = 
-		depth_samples.l_d + 
-		depth_samples.r_d + 
-		depth_samples.u_d + 
-		depth_samples.d_d + 
-		depth_samples.tl_d + 
-		depth_samples.tr_d + 
-		depth_samples.bl_d + 
+	float n_total =
+		depth_samples.l_d +
+		depth_samples.r_d +
+		depth_samples.u_d +
+		depth_samples.d_d +
+		depth_samples.tl_d +
+		depth_samples.tr_d +
+		depth_samples.bl_d +
 		depth_samples.br_d;
 	float t = depth_threshold * getGrazingAngleModulation(pixel_normal, view);
 	return step(t, n_total - (depth_samples.c_d * 8.0));
@@ -125,19 +125,19 @@ float detectEdgesNormalReconstructed(UVNeighbors uvs, sampler2D depth_tex, mat4 
 	vec3 n_tr = reconstructWorldNormal(depth_tex, model_view, inv_proj, uvs.top_right,    world, inv_cam, viewport_size);
 	vec3 n_bl = reconstructWorldNormal(depth_tex, model_view, inv_proj, uvs.bottom_left,  world, inv_cam, viewport_size);
 	vec3 n_br = reconstructWorldNormal(depth_tex, model_view, inv_proj, uvs.bottom_right, world, inv_cam, viewport_size);
-	
+
 	vec3 normalFiniteDifference0 = n_tr - n_bl;
 	vec3 normalFiniteDifference1 = n_tl - n_br;
 	vec3 normalFiniteDifference2 = n_l - n_r;
 	vec3 normalFiniteDifference3 = n_u - n_d;
-	
+
 	float edgeNormal = sqrt(
-		dot(normalFiniteDifference0, normalFiniteDifference0) + 
-		dot(normalFiniteDifference1, normalFiniteDifference1) + 
-		dot(normalFiniteDifference2, normalFiniteDifference2) + 
+		dot(normalFiniteDifference0, normalFiniteDifference0) +
+		dot(normalFiniteDifference1, normalFiniteDifference1) +
+		dot(normalFiniteDifference2, normalFiniteDifference2) +
 		dot(normalFiniteDifference3, normalFiniteDifference3)
 	) * 0.5;
-	
+
 	return smoothstep(normal_threshold - normal_smoothing, normal_threshold + normal_smoothing, edgeNormal);
 }
 
@@ -167,14 +167,14 @@ void fragment() {
 	float min_d = getMinimumDepth(depth_samples);
 	float thickness = clamp(remap(min_d, min_distance, max_distance, max_thickness, min_thickness), min_thickness, max_thickness);
 	float fade_a = clamp(remap(min_d, min_distance, max_distance, 1.0, 0.0), 0.0, 1.0);
-	
+
 	n = getNeighbors(SCREEN_UV, thickness, aspect);
 	depth_samples = getLinearDepthSamples(n, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);
-	
+
 	vec3 pixel_normal = reconstructWorldNormal(DEPTH_TEXTURE, model_view_matrix, INV_PROJECTION_MATRIX, SCREEN_UV, MODEL_MATRIX, INV_VIEW_MATRIX, VIEWPORT_SIZE.xy);
 	float depthEdges = detectEdgesDepth(depth_samples, pixel_normal, VIEW);
 	float normEdges  = detectEdgesNormalReconstructed(n, DEPTH_TEXTURE, model_view_matrix, INV_PROJECTION_MATRIX, SCREEN_UV, MODEL_MATRIX, INV_VIEW_MATRIX, VIEWPORT_SIZE.xy);
-	
+
 	ALBEDO.rgb = outlineColor.rgb;
 	ALPHA = max(depthEdges, normEdges) * outlineColor.a * fade_a;
 }

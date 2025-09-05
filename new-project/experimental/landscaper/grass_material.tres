@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=10 format=3 uid="uid://c0ml2mwg50l7c"]
 
-[ext_resource type="Shader" uid="uid://ykr4towq1siq" path="res://experimental/landscaper/grass_shader.gdshader" id="1_v6gx3"]
+[ext_resource type="Shader" uid="uid://ykr4towq1siq" path="res://experimental/landscaper/grass_shader_experimental.gdshader" id="1_v6gx3"]
 [ext_resource type="Texture2D" uid="uid://m77kx8np7uxw" path="res://experimental/landscaper/default_grass_v0.svg" id="4_ktpq3"]
 [ext_resource type="Texture2D" uid="uid://cciwddrj8g86g" path="res://experimental/landscaper/default_grass_v1.svg" id="5_l82ry"]
 [ext_resource type="Texture2D" uid="uid://75v3htafttix" path="res://experimental/landscaper/default_grass_v2.svg" id="6_cl3p8"]
