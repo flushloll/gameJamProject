@@ -1082,6 +1082,7 @@ draw_pass_1 = SubResource("QuadMesh_4r5pv")
 
 [node name="SwordSlashParticle" type="GPUParticles3D" parent="Head/SpringArm3D/GunCamera/Weapon/WeaponMesh"]
 transform = Transform3D(0.0213559, -2.38448e-07, 0.14419, 0.15977, -5.71072e-07, -0.0167846, 7.23447e-07, 0.13916, 1.98738e-08, 0.366815, -0.233581, 0.0138556)
+visible = false
 material_override = SubResource("ShaderMaterial_wqfne")
 emitting = false
 amount = 1
@@ -1091,6 +1092,7 @@ process_material = SubResource("ParticleProcessMaterial_wnwbv")
 draw_pass_1 = ExtResource("19_ke2ow")
 
 [node name="GPUParticles3D2" type="GPUParticles3D" parent="Head/SpringArm3D/GunCamera/Weapon/WeaponMesh/SwordSlashParticle"]
+visible = false
 sorting_offset = -2.0
 material_override = SubResource("ShaderMaterial_gl8cc")
 emitting = false
@@ -1103,6 +1105,7 @@ draw_pass_1 = ExtResource("19_ke2ow")
 
 [node name="GPUParticles3D3" type="GPUParticles3D" parent="Head/SpringArm3D/GunCamera/Weapon/WeaponMesh/SwordSlashParticle"]
 transform = Transform3D(1, 0, 0, 0, 1, 1.19262e-18, 0, -2.84217e-14, 1, 0, 0, 0)
+visible = false
 material_override = SubResource("ShaderMaterial_md1ol")
 emitting = false
 amount = 1
@@ -1114,6 +1117,7 @@ draw_pass_1 = ExtResource("19_ke2ow")
 
 [node name="GPUParticles3D4" type="GPUParticles3D" parent="Head/SpringArm3D/GunCamera/Weapon/WeaponMesh/SwordSlashParticle"]
 transform = Transform3D(1, 0, 0, 0, 1, 2.1684e-19, 0, -2.84217e-14, 1, 0.32292, 1.13509e-12, -0.653735)
+visible = false
 material_override = SubResource("StandardMaterial3D_jc3p3")
 emitting = false
 amount = 25

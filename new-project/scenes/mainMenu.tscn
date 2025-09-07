@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://bb8g0x37ru3ys"]
+
+[ext_resource type="Texture2D" uid="uid://5r68g87lplt1" path="res://ui/Screenshot 2025-09-07 042137.png" id="1_qkhwq"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BGImage" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Sprite2D" type="Sprite2D" parent="BGImage"]
+position = Vector2(580, 327)
+scale = Vector2(0.64, 0.64)
+texture = ExtResource("1_qkhwq")
+
+[node name="Control" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
