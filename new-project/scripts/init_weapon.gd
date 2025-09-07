@@ -27,7 +27,7 @@ func _ready() -> void:
 		
 func _process(delta):
 	if not Engine.is_editor_hint():
-		if Input.is_action_pressed("toWeapon1") and Global.can_switch:
+		if Input.is_action_just_pressed("toWeapon1") and Global.can_switch:
 			WEAPON_TYPE = baseweapon
 			Global.WeaponTypeNameGlobal = "BaseWeapon"
 			playeranimationplayer.stop()
@@ -39,13 +39,14 @@ func _process(delta):
 				buffered_weapon_input = true
 
 	# Check if buffered input can now be applied
-		if buffered_weapon_input and Global.WeaponTypeNameGlobal == "BaseWeapon" and Global.can_switch:
+		if buffered_weapon_input and Global.can_switch:
 			switch_to_weapon2()
 			buffered_weapon_input = false
 		
 func switch_to_weapon2():
 	WEAPON_TYPE = firstgun
 	Global.can_switch = true
+	Global.can_swing = true
 	Global.WeaponTypeNameGlobal = "FirstGun"
 	playeranimationplayer.stop()
 	load_weapon()

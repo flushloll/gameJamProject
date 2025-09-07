@@ -10,13 +10,15 @@ extends CharacterBody3D
 @export var speed = 5.0
 @export var wander_radius = 6 # How far the NPC will wander from its starting point
 @onready var player = get_node("/root/Main/SubViewportContainer/SubViewport/Player")
-@onready var chickendeadsfx = get_node("/root/Main/ChickenDeadSfx")
+@onready var chickendeadsfx = get_node("/root/Main/SubViewportContainer/SubViewport/ChickenDeadSfx")
+@onready var spawn_sound = $SpawnSound
 @onready var feathers = $FeathersParticle
 
 @export var max_health: int = 100
 var current_health: int
 var is_dead: bool = false
 var canMove: bool = true
+signal enemy_died
 
 func _ready():
 	add_to_group("Enemy")
@@ -110,7 +112,7 @@ func take_damage():
 		else:
 			$HitMarker.display_damage(stompDeduction)
 			return false
-			
+		
 	current_health -= Global.WeaponDamage
 	$HitMarker.display_damage(Global.WeaponDamage)
 	print("%s took %d damage. Health: %d" % [name, Global.WeaponDamage, current_health])
@@ -121,6 +123,7 @@ func take_damage():
 func die():
 	if is_dead:
 		return
+	emit_signal("enemy_died", self)
 	is_dead = true
 	$HitMarker.display_damage("KILL")
 	feathers.emitting = false   # reset
@@ -135,6 +138,7 @@ func die():
 	$StaticBody3D.hide()
 	await get_tree().create_timer(1.6).timeout
 	queue_free() # REMOVE THIS AFTER DEATH ANIMATION IS ADDED
+	
 		
 func flash_red():
 	var original = enemyMesh.get_surface_override_material(0)
@@ -145,5 +149,8 @@ func flash_red():
 	enemyMesh.material_override = flash
 	await get_tree().create_timer(0.15).timeout
 	enemyMesh.material_override = original
-
 # Enemy detects collisions with weapons
+
+func play_spawn_sound_and_effects():
+	print("Playing spawn sound!")
+	spawn_sound.play()

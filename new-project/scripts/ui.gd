@@ -7,7 +7,7 @@ extends CanvasLayer
 @onready var centerCursor = $CenterCursor
 @onready var ammocounter = $AmmoCounter
 @onready var cursor = $Cursor
-@onready var subViewport = $"../SubViewportContainer/SubViewport"
+@onready var subViewport = $".."
 @onready var weapon1 = $Control1/FirstWeaponLoadout
 @onready var weapon2 = $Control2/SecondWeaponLoadout
 @onready var swordBox = get_node("/root/Main/SubViewportContainer/SubViewport/Player/Head/SpringArm3D/GunCamera/Weapon/Area3D")

@@ -20,8 +20,8 @@ var is_falling: bool = false
 @export var stomp_speed: float = -30.0
 @export var stomp_radius: float = 5.0
 @export var stomp_damage: int = 20
-@onready var stompsfx = get_node("/root/Main/StompSfx")
-@onready var fallingsfx = get_node("/root/Main/FallingSfx")
+@onready var stompsfx = get_node("/root/Main/SubViewportContainer/SubViewport/StompSfx")
+@onready var fallingsfx = get_node("/root/Main/SubViewportContainer/SubViewport/FallingSfx")
 @onready var can_stomp = true
 
 @onready var head: Node3D = $Head
@@ -39,6 +39,12 @@ var _yaw: float = 0.0
 var _pitch: float = 0.0
 @export var PITCH_LIMIT_DOWN := -70
 @export var PITCH_LIMIT_UP := 75
+
+@export var lunge_distance: float = 4.0   # how far the lunge goes
+@export var lunge_duration: float = 0.2   # how long it takes
+var is_lunging: bool = false
+var lunge_timer: float = 0.0
+var lunge_velocity: Vector3 = Vector3.ZERO
 
 func _ready() -> void:
 	
@@ -176,6 +182,15 @@ func _process(delta) -> void:
 	# === 5. Jump ===
 	if is_on_floor() and Input.is_action_just_pressed("jump"):
 		velocity.y = jump_force
+	
+	if is_lunging:
+		velocity.x = lunge_velocity.x
+		velocity.z = lunge_velocity.z
+
+		lunge_timer -= delta
+		if lunge_timer <= 0:
+			is_lunging = false
+			lunge_velocity = Vector3.ZERO
 
 	# === 6. Apply movement & collision ===
 	move_and_slide()
@@ -252,3 +267,24 @@ func random_offset() -> Vector3:
 		rng.randf_range(-shake_strength, shake_strength),
 		rng.randf_range(-shake_strength, shake_strength),
 		rng.randf_range(-shake_strength, shake_strength))
+
+func start_lunge():
+	if is_lunging:
+		return  # don't stack lunges
+
+	is_lunging = true
+	lunge_timer = lunge_duration
+
+	# Forward direction depends on camera or player facing
+	var forward_dir: Vector3
+	if Global.cameraFollowsCursor:
+		forward_dir = -head.global_transform.basis.z
+	else:
+		var cam_basis = gun_cam.global_transform.basis
+		forward_dir = -cam_basis.z
+
+	forward_dir.y = 0
+	forward_dir = forward_dir.normalized()
+
+	# Calculate required velocity to cover the distance in the duration
+	lunge_velocity = forward_dir * (lunge_distance / lunge_duration)

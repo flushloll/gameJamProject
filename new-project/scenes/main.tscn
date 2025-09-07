@@ -1,16 +1,7 @@
-[gd_scene load_steps=163 format=4 uid="uid://ur6a24h4lsyf"]
+[gd_scene load_steps=154 format=4 uid="uid://ur6a24h4lsyf"]
 
 [ext_resource type="Script" uid="uid://cbh6mwdbhp7jq" path="res://scripts/main.gd" id="1_gqmmt"]
-[ext_resource type="AudioStream" uid="uid://c4myk46h5nng0" path="res://musicandsfx/kitchen-blog-positive-travel-happy-187696.mp3" id="3_tipki"]
-[ext_resource type="AudioStream" uid="uid://7go17pgvvwf0" path="res://musicandsfx/pistol-shot-233473.mp3" id="4_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://cswlc83di6gbp" path="res://scenes/sub_viewport_container.tscn" id="4_tbgi4"]
-[ext_resource type="AudioStream" uid="uid://dduw1q4dnxlpw" path="res://musicandsfx/clean-revolver-reload-6889.mp3" id="5_tipki"]
-[ext_resource type="AudioStream" uid="uid://biwmx5wp3npfh" path="res://musicandsfx/chicken-noise-196746.mp3" id="6_85g3d"]
-[ext_resource type="AudioStream" uid="uid://bdkl1mos75q13" path="res://musicandsfx/error-sound-39539.mp3" id="6_ya4ey"]
-[ext_resource type="AudioStream" uid="uid://b1fggablddkt2" path="res://musicandsfx/simple-whoosh-382724.mp3" id="7_choun"]
-[ext_resource type="AudioStream" uid="uid://ba0agmbtotc18" path="res://musicandsfx/door-slam-172171.mp3" id="9_trceg"]
-[ext_resource type="AudioStream" uid="uid://jsg6wyrahvdl" path="res://musicandsfx/howling-wind-73982.mp3" id="10_a8y0u"]
-[ext_resource type="PackedScene" uid="uid://dymx22377n8n" path="res://scenes/ui.tscn" id="11_ya4ey"]
 [ext_resource type="Material" uid="uid://b47kxq7b4l58f" path="res://shaders/toon/cel-shading-fenceoutline.tres" id="14_j8jky"]
 [ext_resource type="PackedScene" uid="uid://cpaew8pmlafdj" path="res://scenes/navigation_region_3d.tscn" id="16_5q0nq"]
 [ext_resource type="Material" uid="uid://b51dxioifb5bm" path="res://shaders/toon/greybucket.tres" id="16_bu4jf"]
@@ -1851,45 +1842,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.10514, 0, 3.87667)
 script = ExtResource("1_gqmmt")
 
 [node name="SubViewportContainer" parent="." instance=ExtResource("4_tbgi4")]
-
-[node name="spawnTimer" type="Timer" parent="."]
-wait_time = 5.0
-autostart = true
-
-[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_tipki")
-volume_db = -50.0
-autoplay = true
-
-[node name="ShootSfx" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_o6xl0")
-volume_db = -32.0
-
-[node name="ReloadSfx" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_tipki")
-volume_db = -30.0
-
-[node name="ErrorReloadSfx" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_ya4ey")
-volume_db = -27.0
-
-[node name="ChickenDeadSfx" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_85g3d")
-volume_db = -28.0
-
-[node name="SwingSfx" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_choun")
-volume_db = -30.01
-
-[node name="StompSfx" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("9_trceg")
-volume_db = -34.557
-
-[node name="FallingSfx" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("10_a8y0u")
-volume_db = -35.0
-
-[node name="UI" parent="." instance=ExtResource("11_ya4ey")]
 
 [node name="NavigationRegion3D" parent="." instance=ExtResource("16_5q0nq")]
 transform = Transform3D(3, 0, 0, 0, 1, 0, 0, 0, 3, -0.0428848, -0.53, -0.0357294)
@@ -4633,5 +4585,3 @@ transform = Transform3D(0.877682, 0.227647, -0.430488, -0.464816, 0.741593, -0.3
 
 [node name="@Node3D@640797" parent="Terrain2/Instances" instance=ExtResource("40_cjqg0")]
 transform = Transform3D(0.798156, -0.190691, -0.590342, 0.186091, 0.961686, -0.0700286, 0.535251, -0.0499942, 0.904653, 54.3333, 0.0784321, 40)
-
-[connection signal="timeout" from="spawnTimer" to="." method="_on_spawn_timer_timeout"]

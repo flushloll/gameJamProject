@@ -1,24 +1,50 @@
 extends Node3D
 
 var enemySpawn = load("res://scenes/enemy.tscn")
-@onready var timer = $spawnTimer
-@onready var cursor = $UI/Cursor
-@onready var UI = preload("res://scenes/ui.tscn")
+@onready var timer = $SubViewportContainer/SubViewport/spawnTimer
+@onready var cursor = $SubViewportContainer/SubViewport/UI/Cursor
 
-func spawn_enemy():
-	var enemyInstance = enemySpawn.instantiate()
-	add_child(enemyInstance)
-		# Randomize position for demonstration
-	enemyInstance.global_transform.origin = Vector3(randf_range(-12, 12), 10, randf_range(-8, 8))	
+# Number of enemies per batch
+var ENEMIES_PER_BATCH = 4
+
+func spawn_enemy_batch():
+	if Global.current_enemies.size() == 0: # Only spawn if no enemies alive
+		for i in ENEMIES_PER_BATCH:
+			var enemyInstance = enemySpawn.instantiate()
+			add_child(enemyInstance)
+			
+			# Randomize position and scale
+			enemyInstance.global_transform.origin = Vector3(randf_range(-12, 12), 2, randf_range(-8, 8))
+			var random_scale = randf_range(0.25, 0.8) # For example, between 70% and 130% of original size
+			enemyInstance.scale = Vector3(random_scale, random_scale, random_scale)
+			enemyInstance.play_spawn_sound_and_effects()
+			
+			# Connect the enemy's death signal directly to main scene
+			enemyInstance.connect("enemy_died", Callable(self, "_on_enemies_dead"))
+			
+			Global.current_enemies.append(enemyInstance)
+		
+		# Stop the timer until enemies die
+		timer.stop()
+
+func _on_enemies_dead(enemy):
+	# Remove enemy from list when it dies
+	Global.current_enemies.erase(enemy)
 	
+	# If all dead, spawn next batch after a short delay
+	if Global.current_enemies.size() == 0:
+		ENEMIES_PER_BATCH = randi_range(3, 7)
+		timer.start(randf_range(0.4, 1.5))
+
 func _ready():
 	Input.set_custom_mouse_cursor(cursor)
+	timer.timeout.connect(_on_spawn_timer_timeout)
 	
+	# Spawn the first batch immediately
+	spawn_enemy_batch()
+
 func _on_spawn_timer_timeout() -> void:
-	spawn_enemy()
-	timer.wait_time = randf_range(0.4, 1.5)
-	
+	spawn_enemy_batch()
+
 func _process(delta):
-	if Input.is_action_just_pressed("spawn_enemy"): # Define "spawn_cube" in Project Settings -> Input Map
-		spawn_enemy()
-	
+	pass # Remove unnecessary spawn_enemy_batch calls here

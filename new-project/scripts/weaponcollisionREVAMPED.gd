@@ -10,7 +10,6 @@ var swinging
 
 var swingSoundPlaying
 
-var can_swing = true
 var weaponTypeName
 # func _ready() -> void:
 
@@ -21,19 +20,27 @@ var weaponTypeName
 @export var shoot_delay : float = Global.WeaponCollisionCooldown
 @export var reload_time : float = 2.0
 var reload_timer_time : float
-@onready var gui = $"../../../../../../../../../UI"
+@onready var gui = $"../../../../../../../UI"
 @onready var shoot_cast = $"../../../../../../ShootCast"
 @onready var FPS_shoot_cast = $"../../../FPSCast"
 
 var is_reloading : bool
 var can_shoot: bool = true
 var reload_timer: float = 0.0
-@onready var shootsfx = $"../../../../../../../../../ShootSfx"
-@onready var reloadsfx = $"../../../../../../../../../ReloadSfx"
-@onready var swingsfx = $"../../../../../../../../../SwingSfx"
-@onready var errorreloadsfx = $"../../../../../../../../../ErrorReloadSfx"
+@onready var shootsfx = $"../../../../../../../ShootSfx"
+@onready var reloadsfx = $"../../../../../../../ReloadSfx"
+@onready var swingsfx = $"../../../../../../../SwingSfx"
+@onready var errorreloadsfx = $"../../../../../../../ErrorReloadSfx"
 
 var ammo_text
+
+@onready var weaponDamageScaleSword: int
+@onready var weaponDamageScaleGun: int
+var swingSequence = 1
+@onready var slash_particle0 = $"../../WeaponMesh/SwordSlashParticle"
+@onready var slash_particle1 = $"../../WeaponMesh/SwordSlashParticle/GPUParticles3D2"
+@onready var slash_particle2 = $"../../WeaponMesh/SwordSlashParticle/GPUParticles3D3"
+@onready var slash_particle3 = $"../../WeaponMesh/SwordSlashParticle/GPUParticles3D4"
 
 func _ready():
 	WeaponAreaShape3D.connect("body_entered", Callable(gui, "_on_sword_body_entered"))
@@ -46,12 +53,21 @@ func _ready():
 	weaponMesh.position = Vector3(0.349, -0.045, -0.389)
 	weaponMesh.rotation_degrees = Vector3(-90.0, -12.1, 7.5)
 	
+	slash_particle0.emitting = false
+	slash_particle1.emitting = false
+	slash_particle2.emitting = false
+	slash_particle3.emitting = false
+	
 	print(can_reload())
 		
 func _process(delta):
 	weaponTypeName = Global.WeaponTypeNameGlobal
-	if Input.is_action_just_pressed("attack"):
-		start_attack_animation()
+	if Input.is_action_just_pressed("attackRightClick"):
+		var clickType = 2 #rightClick
+		start_attack_animation(clickType)
+	if Input.is_action_just_pressed("attackLeftClick"):
+		var clickType = 1 #rightClick
+		start_attack_animation(clickType)
 	if Input.is_action_just_pressed("reload") and weaponTypeName == "FirstGun":
 		reload_weapon()
 	
@@ -67,21 +83,29 @@ func _process(delta):
 func swingsfxplay():
 	swingsfx.play()
 	
-func enemiestakedamage():
-	Global.WeaponDamage = randomWeaponDamage()
+func enemiestakedamageSword(weaponDamageScaleSword):
+	Global.WeaponDamage = randomWeaponDamage(weaponDamageScaleSword)
 	for body in WeaponAreaShape3D.get_overlapping_bodies():
 		if body.is_in_group("Enemies") and Global.WeaponTypeNameGlobal == "BaseWeapon":
 			body.take_damage()
 	
 # Called by the player when attack input is detected
-func start_attack_animation():
+func start_attack_animation(clickType):
 	if weaponTypeName == "BaseWeapon":
 		Global.can_switch = false
-		animation_player.play("swinganim")
+		if clickType == 2 and Global.can_swing:
+			animation_player.play("swinganimRightClick")
+		elif clickType == 1 and Global.can_swing:
+			animation_player.play("swinganimLeftClick" + str(swingSequence))
+			print("swinganimLeftClick" + str(swingSequence))
+			swingSequence += 1
+			if swingSequence == 4:
+				swingSequence = 1
 	elif weaponTypeName == "FirstGun" and no_more_ammo() == false and can_shoot == true:
 		animation_player.stop()
 		weaponMesh.position = Vector3()
-		shoot()
+		var weaponDamageScaleGun = 1
+		shoot(weaponDamageScaleGun)
 		print("HasShot")
 
 func can_reload():
@@ -96,7 +120,7 @@ func reserve_ammo_depleted():
 func no_more_ammo():
 	return reserve_ammo <= 0 and current_ammo <= 0
 		
-func shoot():
+func shoot(weaponDamageScaleGun):
 	
 	if is_reloading:
 		if current_ammo <= 0:
@@ -136,7 +160,7 @@ func shoot():
 			collider = collider.get_parent()
 		
 		if collider and collider.has_method("take_damage"):
-			Global.WeaponDamage = randomWeaponDamage()
+			Global.WeaponDamage = randomWeaponDamage(weaponDamageScaleGun)
 			collider.take_damage()
 			print("Hit enemy: ", collider.name)
 		else:
@@ -149,7 +173,7 @@ func shoot():
 			colliderFPS = colliderFPS.get_parent()
 		
 		if colliderFPS and colliderFPS.has_method("take_damage"):
-			Global.WeaponDamage = randomWeaponDamage()
+			Global.WeaponDamage = randomWeaponDamage(weaponDamageScaleGun)
 			colliderFPS.take_damage()
 			print("Hit enemy: ", colliderFPS.name)
 		else:
@@ -178,18 +202,42 @@ func finish_reload():
 	reserve_ammo -= ammo_to_load
 	is_reloading = false
 
-func randomWeaponDamage():
+func randomWeaponDamage(weaponDamageScale):
 	var randomGeneratedWeaponDamage
 	if weaponTypeName == "FirstGun":
-		randomGeneratedWeaponDamage = 47 * randf_range(1.7, 2.8)
+		randomGeneratedWeaponDamage = 47 * randf_range(1.7, 2.8) * weaponDamageScale
 		return randomGeneratedWeaponDamage
 	elif weaponTypeName == "BaseWeapon":
-		randomGeneratedWeaponDamage = 41 * randf_range(1.7, 2.8)
+		randomGeneratedWeaponDamage = 41 * randf_range(1.7, 2.8) * weaponDamageScale
 		return randomGeneratedWeaponDamage
+	
+func canSwingAgain():
+	if Global.can_swing == true:
+		Global.can_swing = false
+		Global.can_switch = false
+	else:
+		Global.can_switch = true
+		Global.can_swing = true
 
-func turnOnCanSwitch():
-	Global.can_switch = true
+func resetSwingSequence():
+	swingSequence = 1
 
 func emitRevolverParticle():
 	$"../../WeaponMesh/RevolverParticle".emitting = true
 	$"../../WeaponMesh/RevolverParticle".restart()
+
+func emitSwordSlashParticle():
+	slash_particle0.emitting = false
+	slash_particle1.emitting = false
+	slash_particle2.emitting = false
+	slash_particle3.emitting = false
+	
+	slash_particle0.restart()
+	slash_particle1.restart()
+	slash_particle2.restart()
+	slash_particle3.restart()
+	
+	slash_particle0.emitting = true
+	slash_particle1.emitting = true
+	slash_particle2.emitting = true
+	slash_particle3.emitting = true
