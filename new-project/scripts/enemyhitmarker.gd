@@ -3,7 +3,7 @@ extends Node3D
 @export var move_speed: float = 2.0
 @export var life_time: float = 10
 @export var fade_time: float = 5
-@onready var cam = get_node("/root/Main/SubViewportContainer/SubViewport/Player/Camera3D")
+@onready var cam = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/Player/Camera3D")
 @onready var DamageLabel = $DamageLabel
 
 var timer: float = 0.0

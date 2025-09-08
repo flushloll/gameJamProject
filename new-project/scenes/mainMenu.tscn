@@ -1,6 +1,40 @@
-[gd_scene load_steps=2 format=3 uid="uid://bb8g0x37ru3ys"]
+[gd_scene load_steps=11 format=3 uid="uid://bb8g0x37ru3ys"]
 
+[ext_resource type="Script" uid="uid://tlgmb8uho1k1" path="res://scenes/main_menu.gd" id="1_7nrmo"]
 [ext_resource type="Texture2D" uid="uid://5r68g87lplt1" path="res://ui/Screenshot 2025-09-07 042137.png" id="1_qkhwq"]
+[ext_resource type="FontFile" uid="uid://b5b3polo64e17" path="res://ui/ChiknScrach-Regular.ttf (2).otf" id="2_3d1i7"]
+[ext_resource type="StyleBox" uid="uid://c4mcua81xfix7" path="res://ui/menuIcons.tres" id="2_l7wge"]
+[ext_resource type="Texture2D" uid="uid://dgeg6ammcrtm5" path="res://ui/14-chalk-arrows-6.png" id="3_7nrmo"]
+[ext_resource type="FontFile" uid="uid://blbarw7hasf0c" path="res://ui/Blueto.otf" id="5_clbkb"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_48ign"]
+font = ExtResource("2_3d1i7")
+font_size = 32
+outline_size = 16
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_l7wge"]
+font = ExtResource("2_3d1i7")
+font_size = 32
+outline_size = 16
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7nrmo"]
+bg_color = Color(0.6, 0.6, 0.6, 0.247059)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="LabelSettings" id="LabelSettings_7nrmo"]
+font = ExtResource("5_clbkb")
+font_size = 64
+outline_size = 16
+outline_color = Color(0, 0, 0, 1)
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -9,19 +43,122 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_7nrmo")
 
 [node name="BGImage" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="BGImage"]
-position = Vector2(580, 327)
-scale = Vector2(0.64, 0.64)
+[node name="TextureRect" type="TextureRect" parent="BGImage"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -59.0
+offset_top = -35.0
+offset_right = -58.5328
+offset_bottom = -35.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.1, 1.1)
 texture = ExtResource("1_qkhwq")
+expand_mode = 3
 
-[node name="Control" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 67.0
+offset_top = -280.0
+offset_right = 317.0
+offset_bottom = -76.0
+grow_vertical = 0
+pivot_offset = Vector2(100, 100)
+theme_override_constants/separation = 16
+
+[node name="Panel" type="Panel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("2_l7wge")
+
+[node name="Label" type="Label" parent="VBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "PLAY"
+label_settings = SubResource("LabelSettings_48ign")
+
+[node name="Panel2" type="Panel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(290, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("2_l7wge")
+
+[node name="Label" type="Label" parent="VBoxContainer/Panel2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "SETTINGS"
+label_settings = SubResource("LabelSettings_l7wge")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -436.0
+offset_top = 39.0
+offset_right = 364.0
+offset_bottom = 169.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7nrmo")
+
+[node name="Label" type="Label" parent="Panel"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -367.0
+offset_top = -53.0
+offset_right = 367.0
+offset_bottom = 69.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "CLUCK N' COOK"
+label_settings = SubResource("LabelSettings_7nrmo")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Arrow" type="Sprite2D" parent="."]
+position = Vector2(398, 418)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_7nrmo")

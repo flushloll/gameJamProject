@@ -10,7 +10,7 @@ extends CanvasLayer
 @onready var subViewport = $".."
 @onready var weapon1 = $Control1/FirstWeaponLoadout
 @onready var weapon2 = $Control2/SecondWeaponLoadout
-@onready var swordBox = get_node("/root/Main/SubViewportContainer/SubViewport/Player/Head/SpringArm3D/GunCamera/Weapon/Area3D")
+@onready var swordBox = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/Player/Head/SpringArm3D/GunCamera/Weapon/Area3D")
 var fade_speed = 0.5
 var current_weapon_type = ""
 

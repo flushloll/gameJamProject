@@ -1,6 +1,6 @@
 extends Camera3D
 
-@export var zoomed_fov: float = 40.0       # smaller FOV = zoomed in
+@export var zoomed_fov: float = 60.0       # smaller FOV = zoomed in
 @export var zoom_in_speed: float = 0.4  
 @export var zoom_out_speed: float = 0.1       # time in seconds
 var original_fov: float

@@ -9,8 +9,8 @@ extends CharacterBody3D
 @export var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 @export var speed = 5.0
 @export var wander_radius = 6 # How far the NPC will wander from its starting point
-@onready var player = get_node("/root/Main/SubViewportContainer/SubViewport/Player")
-@onready var chickendeadsfx = get_node("/root/Main/SubViewportContainer/SubViewport/ChickenDeadSfx")
+@onready var player = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/Player")
+@onready var chickendeadsfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/ChickenDeadSfx")
 @onready var spawn_sound = $SpawnSound
 @onready var feathers = $FeathersParticle
 
@@ -43,6 +43,7 @@ func cubeInput(x):
 		return clampedRadius
 	
 func set_new_random_target():
+
 	var signDifferenceBetweenPlayerAndEnemyX = sign(player.global_position.x - global_position.x) 
 	var signDifferenceBetweenPlayerAndEnemyZ = sign(player.global_position.z - global_position.z) 
 	

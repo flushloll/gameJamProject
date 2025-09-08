@@ -20,8 +20,8 @@ var is_falling: bool = false
 @export var stomp_speed: float = -30.0
 @export var stomp_radius: float = 5.0
 @export var stomp_damage: int = 20
-@onready var stompsfx = get_node("/root/Main/SubViewportContainer/SubViewport/StompSfx")
-@onready var fallingsfx = get_node("/root/Main/SubViewportContainer/SubViewport/FallingSfx")
+@onready var stompsfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/StompSfx")
+@onready var fallingsfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/FallingSfx")
 @onready var can_stomp = true
 
 @onready var head: Node3D = $Head

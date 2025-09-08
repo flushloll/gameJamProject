@@ -1059,7 +1059,7 @@ collision_layer = 2
 collision_mask = 15
 
 [node name="WeaponCollisionShape" type="CollisionShape3D" parent="Head/SpringArm3D/GunCamera/Weapon/Area3D"]
-transform = Transform3D(3.4, -2.89308e-07, -2.35987e-07, 3.50177e-07, 2.809, 5.71274e-07, 4.17239e-07, -8.34476e-07, 1.92301, -0.0403106, 0, -0.276958)
+transform = Transform3D(3.4, -2.89308e-07, -2.35987e-07, 3.50177e-07, 2.809, 5.71273e-07, 4.17239e-07, -8.34476e-07, 1.92301, -0.0403106, 0, -0.276958)
 shape = SubResource("BoxShape3D_dqkch")
 script = ExtResource("4_dqkch")
 
