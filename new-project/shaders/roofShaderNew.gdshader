@@ -13,7 +13,7 @@ void fragment() {
 		0.0,
 		1.0
 	);
-	
+
 	float dither = texture(dither_texture, vec2(FRAGCOORD.xy) / vec2(textureSize(dither_texture, 0))).r;
 	if (value < dither){
 		ALPHA = 0.0;

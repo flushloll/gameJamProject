@@ -30,6 +30,7 @@ var reload_timer: float = 0.0
 @onready var shootsfx = $"../../../../../../../ShootSfx"
 @onready var reloadsfx = $"../../../../../../../ReloadSfx"
 @onready var swingsfx = $"../../../../../../../SwingSfx"
+@onready var swingsfxRightClick = $"../../../../../../../SwingSfxRightClick"
 @onready var errorreloadsfx = $"../../../../../../../ErrorReloadSfx"
 
 var ammo_text
@@ -82,6 +83,9 @@ func _process(delta):
 		
 func swingsfxplay():
 	swingsfx.play()
+
+func swingsfxplayRightClick():
+	swingsfxRightClick.play()
 	
 func enemiestakedamageSword(weaponDamageScaleSword):
 	Global.WeaponDamage = randomWeaponDamage(weaponDamageScaleSword)
@@ -94,8 +98,10 @@ func start_attack_animation(clickType):
 	if weaponTypeName == "BaseWeapon":
 		Global.can_switch = false
 		if clickType == 2 and Global.can_swing:
+			swingsfxRightClick.pitch_scale = randf_range(1.1, 1.3)
 			animation_player.play("swinganimRightClick")
 		elif clickType == 1 and Global.can_swing:
+			swingsfx.pitch_scale = randf_range(0.9, 1.1)
 			animation_player.play("swinganimLeftClick" + str(swingSequence))
 			print("swinganimLeftClick" + str(swingSequence))
 			swingSequence += 1

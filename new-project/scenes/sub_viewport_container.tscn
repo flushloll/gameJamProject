@@ -17,28 +17,28 @@
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.116022, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.725946), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_a8y0u"]
+[sub_resource type="CurveTexture" id="CurveTexture_7ceh2"]
 curve = SubResource("Curve_tvr1o")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_8pj23"]
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jbj1t"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_w4pyt"]
 seamless = true
 noise = SubResource("FastNoiseLite_8pj23")
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_muem4"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fhp6j"]
 seamless = true
 noise = SubResource("FastNoiseLite_8pj23")
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dp3eg"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lyn8a"]
 seamless = true
 noise = SubResource("FastNoiseLite_8pj23")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8je7q"]
 shader = ExtResource("21_q8nmi")
-shader_parameter/cloud_shape_sampler = SubResource("NoiseTexture2D_muem4")
-shader_parameter/cloud_noise_sampler = SubResource("NoiseTexture2D_jbj1t")
-shader_parameter/cloud_curves = SubResource("CurveTexture_a8y0u")
+shader_parameter/cloud_shape_sampler = SubResource("NoiseTexture2D_fhp6j")
+shader_parameter/cloud_noise_sampler = SubResource("NoiseTexture2D_w4pyt")
+shader_parameter/cloud_curves = SubResource("CurveTexture_7ceh2")
 shader_parameter/clouds_samples = 8
 shader_parameter/shadow_sample = 4
 shader_parameter/clouds_density = 0.4
@@ -46,7 +46,7 @@ shader_parameter/clouds_scale = 1.0
 shader_parameter/clouds_smoothness = 0.03
 shader_parameter/clouds_light_color = Color(1, 1, 1, 1)
 shader_parameter/clouds_shadow_intensity = 1.0
-shader_parameter/high_clouds_sampler = SubResource("NoiseTexture2D_dp3eg")
+shader_parameter/high_clouds_sampler = SubResource("NoiseTexture2D_lyn8a")
 shader_parameter/high_clouds_density = 0.7
 shader_parameter/top_color = Color(0, 0.4, 1, 1)
 shader_parameter/bottom_color = Color(0.126426, 0.497708, 0.999999, 1)
@@ -58,12 +58,12 @@ shader_parameter/stars_intensity = 0.6
 shader_parameter/shooting_stars_intensity = 0.0
 shader_parameter/shooting_star_tint = Color(0, 0, 0, 1)
 
-[sub_resource type="Sky" id="Sky_gqmmt"]
+[sub_resource type="Sky" id="Sky_vv30q"]
 sky_material = SubResource("ShaderMaterial_8je7q")
 
 [sub_resource type="Environment" id="Environment_rfyhc"]
 background_mode = 2
-sky = SubResource("Sky_gqmmt")
+sky = SubResource("Sky_vv30q")
 tonemap_mode = 2
 glow_enabled = true
 adjustment_enabled = true
@@ -104,35 +104,39 @@ autostart = true
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="SubViewport"]
 stream = ExtResource("4_7ceh2")
-volume_db = -36.62
+volume_db = -25.177
 autoplay = true
 
 [node name="ShootSfx" type="AudioStreamPlayer" parent="SubViewport"]
 stream = ExtResource("5_w4pyt")
-volume_db = -32.0
+volume_db = -10.269
 
 [node name="ReloadSfx" type="AudioStreamPlayer" parent="SubViewport"]
 stream = ExtResource("6_fhp6j")
-volume_db = -30.0
+volume_db = -13.059
 
 [node name="ErrorReloadSfx" type="AudioStreamPlayer" parent="SubViewport"]
 stream = ExtResource("7_lyn8a")
-volume_db = -27.0
+volume_db = -14.765
 
 [node name="ChickenDeadSfx" type="AudioStreamPlayer" parent="SubViewport"]
 stream = ExtResource("8_vv30q")
-volume_db = -28.0
+volume_db = -14.823
 
 [node name="SwingSfx" type="AudioStreamPlayer" parent="SubViewport"]
 stream = ExtResource("9_016sp")
-volume_db = -30.01
+volume_db = -14.01
+
+[node name="SwingSfxRightClick" type="AudioStreamPlayer" parent="SubViewport"]
+stream = ExtResource("9_016sp")
+volume_db = -14.01
 
 [node name="StompSfx" type="AudioStreamPlayer" parent="SubViewport"]
 stream = ExtResource("10_sqrpa")
-volume_db = -34.557
+volume_db = -7.733
 
 [node name="FallingSfx" type="AudioStreamPlayer" parent="SubViewport"]
 stream = ExtResource("11_yilbv")
-volume_db = -35.0
+volume_db = -11.0
 
 [node name="UI" parent="SubViewport" instance=ExtResource("12_flpa8")]

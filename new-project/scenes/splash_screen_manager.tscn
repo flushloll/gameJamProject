@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://c7q7xk6wnqsh2"]
+[gd_scene load_steps=8 format=3 uid="uid://c7q7xk6wnqsh2"]
 
 [ext_resource type="Script" uid="uid://bgyi8glqkd8j3" path="res://scenes/splash_screen_manager.gd" id="1_kkrr7"]
 [ext_resource type="Texture2D" uid="uid://5r68g87lplt1" path="res://ui/Screenshot 2025-09-07 042137.png" id="2_4krii"]
 [ext_resource type="Texture2D" uid="uid://bgso1deirjsgy" path="res://ui/dextermorgan.jpg" id="3_dpkmb"]
 [ext_resource type="FontFile" uid="uid://blbarw7hasf0c" path="res://ui/Blueto.otf" id="4_f3wds"]
+[ext_resource type="AudioStream" uid="uid://bfgjls71o23n" path="res://ui/dog-bark-382732.mp3" id="5_f3wds"]
+[ext_resource type="AudioStream" uid="uid://cmkwucubvec8j" path="res://ui/mixkit-retro-arcade-casino-notification-211.wav" id="6_7px8g"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7px8g"]
 font = ExtResource("4_f3wds")
@@ -66,3 +68,10 @@ layout_mode = 2
 text = "MADE BY FLUSH
 FOR HACKCLUB SHIBA "
 label_settings = SubResource("LabelSettings_7px8g")
+
+[node name="dogBarkPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_f3wds")
+
+[node name="retroArcadeSoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_7px8g")
+volume_db = -12.525

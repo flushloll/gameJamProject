@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dlmtyxm2ymyb8"]
+[gd_scene load_steps=8 format=3 uid="uid://dlmtyxm2ymyb8"]
 
 [ext_resource type="Script" uid="uid://crg1krxlrhkgh" path="res://scenes/transition_controller.gd" id="1_sf6aj"]
 
@@ -17,6 +17,21 @@ tracks/0/keys = {
 "values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_ptd08"]
+resource_name = "Fade Out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_sf6aj"]
 length = 0.001
 tracks/0/type = "value"
@@ -32,8 +47,24 @@ tracks/0/keys = {
 "values": [Color(0, 0, 0, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_ptd08"]
-resource_name = "Fade Out"
+[sub_resource type="Animation" id="Animation_2la50"]
+resource_name = "MenuToGameIn"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(12.5533, 12.5),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_7orkn"]
+resource_name = "MenuToGameOut"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -51,6 +82,8 @@ tracks/0/keys = {
 _data = {
 &"Fade In": SubResource("Animation_w0a53"),
 &"Fade Out": SubResource("Animation_ptd08"),
+&"MenuToGameIn": SubResource("Animation_2la50"),
+&"MenuToGameOut": SubResource("Animation_7orkn"),
 &"RESET": SubResource("Animation_sf6aj")
 }
 
