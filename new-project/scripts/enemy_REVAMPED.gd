@@ -13,6 +13,7 @@ extends CharacterBody3D
 @onready var chickendeadsfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/ChickenDeadSfx")
 @onready var spawn_sound = $SpawnSound
 @onready var feathers = $FeathersParticle
+@onready var ImpactSoundSFX = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/ImpactSFX")
 
 @export var max_health: int = 100
 var current_health: int
@@ -112,7 +113,14 @@ func take_damage():
 			return true
 		else:
 			$HitMarker.display_damage(stompDeduction)
-			return false
+			return 
+			
+	if current_health >= 0 and Global.WeaponTypeNameGlobal == "BaseWeapon":
+		ImpactSoundSFX.volume_db = randf_range(-13.0, -11.5)
+		ImpactSoundSFX.pitch_scale = randf_range(0.9, 1.1)
+		ImpactSoundSFX.play()
+	else:
+		pass
 		
 	current_health -= Global.WeaponDamage
 	$HitMarker.display_damage(Global.WeaponDamage)

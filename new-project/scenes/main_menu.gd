@@ -16,6 +16,14 @@ var bounce_amplitude := 1.2   # how far left/right it moves
 var bounce_speed := 4.0       # how fast it wiggles
 var time_passed := 0.0
 
+signal showGameInstructionsDone
+@onready var gameInstructionsBackground = $gameInstructionsBackground
+@onready var gameInstructionsAcceptBox = $ScrollContainer/MarginContainer/VBoxContainer/gameInstructionsAcceptBox
+@onready var gameInstructionsContainer = $ScrollContainer
+var showGameInstructionsArrow = false
+var arrowFollowingSelection = false
+var arrowFollowingSelectionTarget
+
 func _ready():
 	call_deferred("update_arrow_position")
 	target_position = arrow.global_position
@@ -27,19 +35,40 @@ func _ready():
 	tween.tween_property(music, "volume_db", 0.0, 2.0) # fade to normal volume in 2 seconds
 
 func _input(event):
-	if event.is_action_pressed("ui_down") and not locked:
-		current_index = (current_index + 1) % options.size()
-		update_arrow_position()
-		$ChangeSelectionSFX.pitch_scale = randf_range(0.97, 1.03)
-		$ChangeSelectionSFX.play()
-	elif event.is_action_pressed("ui_up") and not locked:
-		current_index = (current_index - 1 + options.size()) % options.size()
-		update_arrow_position()
-		$ChangeSelectionSFX.pitch_scale = randf_range(0.97, 1.03)
-		$ChangeSelectionSFX.play()
-	elif event.is_action_pressed("ui_accept") and not locked and current_index == 0:
-		select_option()
-		locked = true
+	# Navigate menu freely until final choice
+	if not showGameInstructionsArrow:
+		if event.is_action_pressed("ui_down") and not showGameInstructionsArrow:
+			current_index = (current_index + 1) % options.size()
+			update_arrow_position()
+			$ChangeSelectionSFX.pitch_scale = randf_range(0.97, 1.03)
+			$ChangeSelectionSFX.play()
+		elif event.is_action_pressed("ui_up") and not showGameInstructionsArrow:
+			current_index = (current_index - 1 + options.size()) % options.size()
+			update_arrow_position()
+			$ChangeSelectionSFX.pitch_scale = randf_range(0.97, 1.03)
+			$ChangeSelectionSFX.play()
+		elif event.is_action_pressed("ui_accept") and current_index == 0 and not showGameInstructionsArrow:
+			# Show instructions, arrow still moves freely
+			showGameInstructions()
+			update_arrow_position()
+
+	# Final choice: when player presses accept on the instructions
+	elif showGameInstructionsArrow and event.is_action_pressed("ui_accept") and not locked:
+		locked = true  # now lock the arrow
+		selectionAudio.play()
+		await get_tree().create_timer(1).timeout
+		gameInstructionsBackground.hide()
+		gameInstructionsContainer.hide()
+		await get_tree().create_timer(0.5).timeout
+		var tween = create_tween()
+		tween.tween_property(music, "volume_db", -40.0, 1.5)
+
+	# Spawn egg toward camera
+		var egg = $"../EggNode3D"
+		egg.visible = true
+		egg.target = get_viewport().get_camera_3d()
+		egg.on_hit_callback = Callable(self, "_on_egg_hit")
+		#emit_signal("showGameInstructionsDone")
 
 func _process(delta):
 	
@@ -56,26 +85,46 @@ func _process(delta):
 	# Apply passive horizontal bounce
 	var bounce = sin(time_passed * bounce_speed) * bounce_amplitude
 	arrow.global_position.x += bounce
+	
+	if arrowFollowingSelection == true:
+		target_position = gameInstructionsAcceptBox.get_global_position() + Vector2(gameInstructionsAcceptBox.size.x, 0) + arrow_offset + Vector2(-20, -20)
 		
 
 func update_arrow_position():
-	var panel = options[current_index]
-	target_position = panel.get_global_position() + Vector2(panel.size.x, 0) + arrow_offset
+	if showGameInstructionsArrow == false:
+		arrow.scale = Vector2(0.1, 0.1)
+		var panel = options[current_index]
+		target_position = panel.get_global_position() + Vector2(panel.size.x, 0) + arrow_offset
 	
-	# Reset bounce when switching options
-	time_passed = 0.0
+		# Reset bounce when switching options
+		time_passed = 0.0
+	else:
+		arrow.get_parent().remove_child(arrow)
+		gameInstructionsContainer.add_child(arrow)
+		arrow.scale = Vector2(0.06, 0.06)
+		bounce_amplitude = 0.4
+		bounce_speed = 8.0
+		target_position = gameInstructionsAcceptBox.get_global_position() + Vector2(gameInstructionsAcceptBox.size.x, 0) + arrow_offset + Vector2(0, 0)
+		time_passed = 0.0
+		arrowFollowingSelectionTarget = gameInstructionsAcceptBox
+		arrowFollowingSelection = true
 
-func select_option():
-	# Fade out music
-	var tween = create_tween()
-	tween.tween_property(music, "volume_db", -40.0, 1.5) # fade out over 1.5s
-	#chickenSquawk.play(0.1)
-	selectionAudio.play()
-	
-	var egg = $"../EggNode3D"
-	egg.visible = true
-	egg.target = get_viewport().get_camera_3d()
-	egg.on_hit_callback = Callable(self, "_on_egg_hit")
+#func select_option():
+	#await showGameInstructionsDone  # waits until final choice
+	#gameInstructionsBackground.hide()
+	#gameInstructionsContainer.hide()
+#
+	## Fade music
+	#var tween = create_tween()
+	#tween.tween_property(music, "volume_db", -40.0, 1.5)
+	#selectionAudio.play()
+#
+	## Spawn egg toward camera
+	#var egg = $"../EggNode3D"
+	#egg.visible = true
+	#egg.target = get_viewport().get_camera_3d()
+	#egg.on_hit_callback = Callable(self, "_on_egg_hit")
+
 	
 func _on_egg_hit():
 	# Show omelette overlay
@@ -94,3 +143,8 @@ func _do_scene_change():
 			print("Options")
 		2:
 			print("Quit Game")
+
+func showGameInstructions():
+	showGameInstructionsArrow = true
+	gameInstructionsContainer.show()
+	gameInstructionsBackground.show()

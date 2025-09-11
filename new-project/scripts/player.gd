@@ -40,6 +40,16 @@ var _pitch: float = 0.0
 @export var PITCH_LIMIT_DOWN := -70
 @export var PITCH_LIMIT_UP := 75
 
+# Saved view state for switching
+var saved_fps_yaw : float = 0.0
+var saved_fps_pitch : float = 0.0
+var has_saved_fps : bool = false
+
+var saved_cursor_target : Vector3 = Vector3.ZERO
+var has_saved_cursor : bool = false
+var saved_fps_target : Vector3 = Vector3.ZERO
+var has_saved_fps_target : bool = false
+
 @export var lunge_distance: float = 4.0   # how far the lunge goes
 @export var lunge_duration: float = 0.2   # how long it takes
 var is_lunging: bool = false
@@ -47,7 +57,6 @@ var lunge_timer: float = 0.0
 var lunge_velocity: Vector3 = Vector3.ZERO
 
 func _ready() -> void:
-	
 	# Lock mouse for camera control
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
@@ -61,37 +70,76 @@ func _unhandled_input(event: InputEvent) -> void:
 	else:
 		head.rotation_degrees.x = _pitch  # only pitch
 
-	# Toggle mouse lock (Escape key or mapped input)
-	#if event.is_action_pressed("toggle_mouse"):
-		#var m = Input.get_mouse_mode()
-		#Input.set_mouse_mode(
-			#Input.MOUSE_MODE_HIDDEN if m == Input.MOUSE_MODE_CAPTURED
-			#else Input.MOUSE_MODE_CAPTURED
-		#)
+# ---------- Helper: save / restore views ----------
+func save_fps_view() -> void:
+	# store yaw/pitch so we can restore later when returning to FPS
+	saved_fps_yaw = _yaw
+	saved_fps_pitch = _pitch
+	has_saved_fps = true
 
+func restore_fps_view() -> void:
+	if not has_saved_fps:
+		return
+	_yaw = saved_fps_yaw
+	_pitch = clamp(saved_fps_pitch, PITCH_LIMIT_DOWN, PITCH_LIMIT_UP)
+	rotation_degrees.y = _yaw
+	head.rotation_degrees.x = _pitch
+	# ensure the body/head are set to these values immediately
+	rotation_degrees.y = _yaw
+	head.rotation_degrees.x = _pitch
+
+func save_cursor_view(target: Vector3) -> void:
+	saved_cursor_target = target
+	has_saved_cursor = true
+
+func restore_cursor_view() -> void:
+	if not has_saved_cursor:
+		return
+	# make the head (or camera) look at the saved cursor target
+	head.look_at(saved_cursor_target, Vector3.UP)
+
+# ---------- Camera view switching ----------
 func camViewSwitchToFPS():
+	# switching into FPS: save the cursor view so we can restore it when leaving FPS
+	# If we are currently following cursor, capture the cursor target we were looking at
+	if Global.cameraFollowsCursor:
+		# store current cursor target if it exists (we maintain this in _process when ray hits)
+		# If you want to ensure there's always a saved cursor target, you could use a default ahead of the player.
+		# Attempt to capture from ShootCast target_position if available:
+		if $ShootCast and $ShootCast.target_position:
+			var world_target = $ShootCast.to_global($ShootCast.target_position)
+			save_cursor_view(world_target)
+		# otherwise keep any previously saved cursor_target
+
+	# When leaving FPS we should save the fps angles; but here we are entering FPS, restore saved fps angles (if any)
+	restore_fps_view()
+
 	cam_view = 2
 	gun_cam.make_current()
 	rotation_degrees.y = _yaw
 	head.rotation_degrees.x = _pitch
 	Global.cameraFollowsCursor = false
-		#position = Vector3(-8.77, 5.846, 0.0)
-		#rotation_degrees = Vector3(-30.0, -90.0, 0.0)
-		#original_local_position = position
-	#elif Input.is_action_just_pressed("change_view") and cam_view == 2:
-		#cam_view = 3
-		#position = Vector3(-8.0, 12.0, -8.0)
-		#rotation_degrees = Vector3(-45.0, -135.0, 0.0)
-		#original_local_position = position
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
 func camViewSwitchToTopView():
+	# switching into top/cursor view:
+	# Save current FPS angles so we can return to them later
+	if not Global.cameraFollowsCursor:
+		save_fps_view()
+
+	# Restore cursor target (where the cursor was last looking) so the top view/head points there
+	if has_saved_fps_target:
+		save_cursor_view(saved_fps_target)
+		restore_cursor_view()
+
 	cam_view = 1
+	
 	camTop.make_current()
 	Global.cameraFollowsCursor = true
 	$Camera3D.global_rotation_degrees = Vector3(-90.0, 0.0, 0.0)
-		#position = Vector3(0.0, 0.0, 0.0)
-		#rotation_degrees = Vector3(0.0, 0.0, 0.0)
-		#original_local_position = position
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
+# ---------- Main process ----------
 func _process(delta) -> void:
 	# === 1. Gravity ===
 	if not is_on_floor():
@@ -122,19 +170,20 @@ func _process(delta) -> void:
 		var shoot_cast = $ShootCast
 		shoot_cast.target_position = shoot_cast.to_local(result.position)
 		$Head.look_at(target, Vector3.UP)
+		# SAVE the last seen cursor target so switching away can restore it later
+		save_cursor_view(target)
 
 	# === 2. Input direction ===
 	var input2d: Vector2 = Input.get_vector("move_left", "move_right", "move_back", "move_forward")
 
-# Instead of using basis (camera/player rotation),
-# lock movement to fixed world axes.
+	# Instead of using basis (camera/player rotation),
+	# lock movement to fixed world axes.
 
 	var forward: Vector3
-	
 	var right: Vector3
 	
 	if Global.cameraFollowsCursor:
-	# Original logic: fixed world axes
+		# Original logic: fixed world axes
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		forward = Vector3.FORWARD
 		right = Vector3.RIGHT
@@ -154,6 +203,10 @@ func _process(delta) -> void:
 			rotation_degrees.y = _yaw  # body follows mouse X
 			head.rotation_degrees.x = _pitch  # head follows mouse Y
 			# Build desired horizontal movement direction
+		var fps_forward_world: Vector3 = gun_cam.global_position + (-cam_basis.z * 1000.0)
+		saved_fps_target = fps_forward_world
+		has_saved_fps_target = true
+		
 			
 	var desired_dir: Vector3 = (right * input2d.x + forward * input2d.y).normalized()
 

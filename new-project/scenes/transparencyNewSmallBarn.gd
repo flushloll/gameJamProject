@@ -9,18 +9,18 @@ func _ready():
 func _on_mesh_body_entered(body):
 	if body.is_in_group("Player"):
 		body.camViewSwitchToTopView()
-		get_child(0).get_child(0).get_child(0).get_surface_override_material(0).set_shader_parameter("player_is_under_roof", true)
-		get_child(0).get_child(0).get_child(0).get_surface_override_material(3).set_shader_parameter("player_is_under_roof", true)
-		get_child(0).get_child(0).get_child(0).get_surface_override_material(0).set_shader_parameter("STRENGTH", 0.2)
-		get_child(0).get_child(0).get_child(0).get_surface_override_material(3).set_shader_parameter("STRENGTH", 1)
+		get_child(0).get_child(0).get_child(0).get_child(0).get_surface_override_material(0).set_shader_parameter("player_is_under_roof", true)
+		get_child(0).get_child(0).get_child(0).get_child(0).get_surface_override_material(3).set_shader_parameter("player_is_under_roof", true)
+		get_child(0).get_child(0).get_child(0).get_child(0).get_surface_override_material(0).set_shader_parameter("STRENGTH", 0.2)
+		get_child(0).get_child(0).get_child(0).get_child(0).get_surface_override_material(3).set_shader_parameter("STRENGTH", 1)
 	else:
 		print("Not a player")
 
 func _on_mesh_body_exited(body):
 	if body.is_in_group("Player"):
 		body.camViewSwitchToFPS()
-		get_child(0).get_child(0).get_child(0).get_surface_override_material(0).set_shader_parameter("player_is_under_roof", false)
-		get_child(0).get_child(0).get_child(0).get_surface_override_material(3).set_shader_parameter("player_is_under_roof", false)
+		get_child(0).get_child(0).get_child(0).get_child(0).get_surface_override_material(0).set_shader_parameter("player_is_under_roof", false)
+		get_child(0).get_child(0).get_child(0).get_child(0).get_surface_override_material(3).set_shader_parameter("player_is_under_roof", false)
 		print("Exited roof area, material:")
 
 #func _process(delta):

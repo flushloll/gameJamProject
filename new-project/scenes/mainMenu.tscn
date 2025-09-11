@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bb8g0x37ru3ys"]
+[gd_scene load_steps=25 format=3 uid="uid://bb8g0x37ru3ys"]
 
 [ext_resource type="Script" uid="uid://tlgmb8uho1k1" path="res://scenes/main_menu.gd" id="1_7nrmo"]
 [ext_resource type="Texture2D" uid="uid://5r68g87lplt1" path="res://ui/Screenshot 2025-09-07 042137.png" id="1_qkhwq"]
@@ -6,7 +6,10 @@
 [ext_resource type="StyleBox" uid="uid://c4mcua81xfix7" path="res://ui/menuIcons.tres" id="2_l7wge"]
 [ext_resource type="Texture2D" uid="uid://dgeg6ammcrtm5" path="res://ui/14-chalk-arrows-6.png" id="3_7nrmo"]
 [ext_resource type="FontFile" uid="uid://blbarw7hasf0c" path="res://ui/Blueto.otf" id="5_clbkb"]
+[ext_resource type="Script" uid="uid://6cxchwxxh142" path="res://scenes/scrollcontainergameinstructions.gd" id="6_25e00"]
+[ext_resource type="FontFile" uid="uid://157nggnfm5j5" path="res://ui/ComicHelvetic_Heavy.otf" id="7_amia2"]
 [ext_resource type="AudioStream" uid="uid://khy783jryl38" path="res://musicandsfx/morning_music_p1.mp3" id="7_ldpc3"]
+[ext_resource type="LabelSettings" uid="uid://b7dxld1jrefvl" path="res://ui/menuInstructions.tres" id="8_25e00"]
 [ext_resource type="AudioStream" uid="uid://b82ytdxdx4dtg" path="res://musicandsfx/andySquawkReverb.wav" id="8_y35fp"]
 [ext_resource type="Texture2D" uid="uid://cpka6ypy71cgc" path="res://ui/omellete.png" id="9_6b2wv"]
 [ext_resource type="Script" uid="uid://dpyqb2elrnkn" path="res://scenes/eggsplatter.gd" id="9_dj72i"]
@@ -40,6 +43,43 @@ corner_radius_bottom_left = 16
 [sub_resource type="LabelSettings" id="LabelSettings_7nrmo"]
 font = ExtResource("5_clbkb")
 font_size = 64
+outline_size = 16
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lam2r"]
+bg_color = Color(0.896848, 0.578562, 0.402311, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_jfr2g"]
+font = ExtResource("7_amia2")
+font_size = 20
+font_color = Color(0.528309, 0.889668, 0.524865, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vt84v"]
+bg_color = Color(0.997469, 0.397147, 0.496171, 0.345098)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 0.701961)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="LabelSettings" id="LabelSettings_lam2r"]
+font = ExtResource("2_3d1i7")
+font_size = 24
 outline_size = 16
 outline_color = Color(0, 0, 0, 1)
 
@@ -167,10 +207,116 @@ label_settings = SubResource("LabelSettings_7nrmo")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="gameInstructionsBackground" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.407843)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+visible = false
+custom_minimum_size = Vector2(700, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lam2r")
+follow_focus = true
+horizontal_scroll_mode = 3
+script = ExtResource("6_25e00")
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/MarginContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(600, 100)
+layout_mode = 2
+text = "In order for the game to work correctly, you must copy the link in the TOP RIGHT of the playtest BOX and open the game in a new tab. 
+
+Please ensure your audio is on before starting."
+label_settings = SubResource("LabelSettings_jfr2g")
+autowrap_mode = 3
+
+[node name="Label2" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(600, 50)
+layout_mode = 2
+text = "Killing enemies will drop ingredients you can use to cook tasty (and sometimes questionable) dishes, granting you random permanent power-ups to help in future waves.
+
+WASD + SPACEBAR to move
+LEFT CLICK to swing.
+RIGHT CLICK to lunge.
+1 and 2 to switch between weapons
+C in the air to stomp (recharges on kill)"
+label_settings = ExtResource("8_25e00")
+autowrap_mode = 3
+
+[node name="gameInstructionsAcceptBox" type="Panel" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_vt84v")
+
+[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/gameInstructionsAcceptBox"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -58.5
+offset_top = -8.34
+offset_right = 58.5
+offset_bottom = 14.66
+grow_horizontal = 2
+grow_vertical = 2
+text = "CONTINUE"
+label_settings = SubResource("LabelSettings_lam2r")
+
 [node name="Arrow" type="Sprite2D" parent="."]
 position = Vector2(398, 418)
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("3_7nrmo")
+
+[node name="OmeletteTextureRect" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -511.0
+offset_top = -511.0
+offset_right = 511.0
+offset_bottom = 511.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_6b2wv")
+script = ExtResource("9_dj72i")
 
 [node name="MainMenuMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_ldpc3")
@@ -189,20 +335,3 @@ stream = ExtResource("10_epn8x")
 
 [node name="ChangeSelectionSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_lam2r")
-
-[node name="OmeletteTextureRect" type="TextureRect" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("9_6b2wv")
-script = ExtResource("9_dj72i")
