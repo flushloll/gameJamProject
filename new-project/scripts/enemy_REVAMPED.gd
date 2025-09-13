@@ -116,8 +116,8 @@ func take_damage():
 			return 
 			
 	if current_health >= 0 and Global.WeaponTypeNameGlobal == "BaseWeapon":
-		ImpactSoundSFX.volume_db = randf_range(-13.0, -11.5)
-		ImpactSoundSFX.pitch_scale = randf_range(0.9, 1.1)
+		ImpactSoundSFX.volume_db = randf_range(-13, -11.5)
+		ImpactSoundSFX.pitch_scale = randf_range(0.8, 1.2)
 		ImpactSoundSFX.play()
 	else:
 		pass
@@ -139,6 +139,7 @@ func die():
 	feathers.restart()          # force restart if it was already used
 	feathers.emitting = true    # now play once
 	chickendeadsfx.play()
+	$HealthBar.hide()
 	# animation_player.play("Death")
 	set_physics_process(false)
 	# animation_player.animation_finished.connect(_on_death_animation_finished)

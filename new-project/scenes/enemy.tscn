@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bgwx7alhd6yb3"]
+[gd_scene load_steps=13 format=3 uid="uid://bgwx7alhd6yb3"]
 
 [ext_resource type="Script" uid="uid://bs606d67k60lp" path="res://scripts/enemy_REVAMPED.gd" id="1_md0e3"]
 [ext_resource type="ArrayMesh" uid="uid://dr6ts6osnotbe" path="res://assets/Chicken/brownchicken.tres" id="2_md484"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://caa6hxrno6d1e" path="res://scenes/loadParticles.tscn" id="6_nenq2"]
 [ext_resource type="Script" uid="uid://dwj07g5r7ralt" path="res://scenes/load_particles.gd" id="7_md484"]
 [ext_resource type="AudioStream" uid="uid://dxv637svc2bsj" path="res://musicandsfx/audiomass-output.wav" id="8_md484"]
+[ext_resource type="PackedScene" uid="uid://ckjdqxm5t8ffa" path="res://scenes/enemyHealthBar.tscn" id="9_ipns3"]
 
 [sub_resource type="Skin" id="Skin_nenq2"]
 resource_name = "Skin7"
@@ -338,3 +339,10 @@ script = ExtResource("7_md484")
 [node name="SpawnSound" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("8_md484")
 volume_db = -16.87
+
+[node name="HealthBar" parent="." instance=ExtResource("9_ipns3")]
+visible = false
+modulate = Color(1, 1, 1, 0.666667)
+offset_right = 1024.0
+offset_bottom = 1024.0
+scale = Vector2(0.2, 0.2)

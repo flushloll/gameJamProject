@@ -57,10 +57,6 @@ text = "30/30"
 label_settings = SubResource("LabelSettings_tefeu")
 metadata/_edit_use_anchors_ = true
 
-[node name="ProgressBar" type="ProgressBar" parent="."]
-offset_right = 4.0
-offset_bottom = 27.0
-
 [node name="CenterCursor" type="Sprite2D" parent="."]
 scale = Vector2(0.025, 0.025)
 texture = ExtResource("3_gdt2y")

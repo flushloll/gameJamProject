@@ -2263,6 +2263,7 @@ script = ExtResource("27_cjqg0")
 
 [node name="Label3D" type="Label3D" parent="Asset_pack/InGameText"]
 transform = Transform3D(0.938403, 0.00151227, -0.345542, -0.174001, 0.866025, -0.46875, 0.298539, 0.5, 0.812942, 16.371, -1.17483, 6.62025)
+visible = false
 pixel_size = 0.02
 text = "PLEASE READ!!!
 
@@ -2279,8 +2280,9 @@ CONTROLS ARE IN THE DEMO DESCRIPTION
 font = ExtResource("28_vchkt")
 
 [node name="Label3D2" type="Label3D" parent="Asset_pack/InGameText"]
-transform = Transform3D(0.965926, -0.129365, 0.22417, 0.129454, 0.991482, 0.0143632, -0.224118, 0.0151457, 0.974445, -0.691086, -0.937494, 1.62589)
+transform = Transform3D(0.901546, -0.216213, 0.37479, 0.21647, 0.975387, 0.0419778, -0.374641, 0.0432858, 0.92616, -0.739695, -0.926497, 1.60699)
 pixel_size = 0.015
+billboard = 1
 text = "STORE/KITCHEN
 
 (not set up yet)"
