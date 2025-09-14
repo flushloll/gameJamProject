@@ -1,4 +1,3 @@
-
 extends TextureProgressBar
 
 # The 3D character whose health this bar represents

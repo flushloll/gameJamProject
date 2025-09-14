@@ -1,0 +1,9 @@
+[gd_resource type="AnimationNodeAnimation" format=3 uid="uid://b267aakf8ged"]
+
+[resource]
+animation = &"chickenWalk"
+use_custom_timeline = true
+timeline_length = 1.1333
+stretch_time_scale = false
+start_offset = 0.5667
+loop_mode = 1
