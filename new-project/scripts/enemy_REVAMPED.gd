@@ -1,11 +1,9 @@
 extends CharacterBody3D
 
-@onready var hitbox_area: Area3D = $EnemyHitBoxArea
-@onready var enemyMesh: MeshInstance3D = $Skeleton3D/chicken_001
+@onready var enemyMesh: MeshInstance3D = $chicken4/chicken_0012/Skeleton3D/chicken_001
 @onready var enemycollisionshape: CollisionShape3D = $EnemyCollisionShape
-@onready var animation_player: AnimationPlayer = $EnemyAnimationPlayer
+@onready var animation_player: AnimationPlayer = $chicken4/AnimationPlayer
 @onready var navigation_agent = $NavigationAgent3D
-@onready var enemy = $"."
 @export var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 @export var speed = 5.0
 @export var wander_radius = 6 # How far the NPC will wander from its starting point
@@ -14,12 +12,15 @@ extends CharacterBody3D
 @onready var spawn_sound = $SpawnSound
 @onready var feathers = $FeathersParticle
 @onready var ImpactSoundSFX = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/ImpactSFX")
+@onready var animation_tree: AnimationTree = $chicken4/AnimationTree
 
 @export var max_health: int = 100
 var current_health: int
 var is_dead: bool = false
 var canMove: bool = true
 signal enemy_died
+
+var stomped_this_frame = false
 
 func _ready():
 	add_to_group("Enemy")
@@ -64,15 +65,15 @@ func set_new_random_target():
 	navigation_agent.target_position = Vector3(global_position.x + newX, 0, global_position.z + newZ)
 	
 func _physics_process(delta: float) -> void:
-	
+	stomped_this_frame = false
 	var next_position = navigation_agent.get_next_path_position()
 	
 	if velocity.length() > 0.1:  # Only rotate if moving\
 		var move_dir = Vector3(velocity.x, 0, velocity.z).normalized()
 		var target_rotation = atan2(-move_dir.x, -move_dir.z)  # Yaw angle in radians
 	# Smoothly rotate the mesh
-		var current_rotation = enemyMesh.rotation.y
-		enemyMesh.rotation.y = lerp_angle(current_rotation, target_rotation, 0.1)  # 0.1 = rotation speed
+		var current_rotation = rotation.y
+		rotation.y = lerp_angle(current_rotation, target_rotation, 0.1)  # 0.1 = rotation speed
 	
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -96,24 +97,39 @@ func _physics_process(delta: float) -> void:
 		# Stop moving if no path
 		velocity.x = 0
 		velocity.z = 0
-		
+
 	move_and_slide()
-		
+	
+	if animation_tree:
+		var horizontal_velocity = Vector3(velocity.x, 0, velocity.z)
+		var horizontal_speed = horizontal_velocity.length()
+	
+		if horizontal_speed <= 0.1:
+			animation_tree["parameters/conditions/walkingToIdle"] = true
+			animation_tree["parameters/conditions/isWalking"] = false
+		elif horizontal_speed > 0.1:
+			animation_tree["parameters/conditions/walkingToIdle"] = false
+			animation_tree["parameters/conditions/isWalking"] = true
+
+func stomp_take_damage():
+	if stomped_this_frame:
+		return false
+	stomped_this_frame = true
+	flash_red()
+	var stompDeduction = randi_range(56, 64)
+	current_health -= stompDeduction
+	if current_health <= 0:
+		die()
+		return true
+	else:
+		$HitMarker.display_damage(stompDeduction)
+		return false
 			
 func take_damage():
 	if is_dead:
 		return
 	#playerCamera.add_trauma(0.4)  # Amount between 0.1 (light) and 1.0 (extreme)
 	flash_red()
-	if Global.isStomping:
-		var stompDeduction = randi_range(56, 64)
-		current_health -= stompDeduction
-		if current_health <= 0:
-			die()
-			return true
-		else:
-			$HitMarker.display_damage(stompDeduction)
-			return 
 			
 	if current_health >= 0 and Global.WeaponTypeNameGlobal == "BaseWeapon":
 		ImpactSoundSFX.volume_db = randf_range(-13, -11.5)
@@ -164,3 +180,20 @@ func flash_red():
 func play_spawn_sound_and_effects():
 	print("Playing spawn sound!")
 	spawn_sound.play()
+
+func _on_vision_timer_timeout() -> void:
+	var overlaps = $EnemyVision.get_overlapping_bodies()
+	if overlaps.size() > 0:
+		for overlap in overlaps:
+			if overlap.is_in_group("Player"):
+				var playerPosition = overlap.global_transform.origin
+				$VisionRayCast.look_at(playerPosition, Vector3.UP)
+				$VisionRayCast.force_raycast_update()
+				
+				if $VisionRayCast.is_colliding():
+					var collider = $VisionRayCast.get_collider()
+					
+					if collider.is_in_group("Player"):
+						$VisionRayCast.debug_shape_custom_color = Color(174, 0, 0)
+					else:
+						$VisionRayCast.debug_shape_custom_color = Color(0, 255, 0)

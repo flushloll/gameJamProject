@@ -1054,7 +1054,7 @@ script = ExtResource("2_qlg0r")
 WEAPON_TYPE = ExtResource("4_y4r1p")
 
 [node name="Area3D" type="Area3D" parent="Head/SpringArm3D/GunCamera/Weapon"]
-transform = Transform3D(1, -3.72529e-09, -2.98023e-08, 0, 1, 0, 1.49012e-08, -2.98023e-08, 1, 0.443, 0.324, -0.945)
+transform = Transform3D(1, 4.4409e-16, -1.49012e-08, 0, 1, 2.98023e-08, 1.49012e-08, -2.98023e-08, 1, 0.443, 0.324, -0.945)
 collision_layer = 2
 collision_mask = 15
 
@@ -1153,7 +1153,7 @@ extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_fjrip")
 
 [node name="ShootCast" type="RayCast3D" parent="."]
-transform = Transform3D(38.9593, -8.26729, 3.7187, 5.14792, 6.67076, -39.1024, 7.46162, 38.5636, 7.56118, 0.349, -0.045, -0.389)
+transform = Transform3D(38.9593, -8.26728, 3.71869, 5.14792, 6.67076, -39.1024, 7.46162, 38.5636, 7.56118, 0.349, -0.045, -0.389)
 target_position = Vector3(0, -1000, 0)
 collision_mask = 15
 collide_with_areas = true

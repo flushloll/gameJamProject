@@ -1,7 +1,7 @@
 extends TextureProgressBar
 
 # The 3D character whose health this bar represents
-@onready var character = $"../../Player"
+@onready var character = $"../../../Player"
 
 func _ready():
 	

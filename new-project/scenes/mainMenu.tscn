@@ -11,9 +11,9 @@
 [ext_resource type="AudioStream" uid="uid://khy783jryl38" path="res://musicandsfx/morning_music_p1.mp3" id="7_ldpc3"]
 [ext_resource type="LabelSettings" uid="uid://b7dxld1jrefvl" path="res://ui/menuInstructions.tres" id="8_25e00"]
 [ext_resource type="AudioStream" uid="uid://b82ytdxdx4dtg" path="res://musicandsfx/andySquawkReverb.wav" id="8_y35fp"]
-[ext_resource type="Texture2D" uid="uid://cpka6ypy71cgc" path="res://ui/omellete.png" id="9_6b2wv"]
 [ext_resource type="Script" uid="uid://dpyqb2elrnkn" path="res://scenes/eggsplatter.gd" id="9_dj72i"]
 [ext_resource type="AudioStream" uid="uid://dnbxovawgnvnb" path="res://musicandsfx/090035_splatwav-91604.mp3" id="9_tov5d"]
+[ext_resource type="Texture2D" uid="uid://dldeq7puc0axy" path="res://ui/omeletteSplashOutline.png" id="10_25e00"]
 [ext_resource type="AudioStream" uid="uid://cqi8bf7vj605b" path="res://musicandsfx/Minimalist3.mp3" id="10_epn8x"]
 [ext_resource type="AudioStream" uid="uid://c4qhywbkcjqdm" path="res://ui/Modern2.mp3" id="13_lam2r"]
 
@@ -315,7 +315,7 @@ offset_right = 511.0
 offset_bottom = 511.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("9_6b2wv")
+texture = ExtResource("10_25e00")
 script = ExtResource("9_dj72i")
 
 [node name="MainMenuMusic" type="AudioStreamPlayer" parent="."]

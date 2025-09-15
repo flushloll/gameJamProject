@@ -107,7 +107,7 @@ autoplay = true
 
 [node name="ShootSfx" type="AudioStreamPlayer" parent="SubViewport"]
 stream = ExtResource("5_w4pyt")
-volume_db = -10.269
+volume_db = -14.504
 
 [node name="ReloadSfx" type="AudioStreamPlayer" parent="SubViewport"]
 stream = ExtResource("6_fhp6j")
