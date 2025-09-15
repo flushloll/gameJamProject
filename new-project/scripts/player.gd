@@ -49,7 +49,8 @@ var has_saved_cursor : bool = false
 var saved_fps_target : Vector3 = Vector3.ZERO
 var has_saved_fps_target : bool = false
 
-@export var lunge_distance: float = 4.0   # how far the lunge goes
+@export var lunge_distance: float = 8.0
+@export var vertical_velocity_for_lunge: float # or some custom boost   # how far the lunge goes
 @export var lunge_duration: float = 0.2   # how long it takes
 var is_lunging: bool = false
 var lunge_timer: float = 0.0
@@ -238,6 +239,7 @@ func _process(delta) -> void:
 	
 	if is_lunging:
 		velocity.x = lunge_velocity.x
+		velocity.y = lunge_velocity.y
 		velocity.z = lunge_velocity.z
 
 		lunge_timer -= delta
@@ -338,11 +340,12 @@ func start_lunge():
 		var cam_basis = gun_cam.global_transform.basis
 		forward_dir = -cam_basis.z
 
-	forward_dir.y = 0
-	forward_dir = forward_dir.normalized()
-
-	# Calculate required velocity to cover the distance in the duration
-	lunge_velocity = forward_dir * (lunge_distance / lunge_duration)
+	#forward_dir.y = 0
+	# Remove vertical component from forward_dir and add an initial jump-like boost
+	var forward_dir_no_y = forward_dir
+	forward_dir_no_y.y = 0
+	var horizontal_velocity = forward_dir_no_y.normalized() * (lunge_distance / lunge_duration)
+	lunge_velocity = Vector3(horizontal_velocity.x, vertical_velocity_for_lunge, horizontal_velocity.z)
 
 func setCanStompToTrue():
 	can_stomp = true

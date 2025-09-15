@@ -489,6 +489,7 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 collision_layer = 4
 collision_mask = 11
 script = ExtResource("1_md0e3")
+speed = 3.5
 wander_radius = 24
 
 [node name="chicken4" type="Node3D" parent="."]
@@ -733,6 +734,8 @@ debug_shape_custom_color = Color(1, 0, 0, 1)
 debug_shape_thickness = 5
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
+height = 2.0
 
 [node name="FeathersParticle" parent="." instance=ExtResource("3_c4w8v")]
 
@@ -769,4 +772,9 @@ scale = Vector2(0.2, 0.2)
 wait_time = 0.2
 autostart = true
 
+[node name="WanderTimer" type="Timer" parent="."]
+wait_time = 6.0
+autostart = true
+
 [connection signal="timeout" from="VisionTimer" to="." method="_on_vision_timer_timeout"]
+[connection signal="timeout" from="WanderTimer" to="." method="_on_wander_timer_timeout"]

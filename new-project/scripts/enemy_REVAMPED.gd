@@ -15,6 +15,14 @@ extends CharacterBody3D
 @onready var animation_tree: AnimationTree = $chicken4/AnimationTree
 
 @export var max_health: int = 100
+
+@export var rotation_speed: float = 8.0            # how fast the enemy turns (higher = snappier)
+@export var rotation_offset_degrees: float = 0.0   # use 180 if your model faces the other way
+@export var face_threshold: float = 0.05           # minimum horizontal length to face (avoids jitter)
+
+var chasing_player: bool = false
+var navigation_paused: bool = false
+
 var current_health: int
 var is_dead: bool = false
 var canMove: bool = true
@@ -22,14 +30,35 @@ signal enemy_died
 
 var stomped_this_frame = false
 
+# cached safe velocity received from NavigationAgent3D
+var agent_safe_velocity: Vector3 = Vector3.ZERO
+
 func _ready():
 	add_to_group("Enemy")
 	set_new_random_target()
 	current_health = max_health
 	feathers.emitting = false
+	$WanderTimer.start()
+
+	# Connect the NavigationAgent3D signal that returns the avoidance-corrected velocity.
+	# (Either connect in code or via the editor inspector.)
+	navigation_agent.velocity_computed.connect(Callable(self, "_on_navigation_agent_velocity_computed"))
+
+	# ensure avoidance is enabled (you can also toggle this in the Inspector)
+	navigation_agent.avoidance_enabled = true
+	
 func navigationCooldown():
-	await get_tree().create_timer(randf_range(0.4,2)).timeout
+	await get_tree().create_timer(randf_range(0.4,3)).timeout
 	canMove = true
+
+func _face_direction(direction: Vector3, delta: float) -> void:
+	direction.y = 0
+	if direction.length() <= face_threshold:
+		return
+	var dir_norm = direction.normalized()
+	# If your model's forward is -Z (usual Godot), this works. Adjust rotation_offset_degrees if needed.
+	var target_yaw = atan2(-dir_norm.x, -dir_norm.z) + deg_to_rad(rotation_offset_degrees)
+	rotation.y = lerp_angle(rotation.y, target_yaw, clamp(delta * rotation_speed, 0.0, 1.0))
 
 func cubeInput(x):
 	var radius = pow(x, 1/3.0) * -40
@@ -64,52 +93,75 @@ func set_new_random_target():
 	
 	navigation_agent.target_position = Vector3(global_position.x + newX, 0, global_position.z + newZ)
 	
+# --- physics process: unified movement + rotation logic ---
 func _physics_process(delta: float) -> void:
 	stomped_this_frame = false
-	var next_position = navigation_agent.get_next_path_position()
-	
-	if velocity.length() > 0.1:  # Only rotate if moving\
-		var move_dir = Vector3(velocity.x, 0, velocity.z).normalized()
-		var target_rotation = atan2(-move_dir.x, -move_dir.z)  # Yaw angle in radians
-	# Smoothly rotate the mesh
-		var current_rotation = rotation.y
-		rotation.y = lerp_angle(current_rotation, target_rotation, 0.1)  # 0.1 = rotation speed
-	
+
+	# --- gravity (unchanged) ---
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	else:
 		if absf(velocity.y) < 0.01:
 			velocity.y = 0.0
-			
-	if next_position != Vector3.ZERO:
-		var direction = (next_position - global_position).normalized()
-		
-		if canMove:
-			velocity.x = direction.x * speed
-			velocity.z = direction.z * speed
-		if canMove and global_position.distance_to(navigation_agent.target_position) < 1.0:
-			canMove = false
-			velocity.x = 0
-			velocity.z = 0
-			navigationCooldown()
-			set_new_random_target()
-	else:
-		# Stop moving if no path
-		velocity.x = 0
-		velocity.z = 0
 
-	move_and_slide()
-	
+	# Build the desired horizontal velocity (what we want to do, pre-avoidance)
+	var desired_velocity: Vector3 = Vector3.ZERO
+
+	if chasing_player and canMove:
+		var to_player = player.global_position - global_position
+		_face_direction(to_player, delta)
+		# horizontal only
+		to_player.y = 0
+		if to_player.length() > 0.001:
+			desired_velocity = to_player.normalized() * speed
+	else:
+		var next_position = Vector3.ZERO
+		if not navigation_paused:
+			next_position = navigation_agent.get_next_path_position()
+
+		if next_position != Vector3.ZERO:
+			var path_dir = next_position - global_position
+			_face_direction(path_dir, delta)
+
+			if canMove:
+				desired_velocity = Vector3(path_dir.x, 0, path_dir.z).normalized() * speed
+
+			# still keep your "reached target" logic
+			if canMove and global_position.distance_to(navigation_agent.target_position) < 1.0:
+				canMove = false
+				# stop asking for movement
+				desired_velocity = Vector3.ZERO
+				velocity.x = 0
+				velocity.z = 0
+				navigationCooldown()
+				set_new_random_target()
+				$WanderTimer.wait_time = randf_range(5.0, 8.0)
+				$WanderTimer.start()
+		else:
+			desired_velocity = Vector3.ZERO
+
+	# Tell the NavigationAgent what we want it to try to do.
+	# The agent will compute a safe_velocity and emit velocity_computed.
+	navigation_agent.set_velocity(desired_velocity)
+
+	# NOTE:
+	# Do NOT call move_and_slide() here — movement will be applied in the velocity_computed callback below.
+	# (If you prefer to keep move_and_slide in _physics_process, you can cache the safe velocity in the callback
+	# and apply it here instead — either pattern is used in examples.) 
+
+
+	# --- animation sync (unchanged) ---
 	if animation_tree:
 		var horizontal_velocity = Vector3(velocity.x, 0, velocity.z)
 		var horizontal_speed = horizontal_velocity.length()
-	
+
 		if horizontal_speed <= 0.1:
 			animation_tree["parameters/conditions/walkingToIdle"] = true
 			animation_tree["parameters/conditions/isWalking"] = false
-		elif horizontal_speed > 0.1:
+		else:
 			animation_tree["parameters/conditions/walkingToIdle"] = false
 			animation_tree["parameters/conditions/isWalking"] = true
+
 
 func stomp_take_damage():
 	if stomped_this_frame:
@@ -183,17 +235,55 @@ func play_spawn_sound_and_effects():
 
 func _on_vision_timer_timeout() -> void:
 	var overlaps = $EnemyVision.get_overlapping_bodies()
-	if overlaps.size() > 0:
-		for overlap in overlaps:
-			if overlap.is_in_group("Player"):
-				var playerPosition = overlap.global_transform.origin
-				$VisionRayCast.look_at(playerPosition, Vector3.UP)
-				$VisionRayCast.force_raycast_update()
-				
-				if $VisionRayCast.is_colliding():
-					var collider = $VisionRayCast.get_collider()
-					
-					if collider.is_in_group("Player"):
-						$VisionRayCast.debug_shape_custom_color = Color(174, 0, 0)
-					else:
-						$VisionRayCast.debug_shape_custom_color = Color(0, 255, 0)
+	var seen_player = false
+	for overlap in overlaps:
+		if overlap.is_in_group("Player"):
+			var playerPosition = overlap.global_transform.origin
+			$VisionRayCast.look_at(playerPosition, Vector3.UP)
+			$VisionRayCast.force_raycast_update()
+			if $VisionRayCast.is_colliding():
+				var collider = $VisionRayCast.get_collider()
+				if collider.is_in_group("Player"):
+					seen_player = true
+					break
+	if seen_player:
+		if not chasing_player:
+			# start chase: pause navigation usage and lock on player
+			chasing_player = true
+			navigation_paused = true
+			# prevent the agent from trying to walk somewhere while chasing
+			navigation_agent.target_position = global_position
+		$VisionRayCast.debug_shape_custom_color = Color(1, 0, 0)
+	else:
+		if chasing_player:
+			# lost player -> resume navigation and pick a new nav target
+			chasing_player = false
+			navigation_paused = false
+			set_new_random_target()
+		$VisionRayCast.debug_shape_custom_color = Color(0, 1, 0)
+
+func _on_wander_timer_timeout() -> void:
+	#(velocity.x <= 0 or velocity.y <= 0 or velocity.z <= 0) velocity check removed
+	if not chasing_player and not navigation_paused:
+		set_new_random_target()
+
+func _on_navigation_agent_velocity_computed(safe_velocity: Vector3) -> void:
+	# safe_velocity is the avoidance-adjusted velocity returned by the NavigationServer
+	agent_safe_velocity = safe_velocity
+
+	# Apply horizontal part and preserve vertical (gravity) velocity
+	velocity.x = agent_safe_velocity.x
+	velocity.z = agent_safe_velocity.z
+
+	# Now move and update animations here (move_and_slide must be called once per physics frame)
+	move_and_slide()
+
+	# update animation tree (same logic you had before)
+	if animation_tree:
+		var horizontal_speed = Vector3(velocity.x, 0, velocity.z).length()
+		if horizontal_speed <= 0.1:
+			animation_tree["parameters/conditions/walkingToIdle"] = true
+			animation_tree["parameters/conditions/isWalking"] = false
+		else:
+			animation_tree["parameters/conditions/walkingToIdle"] = false
+			animation_tree["parameters/conditions/isWalking"] = true
