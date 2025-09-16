@@ -40,10 +40,6 @@ func _ready():
 	feathers.emitting = false
 	$WanderTimer.start()
 
-	# Connect the NavigationAgent3D signal that returns the avoidance-corrected velocity.
-	# (Either connect in code or via the editor inspector.)
-	navigation_agent.velocity_computed.connect(Callable(self, "_on_navigation_agent_velocity_computed"))
-
 	# ensure avoidance is enabled (you can also toggle this in the Inspector)
 	navigation_agent.avoidance_enabled = true
 	

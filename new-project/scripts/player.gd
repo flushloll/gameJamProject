@@ -21,6 +21,7 @@ var is_stomp_falling: bool = false
 @export var stomp_radius: float = 5.0
 @onready var stompsfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/StompSfx")
 @onready var fallingsfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/FallingSfx")
+@onready var cracksfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/CrackSfx")
 @onready var can_stomp = true
 
 @onready var head: Node3D = $Head
@@ -55,6 +56,10 @@ var has_saved_fps_target : bool = false
 var is_lunging: bool = false
 var lunge_timer: float = 0.0
 var lunge_velocity: Vector3 = Vector3.ZERO
+
+@onready var max_health = 100.0
+@onready var current_health = 100.0
+@onready var stompedYetThisFrame: bool
 
 func _ready() -> void:
 	# Lock mouse for camera control
@@ -141,6 +146,7 @@ func camViewSwitchToTopView():
 
 # ---------- Main process ----------
 func _process(delta) -> void:
+	stompedYetThisFrame = false
 	# === 1. Gravity ===
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -277,9 +283,14 @@ func _process(delta) -> void:
 			
 	
 func perform_stomp() -> void:
+	if stompedYetThisFrame:
+		return
+	stompedYetThisFrame = true
 	is_stomp_falling = false
+	playCrackSfx()
 	stompsfx.play()
 	apply_shake("stomp")
+	current_health -= 25
 		
 	var killed: Array = []
 	var space_state_forstomp = get_world_3d().direct_space_state
@@ -349,3 +360,9 @@ func start_lunge():
 
 func setCanStompToTrue():
 	can_stomp = true
+
+func playCrackSfx():
+	cracksfx.play()
+	await get_tree().create_timer(0.7)
+	cracksfx.stop()
+	

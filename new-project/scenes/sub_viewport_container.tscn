@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cswlc83di6gbp"]
+[gd_scene load_steps=24 format=3 uid="uid://cswlc83di6gbp"]
 
 [ext_resource type="PackedScene" uid="uid://cufpjto4q3vgs" path="res://scenes/player.tscn" id="1_w4pyt"]
 [ext_resource type="AudioStream" uid="uid://c4myk46h5nng0" path="res://musicandsfx/kitchen-blog-positive-travel-happy-187696.mp3" id="4_7ceh2"]
@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://biwmx5wp3npfh" path="res://musicandsfx/chicken-noise-196746.mp3" id="8_vv30q"]
 [ext_resource type="AudioStream" uid="uid://b1fggablddkt2" path="res://musicandsfx/simple-whoosh-382724.mp3" id="9_016sp"]
 [ext_resource type="AudioStream" uid="uid://ba0agmbtotc18" path="res://musicandsfx/door-slam-172171.mp3" id="10_sqrpa"]
+[ext_resource type="AudioStream" uid="uid://b2dtalc86w68q" path="res://ui/wood-crack-2-88687.mp3" id="11_fhp6j"]
 [ext_resource type="AudioStream" uid="uid://dmql8ykwyrdwo" path="res://ui/punch-04-383965.mp3" id="11_w4pyt"]
 [ext_resource type="AudioStream" uid="uid://jsg6wyrahvdl" path="res://musicandsfx/howling-wind-73982.mp3" id="11_yilbv"]
 [ext_resource type="PackedScene" uid="uid://dymx22377n8n" path="res://scenes/ui.tscn" id="12_flpa8"]
@@ -107,7 +108,7 @@ autoplay = true
 
 [node name="ShootSfx" type="AudioStreamPlayer" parent="SubViewport"]
 stream = ExtResource("5_w4pyt")
-volume_db = -14.504
+volume_db = -17.0
 
 [node name="ReloadSfx" type="AudioStreamPlayer" parent="SubViewport"]
 stream = ExtResource("6_fhp6j")
@@ -135,6 +136,10 @@ volume_db = -7.733
 
 [node name="FallingSfx" type="AudioStreamPlayer" parent="SubViewport"]
 stream = ExtResource("11_yilbv")
+volume_db = -11.0
+
+[node name="CrackSfx" type="AudioStreamPlayer" parent="SubViewport"]
+stream = ExtResource("11_fhp6j")
 volume_db = -11.0
 
 [node name="ImpactSFX" type="AudioStreamPlayer" parent="SubViewport"]

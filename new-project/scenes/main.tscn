@@ -1878,6 +1878,7 @@ transform = Transform3D(3, 0, 0, 0, 1, 0, 0, 0, 3, -0.0428848, -0.53, -0.0357294
 
 [node name="Fences" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0)
+collision_layer = 16
 
 [node name="Cube_004" type="MeshInstance3D" parent="Fences"]
 transform = Transform3D(86.7406, -64.5791, -2.00587e-06, -1.50813e-13, -5.02073e-06, 81.6183, -58.9725, -94.9871, -2.95036e-06, -16.5187, 0.55, 10.8974)

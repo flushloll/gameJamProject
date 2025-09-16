@@ -1,18 +1,27 @@
-[gd_scene load_steps=10 format=3 uid="uid://dymx22377n8n"]
+[gd_scene load_steps=12 format=3 uid="uid://dymx22377n8n"]
 
 [ext_resource type="Script" uid="uid://b2jga8epi11h0" path="res://scripts/ui.gd" id="1_gdt2y"]
-[ext_resource type="Texture2D" uid="uid://hx5nkjqrfv4n" path="res://ui/knifeImage.png" id="2_wm3ai"]
+[ext_resource type="Texture2D" uid="uid://bxls2v826qxr1" path="res://ui/revolverMatching.png" id="2_cgfq5"]
 [ext_resource type="Texture2D" uid="uid://cdmh6jcvkwkkh" path="res://ui/whitedot.tres" id="3_gdt2y"]
 [ext_resource type="FontFile" uid="uid://b5b3polo64e17" path="res://ui/ChiknScrach-Regular.ttf (2).otf" id="4_p7vwb"]
+[ext_resource type="FontFile" uid="uid://c0sx4gtuplc2s" path="res://ui/Night Fashion.ttf" id="5_7dvkv"]
 [ext_resource type="Script" uid="uid://xr00ksmy0s5p" path="res://scenes/center_cursor.gd" id="5_wm3ai"]
 [ext_resource type="Script" uid="uid://dpspvqqo5b1kx" path="res://scripts/player_healthbar.gd" id="6_8dubc"]
 [ext_resource type="Texture2D" uid="uid://dwvjcfvhii0se" path="res://ui/PlayerHealthBarTopLeftFull.png" id="6_ktti3"]
 [ext_resource type="Texture2D" uid="uid://2btp68iwmtrd" path="res://ui/PlayerHealthBarTopLeft.png" id="7_cgfq5"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_tefeu"]
+[sub_resource type="LabelSettings" id="LabelSettings_vdcm2"]
 font = ExtResource("4_p7vwb")
 font_size = 32
+font_color = Color(0.709804, 0.705882, 0.737255, 1)
 outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_tefeu"]
+font = ExtResource("5_7dvkv")
+font_size = 64
+font_color = Color(0.539096, 0.311987, 0.182129, 1)
+outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
 [node name="UI" type="CanvasLayer"]
@@ -28,17 +37,19 @@ offset_bottom = 40.0
 
 [node name="Control1" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 2
+anchor_left = 0.984
 anchor_top = 1.0
+anchor_right = 0.984
 anchor_bottom = 1.0
-offset_top = -40.0
-offset_right = 40.0
-grow_vertical = 0
+offset_left = -157.568
+offset_top = -97.0
+offset_right = -117.568
+offset_bottom = -57.0
+grow_horizontal = 0
 
 [node name="FirstWeaponLoadout" type="Sprite2D" parent="Control1"]
-position = Vector2(78, -31)
-scale = Vector2(1.6, 1.6)
-texture = ExtResource("2_wm3ai")
+scale = Vector2(0.17, 0.17)
+texture = ExtResource("2_cgfq5")
 offset = Vector2(39, -30)
 
 [node name="Cursor" type="Sprite2D" parent="."]
@@ -47,20 +58,35 @@ scale = Vector2(0.1, 0.1)
 texture = ExtResource("3_gdt2y")
 
 [node name="AmmoCounter" type="Label" parent="."]
-anchors_preset = 3
-anchor_left = 1.0
+anchors_preset = -1
+anchor_left = 0.781
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.781
 anchor_bottom = 1.0
-offset_left = -184.0
-offset_top = -75.0
-offset_right = -45.0
-offset_bottom = -42.3333
+offset_left = -102.712
+offset_top = -80.0
+offset_right = 36.288
+offset_bottom = -34.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 8
 size_flags_vertical = 8
 text = "30/30"
+label_settings = SubResource("LabelSettings_vdcm2")
+metadata/_edit_use_anchors_ = true
+
+[node name="WingCounter" type="Label" parent="."]
+anchors_preset = -1
+anchor_left = 0.13
+anchor_right = 0.13
+offset_left = 18.24
+offset_top = 12.0
+offset_right = 185.24
+offset_bottom = 73.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8
 label_settings = SubResource("LabelSettings_tefeu")
 metadata/_edit_use_anchors_ = true
 

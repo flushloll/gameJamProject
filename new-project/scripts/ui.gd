@@ -2,8 +2,8 @@ extends CanvasLayer
 
 @onready var blueCursor = load("res://ui/cursorBlue.png")
 @onready var redCursor = load("res://ui/cursorRed.png")
-@onready var firingCursor = load("res://ui/firingCursor.png")
-@onready var knifeImage = load("res://ui/knifeImage.png")
+@onready var gunImage = load("res://ui/revolverMatching.png")
+@onready var knifeImage = load("res://ui/katanaMatching.png")
 @onready var centerCursor = $CenterCursor
 @onready var ammocounter = $AmmoCounter
 @onready var cursor = $Cursor
@@ -31,19 +31,23 @@ func _process(delta: float) -> void:
 		weapon1.self_modulate.a = 1  # reset alpha only on weapon change
 		if current_weapon_type == "BaseWeapon":
 			weapon1.texture = knifeImage
+			weapon1.scale = Vector2(0.35, 0.35)
+			weapon1.position = Vector2(-70, 5)
 			ammocounter.hide()
 			cursor.texture = blueCursor
-			cursor.scale = Vector2(0.1, 0.1)
+			cursor.scale = Vector2(0.3, 0.3)
 		
 		elif current_weapon_type == "FirstGun":
-			weapon1.texture = firingCursor
+			weapon1.texture = gunImage
+			weapon1.scale = Vector2(0.17, 0.17)
+			weapon1.position = Vector2(0, 0)
 			ammocounter.show()
 			cursor.texture = redCursor
 			cursor.scale = Vector2(0.1, 0.1)
 		
 		if Global.WeaponTypeNameGlobal == "FirstGun" and Global.collider:
 			if Global.collider.is_in_group("Enemies"):
-				cursor.texture = firingCursor  # enemy detected
+				cursor.texture = gunImage  # enemy detected
 			else:
 				cursor.texture = redCursor  # not an enemy
 	# Fade the weapon over time
