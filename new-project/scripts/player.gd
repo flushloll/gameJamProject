@@ -22,7 +22,10 @@ var is_stomp_falling: bool = false
 @onready var stompsfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/StompSfx")
 @onready var fallingsfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/FallingSfx")
 @onready var cracksfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/CrackSfx")
+@onready var playerdeathsfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/DeathSoundSfx")
 @onready var can_stomp = true
+@onready var DamagedParticle = $DamagedParticle
+@onready var playerMesh = $MeshInstance3D
 
 @onready var head: Node3D = $Head
 @onready var FPS_shoot_cast = $Head/SpringArm3D/GunCamera/FPSCast
@@ -60,6 +63,7 @@ var lunge_velocity: Vector3 = Vector3.ZERO
 @onready var max_health = 100.0
 @onready var current_health = 100.0
 @onready var stompedYetThisFrame: bool
+@onready var is_dead
 
 func _ready() -> void:
 	# Lock mouse for camera control
@@ -146,15 +150,19 @@ func camViewSwitchToTopView():
 
 # ---------- Main process ----------
 func _process(delta) -> void:
+	
+	if current_health <= 0 and not is_dead:
+		die()
+		
 	stompedYetThisFrame = false
 	# === 1. Gravity ===
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 		if Input.is_action_just_pressed("stomp") and can_stomp:
-				is_stomp_falling = true
-				can_stomp = false
-				fallingsfx.play()
-				velocity.y = stomp_speed   # force you downward fast
+			is_stomp_falling = true
+			can_stomp = false
+			fallingsfx.play()
+			velocity.y -= stomp_speed   # force you downward fast
 	else:
 		if absf(velocity.y) < 0.01:
 			velocity.y = 0.0
@@ -329,6 +337,10 @@ func apply_shake(shakeStrengthBasedOnInput):
 		shake_strength = randomStrength
 	elif shakeStrengthBasedOnInput == "stomp":
 		shake_strength = randomStrength * 3.3
+	elif shakeStrengthBasedOnInput == "damaged":
+		shake_strength = randomStrength * 0.8
+	else:
+		shake_strength = randomStrength
 
 func random_offset() -> Vector3:
 	return Vector3(
@@ -365,4 +377,26 @@ func playCrackSfx():
 	cracksfx.play()
 	await get_tree().create_timer(0.7)
 	cracksfx.stop()
+
+func die():
+	move_speed = 0.0001
+	playerdeathsfx.play()
+
+func damagedParticlePlay():
+	flash_red()
+	apply_shake("hit")
+	DamagedParticle.emitting = false
+	DamagedParticle.emitting = true
+
+func flash_red():
+	var mat: ShaderMaterial = playerMesh.get_surface_override_material(0)
+
+	# Save original color
+	var original_color: Color = mat.get_shader_parameter("color")
+
+	# Flash red
+	mat.set_shader_parameter("color", Color(0.776, 0.76, 0.636, 1)) # "#c2be9f"
 	
+	await get_tree().create_timer(0.4).timeout
+	# Restore
+	mat.set_shader_parameter("color", original_color) # "#c2a08a" if that's default

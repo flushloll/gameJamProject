@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cdyi6bpiqv1cr"
+path="res://.godot/imported/golf-swing-practice-01-255625 (1).mp3-9000dc114a2302e458c258ca46c21583.mp3str"
+
+[deps]
+
+source_file="res://ui/golf-swing-practice-01-255625 (1).mp3"
+dest_files=["res://.godot/imported/golf-swing-practice-01-255625 (1).mp3-9000dc114a2302e458c258ca46c21583.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

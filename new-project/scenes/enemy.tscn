@@ -251,6 +251,34 @@ tracks/17/path = NodePath("chicken_0012/Skeleton3D:toe.L")
 tracks/17/interp = 0
 tracks/17/loop_wrap = true
 tracks/17/keys = PackedFloat32Array(0, 1, 0.587493, -3.5122e-14, 1.40069e-07, 0.809229)
+tracks/18/type = "method"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("..")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0.7),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"startPecking"
+}]
+}
+tracks/19/type = "method"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("..")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0.833333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"startPecking"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_q2nr3"]
 resource_name = "chickenWalk"
@@ -411,7 +439,7 @@ advance_condition = &"isWalking"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_g0wcc"]
 advance_mode = 2
-advance_condition = &"isPecking"
+advance_condition = &"walkingTopecking"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_s1ycm"]
 advance_mode = 2
@@ -419,11 +447,11 @@ advance_condition = &"walkingToIdle"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_shcg2"]
 advance_mode = 2
-advance_condition = &"isPecking"
+advance_condition = &"IdleTopecking"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ile5s"]
 advance_mode = 2
-advance_condition = &"peckingToMoving"
+advance_condition = &"peckingToWalking"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_1x4g4"]
 advance_mode = 2
@@ -433,6 +461,7 @@ advance_condition = &"peckingToIdle"
 advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_otmr2"]
+states/End/position = Vector2(900, 101)
 states/Idle/node = SubResource("AnimationNodeBlendSpace2D_w8i8w")
 states/Idle/position = Vector2(291, 84)
 states/Start/position = Vector2(120, 84)
@@ -453,7 +482,7 @@ radius = 14.0
 [node name="Enemy" type="CharacterBody3D" groups=["Enemies"]]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 collision_layer = 4
-collision_mask = 27
+collision_mask = 25
 script = ExtResource("1_md0e3")
 
 [node name="chicken4" type="Node3D" parent="."]
@@ -652,16 +681,17 @@ skin = SubResource("Skin_ay60e")
 libraries = {
 &"": SubResource("AnimationLibrary_fqj0l")
 }
-speed_scale = 2.0
+speed_scale = 1.7
 
 [node name="AnimationTree" type="AnimationTree" parent="chicken4"]
 tree_root = SubResource("AnimationNodeStateMachine_otmr2")
 anim_player = NodePath("../AnimationPlayer")
-parameters/conditions/isPecking = false
+parameters/conditions/IdleTopecking = false
 parameters/conditions/isWalking = false
 parameters/conditions/peckingToIdle = false
-parameters/conditions/peckingToMoving = false
+parameters/conditions/peckingToWalking = false
 parameters/conditions/walkingToIdle = false
+parameters/conditions/walkingTopecking = false
 parameters/Idle/blend_position = Vector2(0, 0)
 
 [node name="EnemyCollisionShape" type="CollisionShape3D" parent="."]
@@ -734,6 +764,8 @@ autostart = true
 wait_time = 6.0
 autostart = true
 
+[connection signal="animation_finished" from="chicken4/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="chicken4/AnimationTree" to="." method="_on_animation_tree_animation_finished"]
 [connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_velocity_computed"]
 [connection signal="timeout" from="VisionTimer" to="." method="_on_vision_timer_timeout"]
 [connection signal="timeout" from="WanderTimer" to="." method="_on_wander_timer_timeout"]

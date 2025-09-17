@@ -7,7 +7,7 @@
 render_priority = 0
 next_pass = ExtResource("1_ls6oj")
 shader = ExtResource("2_ci33j")
-shader_parameter/color = Color(0.76, 0.62776, 0.5396, 1)
+shader_parameter/color = Color(0.760784, 0.627451, 0.541176, 1)
 shader_parameter/specular = Color(0.3, 0.3, 0.3, 0.5)
 shader_parameter/fresnel = Color(0.2, 0.2, 0.2, 0.3)
 shader_parameter/uv_scale = Vector2(1, 1)

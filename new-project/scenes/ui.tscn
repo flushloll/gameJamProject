@@ -118,4 +118,5 @@ scale = Vector2(0.2, 0.2)
 value = 100.0
 texture_over = ExtResource("6_ktti3")
 texture_progress = ExtResource("7_cgfq5")
+texture_progress_offset = Vector2(20, 0)
 script = ExtResource("6_8dubc")

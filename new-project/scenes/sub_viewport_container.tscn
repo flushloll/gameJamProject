@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cswlc83di6gbp"]
+[gd_scene load_steps=25 format=3 uid="uid://cswlc83di6gbp"]
 
 [ext_resource type="PackedScene" uid="uid://cufpjto4q3vgs" path="res://scenes/player.tscn" id="1_w4pyt"]
 [ext_resource type="AudioStream" uid="uid://c4myk46h5nng0" path="res://musicandsfx/kitchen-blog-positive-travel-happy-187696.mp3" id="4_7ceh2"]
@@ -13,6 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://jsg6wyrahvdl" path="res://musicandsfx/howling-wind-73982.mp3" id="11_yilbv"]
 [ext_resource type="PackedScene" uid="uid://dymx22377n8n" path="res://scenes/ui.tscn" id="12_flpa8"]
 [ext_resource type="AudioStream" uid="uid://brh0prfokml8o" path="res://musicandsfx/hit-flesh-02-266309.mp3" id="12_w4pyt"]
+[ext_resource type="AudioStream" uid="uid://cdyi6bpiqv1cr" path="res://ui/golf-swing-practice-01-255625 (1).mp3" id="13_lyn8a"]
 [ext_resource type="Shader" uid="uid://j4qbjvu31oll" path="res://shaders/stylizedsky.gdshader" id="21_q8nmi"]
 
 [sub_resource type="Curve" id="Curve_tvr1o"]
@@ -142,11 +143,19 @@ volume_db = -11.0
 stream = ExtResource("11_fhp6j")
 volume_db = -11.0
 
-[node name="ImpactSFX" type="AudioStreamPlayer" parent="SubViewport"]
+[node name="ImpactSfx" type="AudioStreamPlayer" parent="SubViewport"]
 stream = ExtResource("11_w4pyt")
 volume_db = 7.365
 
-[node name="DeathSoundSFX" type="AudioStreamPlayer" parent="SubViewport"]
+[node name="ChickenMissSfx" type="AudioStreamPlayer" parent="SubViewport"]
+stream = ExtResource("13_lyn8a")
+volume_db = 7.365
+
+[node name="PeckingSfx" type="AudioStreamPlayer" parent="SubViewport"]
+stream = ExtResource("13_lyn8a")
+volume_db = 0.47
+
+[node name="DeathSoundSfx" type="AudioStreamPlayer" parent="SubViewport"]
 stream = ExtResource("12_w4pyt")
 volume_db = -10.824
 

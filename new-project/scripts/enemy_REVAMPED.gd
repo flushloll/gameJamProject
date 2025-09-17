@@ -8,12 +8,12 @@ extends CharacterBody3D
 @export var speed = 5.0
 @export var wander_radius = 6 # How far the NPC will wander from its starting point
 @onready var player = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/Player")
-@onready var chickendeadsfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/ChickenDeadSfx")
+@onready var chickendeadSfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/ChickenDeadSfx")
 @onready var spawn_sound = $SpawnSound
 @onready var feathers = $FeathersParticle
-@onready var ImpactSoundSFX = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/ImpactSFX")
+@onready var ImpactSoundSfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/ImpactSfx")
 @onready var animation_tree: AnimationTree = $chicken4/AnimationTree
-
+@onready var animation_state_machine_node = animation_tree.get("parameters/playback")
 @export var max_health: int = 100
 
 @export var rotation_speed: float = 8.0            # how fast the enemy turns (higher = snappier)
@@ -29,6 +29,11 @@ var canMove: bool = true
 signal enemy_died
 
 var stomped_this_frame = false
+var pecking: bool = false
+@onready var PeckingSfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/PeckingSfx")
+@onready var ChickenMissSfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/ChickenMissSfx")
+var horizontal_speed = Vector3(velocity.x, 0, velocity.z).length()
+@onready var playerdamageCooldownBool: bool = false
 
 # cached safe velocity received from NavigationAgent3D
 var agent_safe_velocity: Vector3 = Vector3.ZERO
@@ -88,6 +93,23 @@ func set_new_random_target():
 		newZ = cubeInput(randf_range(-4, wander_radius))
 	
 	navigation_agent.target_position = Vector3(global_position.x + newX, 0, global_position.z + newZ)
+
+func _process(delta):
+		# update animation tree (same logic you had before)
+	if animation_tree:
+		var current_state = animation_state_machine_node.get_current_node()
+		
+		if current_state != "chickenPeck" and pecking:
+		# just exited peck animation
+			pecking = false
+			
+		horizontal_speed = Vector3(velocity.x, 0, velocity.z).length() 
+		# getting the velocity and returning it's magnitude (or length) as speed because speed is the magnitude of velocity
+		
+		animation_tree.set("parameters/conditions/isWalking", horizontal_speed > 0.1 and not pecking)
+		animation_tree.set("parameters/conditions/walkingToIdle", horizontal_speed <= 0.1 and not pecking)
+		animation_tree.set("parameters/conditions/peckingToIdle", horizontal_speed <= 0.1 and pecking)
+		animation_tree.set("parameters/conditions/peckingToWalking", horizontal_speed > 0.1 and pecking)
 	
 # --- physics process: unified movement + rotation logic ---
 func _physics_process(delta: float) -> void:
@@ -103,13 +125,16 @@ func _physics_process(delta: float) -> void:
 	# Build the desired horizontal velocity (what we want to do, pre-avoidance)
 	var desired_velocity: Vector3 = Vector3.ZERO
 
-	if chasing_player and canMove:
+	if chasing_player and canMove and not pecking:
 		var to_player = player.global_position - global_position
 		_face_direction(to_player, delta)
 		# horizontal only
 		to_player.y = 0
 		if to_player.length() > 0.001:
 			desired_velocity = to_player.normalized() * speed
+		if global_position.distance_to(player.global_position) < 1.0:
+			startPecking()
+			animation_state_machine_node.travel("chickenPeck")
 	else:
 		var next_position = Vector3.ZERO
 		if not navigation_paused:
@@ -135,6 +160,7 @@ func _physics_process(delta: float) -> void:
 				$WanderTimer.start()
 		else:
 			desired_velocity = Vector3.ZERO
+			pecking = false
 
 	# Tell the NavigationAgent what we want it to try to do.
 	# The agent will compute a safe_velocity and emit velocity_computed.
@@ -146,29 +172,18 @@ func _physics_process(delta: float) -> void:
 	# and apply it here instead — either pattern is used in examples.) 
 
 
-	# --- animation sync (unchanged) ---
-	if animation_tree:
-		var horizontal_velocity = Vector3(velocity.x, 0, velocity.z)
-		var horizontal_speed = horizontal_velocity.length()
-
-		if horizontal_speed <= 0.1:
-			animation_tree["parameters/conditions/walkingToIdle"] = true
-			animation_tree["parameters/conditions/isWalking"] = false
-		else:
-			animation_tree["parameters/conditions/walkingToIdle"] = false
-			animation_tree["parameters/conditions/isWalking"] = true
-
-
 func stomp_take_damage():
 	if stomped_this_frame:
 		return false
 	stomped_this_frame = true
 	flash_red()
+	player.current_health -= 25
 	var stompDeduction = randi_range(56, 64)
 	current_health -= stompDeduction
 	if current_health <= 0:
 		die()
 		return true
+		player.current_health += 25
 	else:
 		$HitMarker.display_damage(stompDeduction)
 		return false
@@ -180,9 +195,9 @@ func take_damage():
 	flash_red()
 			
 	if current_health >= 0 and Global.WeaponTypeNameGlobal == "BaseWeapon":
-		ImpactSoundSFX.volume_db = randf_range(-13, -11.5)
-		ImpactSoundSFX.pitch_scale = randf_range(0.8, 1.2)
-		ImpactSoundSFX.play()
+		ImpactSoundSfx.volume_db = randf_range(-13, -11.5)
+		ImpactSoundSfx.pitch_scale = randf_range(0.8, 1.2)
+		ImpactSoundSfx.play()
 	else:
 		pass
 		
@@ -198,11 +213,12 @@ func die():
 		return
 	emit_signal("enemy_died", self)
 	is_dead = true
+	player.current_health += 5
 	$HitMarker.display_damage("KILL")
 	feathers.emitting = false   # reset
 	feathers.restart()          # force restart if it was already used
 	feathers.emitting = true    # now play once
-	chickendeadsfx.play()
+	chickendeadSfx.play()
 	$HealthBar.hide()
 	# animation_player.play("Death")
 	set_physics_process(false)
@@ -274,12 +290,28 @@ func _on_navigation_agent_velocity_computed(safe_velocity: Vector3) -> void:
 	# Now move and update animations here (move_and_slide must be called once per physics frame)
 	move_and_slide()
 
-	# update animation tree (same logic you had before)
-	if animation_tree:
-		var horizontal_speed = Vector3(velocity.x, 0, velocity.z).length()
-		if horizontal_speed <= 0.1:
-			animation_tree["parameters/conditions/walkingToIdle"] = true
-			animation_tree["parameters/conditions/isWalking"] = false
-		else:
-			animation_tree["parameters/conditions/walkingToIdle"] = false
-			animation_tree["parameters/conditions/isWalking"] = true
+func startPecking():
+	if not pecking:
+		pecking = true
+		if not playerdamageCooldownBool:
+			player.current_health -= 10.0 # Enemy/chicken does damage to player
+			player.damagedParticlePlay()
+			playerdamageCooldown()
+		PeckingSfx.play()
+		#ChickenMissSfx.play()
+		animation_state_machine_node.travel("chickenPeck")
+
+func playerdamageCooldown():
+	if playerdamageCooldownBool == false:
+		playerdamageCooldownBool = true
+		await get_tree().create_timer(3).timeout
+		playerdamageCooldownBool = false
+	else:
+		return
+		
+# NEITHER OF THESE ARE WORKING WHEN BEING CALLED IN THE ANIMATION PLAYER AS OF NOW
+#func peckingSfxPlay():
+	#PeckingSfx.play()
+# 
+#func phickenMissSfxPlay():
+	#ChickenMissSfx.play()

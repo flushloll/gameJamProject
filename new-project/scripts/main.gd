@@ -15,7 +15,7 @@ func spawn_enemy_batch():
 			
 			# Randomize position and scale
 			enemyInstance.global_transform.origin = Vector3(randf_range(-12, 12), 2, randf_range(-8, 8))
-			var random_scale = randf_range(0.8, 3) # For example, between 70% and 130% of original size
+			var random_scale = randf_range(1.6, 3) # For example, between 70% and 130% of original size
 			enemyInstance.get_child(0).get_child(0).get_child(0).get_child(0).scale = Vector3(random_scale, random_scale, random_scale)
 			enemyInstance.play_spawn_sound_and_effects()
 			
