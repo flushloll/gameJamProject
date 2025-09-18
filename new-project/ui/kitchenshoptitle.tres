@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://baem2ugbwlbre"]
+
+[ext_resource type="FontFile" uid="uid://b5b3polo64e17" path="res://ui/ChiknScrach-Regular.ttf (2).otf" id="1_68ws3"]
+
+[resource]
+font = ExtResource("1_68ws3")
+font_size = 24
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)

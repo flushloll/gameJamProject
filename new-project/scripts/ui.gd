@@ -11,6 +11,8 @@ extends CanvasLayer
 @onready var weapon1 = $Control1/FirstWeaponLoadout
 @onready var weapon2 = $Control2/SecondWeaponLoadout
 @onready var swordBox = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/Player/Head/SpringArm3D/GunCamera/Weapon/Area3D")
+@onready var shop_kitchen = $Shop_Kitchen
+@onready var shop_kitchen_margin_container = $Shop_Kitchen/PanelContainer/MarginContainer
 var fade_speed = 0.5
 var current_weapon_type = ""
 
@@ -32,7 +34,7 @@ func _process(delta: float) -> void:
 		if current_weapon_type == "BaseWeapon":
 			weapon1.texture = knifeImage
 			weapon1.scale = Vector2(0.35, 0.35)
-			weapon1.position = Vector2(-70, 5)
+			weapon1.position = Vector2(-90, 5)
 			ammocounter.hide()
 			cursor.texture = blueCursor
 			cursor.scale = Vector2(0.3, 0.3)
@@ -70,3 +72,11 @@ func _on_sword_body_exited(body):
 		if Global.WeaponTypeNameGlobal == "BaseWeapon":
 			cursor.texture = blueCursor
 			cursor.scale = Vector2(0.1, 0.1)
+
+func load_or_exit_shop_kitchen(enter_or_exit: String):
+	if enter_or_exit == "exit":
+		shop_kitchen.hide()
+		shop_kitchen_margin_container.enter_or_exit_ShopKitchen("exitShopKitchen")
+	elif enter_or_exit == "enter":
+		shop_kitchen.show()
+		shop_kitchen_margin_container.enter_or_exit_ShopKitchen("enterShopKitchen")

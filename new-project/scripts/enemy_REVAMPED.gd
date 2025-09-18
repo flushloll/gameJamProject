@@ -182,8 +182,8 @@ func stomp_take_damage():
 	current_health -= stompDeduction
 	if current_health <= 0:
 		die()
-		return true
 		player.current_health += 25
+		return true
 	else:
 		$HitMarker.display_damage(stompDeduction)
 		return false

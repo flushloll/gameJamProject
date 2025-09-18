@@ -5,6 +5,7 @@ extends Control
 @onready var music = $MainMenuMusic  # <- your AudioStreamPlayer node
 @onready var chickenSquawk = $ChickenSquawk
 @onready var selectionAudio = $SelectOptionSFX
+@onready var cannotSpamSelectionAudio: bool = false
 var current_index = 0
 var arrow_offset = Vector2(80, 45) # Adjust as needed
 @onready var locked = false
@@ -23,6 +24,7 @@ signal showGameInstructionsDone
 var showGameInstructionsArrow = false
 var arrowFollowingSelection = false
 var arrowFollowingSelectionTarget
+var timeSinceGameInstructionsOpened: float
 
 func _ready():
 	call_deferred("update_arrow_position")
@@ -48,6 +50,7 @@ func _input(event):
 			$ChangeSelectionSFX.pitch_scale = randf_range(0.97, 1.03)
 			$ChangeSelectionSFX.play()
 		elif event.is_action_pressed("ui_accept") and current_index == 0 and not showGameInstructionsArrow:
+			selectionAudio.play()
 			# Show instructions, arrow still moves freely
 			showGameInstructions()
 			update_arrow_position()
@@ -55,11 +58,15 @@ func _input(event):
 	# Final choice: when player presses accept on the instructions
 	elif showGameInstructionsArrow and event.is_action_pressed("ui_accept") and not locked:
 		locked = true  # now lock the arrow
-		selectionAudio.play()
-		await get_tree().create_timer(1).timeout
+		if not cannotSpamSelectionAudio:
+			selectionAudio.play()
+		cannotSpamSelectionAudio = true
+		if timeSinceGameInstructionsOpened > 1:
+			await get_tree().create_timer(1).timeout
 		gameInstructionsBackground.hide()
 		gameInstructionsContainer.hide()
-		await get_tree().create_timer(0.5).timeout
+		if timeSinceGameInstructionsOpened > 1:
+			await get_tree().create_timer(0.5).timeout
 		var tween = create_tween()
 		tween.tween_property(music, "volume_db", -40.0, 1.5)
 
@@ -71,6 +78,8 @@ func _input(event):
 		#emit_signal("showGameInstructionsDone")
 
 func _process(delta):
+	
+	timeSinceGameInstructionsOpened += delta
 	
 	if locked == true:
 		smoothing_speed = 8.0  # higher = faster, lower = slower
@@ -146,5 +155,6 @@ func _do_scene_change():
 
 func showGameInstructions():
 	showGameInstructionsArrow = true
+	timeSinceGameInstructionsOpened = 0
 	gameInstructionsContainer.show()
 	gameInstructionsBackground.show()

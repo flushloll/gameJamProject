@@ -23,6 +23,7 @@ var is_stomp_falling: bool = false
 @onready var fallingsfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/FallingSfx")
 @onready var cracksfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/CrackSfx")
 @onready var playerdeathsfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/DeathSoundSfx")
+@onready var UI = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/UI")
 @onready var can_stomp = true
 @onready var DamagedParticle = $DamagedParticle
 @onready var playerMesh = $MeshInstance3D
@@ -64,6 +65,10 @@ var lunge_velocity: Vector3 = Vector3.ZERO
 @onready var current_health = 100.0
 @onready var stompedYetThisFrame: bool
 @onready var is_dead
+
+@onready var in_menu = false
+@onready var in_shop_kitchen = false
+var interact_distance := 5.0
 
 func _ready() -> void:
 	# Lock mouse for camera control
@@ -153,6 +158,12 @@ func _process(delta) -> void:
 	
 	if current_health <= 0 and not is_dead:
 		die()
+					
+	if Input.is_action_just_pressed("escape") and in_menu:
+		if in_shop_kitchen:
+			UI.load_or_exit_shop_kitchen("exit")
+		else:
+			return
 		
 	stompedYetThisFrame = false
 	# === 1. Gravity ===
@@ -400,3 +411,24 @@ func flash_red():
 	await get_tree().create_timer(0.4).timeout
 	# Restore
 	mat.set_shader_parameter("color", original_color) # "#c2a08a" if that's default
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("interact") and not in_menu:
+		var from: Vector3 = gun_cam.global_transform.origin
+		var to: Vector3 = from + -gun_cam.global_transform.basis.z * interact_distance
+
+		var space_state = get_world_3d().direct_space_state
+		var query = PhysicsRayQueryParameters3D.create(from, to)
+		query.exclude = [self]
+		query.collision_mask = 1  # only detect interactables
+
+		var result = space_state.intersect_ray(query)
+
+		if result:
+			var collider = result.collider
+			if collider and collider.is_in_group("Interactable"):
+				if collider.name == "Shop_Kitchen":
+					print("hi")  # triggers once per key press
+					UI.load_or_exit_shop_kitchen("enter")
+					in_menu = true
+					in_shop_kitchen = true
