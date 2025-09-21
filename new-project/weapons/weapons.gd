@@ -9,3 +9,4 @@ class_name Weapons extends Resource
 @export var shadow : bool
 @export var weapon_damage : float
 @export var weapon_cooldown : float
+@export var weapon_size : float

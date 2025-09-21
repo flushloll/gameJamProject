@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dymx22377n8n"]
+[gd_scene load_steps=23 format=3 uid="uid://dymx22377n8n"]
 
 [ext_resource type="Script" uid="uid://b2jga8epi11h0" path="res://scripts/ui.gd" id="1_gdt2y"]
 [ext_resource type="Texture2D" uid="uid://bxls2v826qxr1" path="res://ui/revolverMatching.png" id="2_cgfq5"]
@@ -17,11 +17,13 @@
 [ext_resource type="LabelSettings" uid="uid://cfy2kasedn87" path="res://ui/switchPagesLabel.tres" id="13_cof4p"]
 [ext_resource type="AudioStream" uid="uid://cqi8bf7vj605b" path="res://musicandsfx/Minimalist3.mp3" id="16_cof4p"]
 [ext_resource type="AudioStream" uid="uid://c4qhywbkcjqdm" path="res://ui/Modern2.mp3" id="17_f7tlh"]
+[ext_resource type="Script" uid="uid://dxy2rpgrogvwx" path="res://scenes/waveTimer.gd" id="18_8k7j3"]
+[ext_resource type="Script" uid="uid://cm8v5b0aj2syi" path="res://scenes/shotgun_knockback_skill.gd" id="19_jkdwc"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vdcm2"]
 font = ExtResource("4_p7vwb")
-font_size = 32
-font_color = Color(0.709804, 0.705882, 0.737255, 1)
+font_size = 42
+font_color = Color(0.770032, 0.457367, 0.30513, 1)
 outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 
@@ -30,6 +32,12 @@ font = ExtResource("5_7dvkv")
 font_size = 64
 font_color = Color(0.539096, 0.311987, 0.182129, 1)
 outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_jkdwc"]
+font = ExtResource("5_7dvkv")
+font_size = 64
+outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 
 [node name="UI" type="CanvasLayer"]
@@ -67,14 +75,14 @@ texture = ExtResource("3_gdt2y")
 
 [node name="AmmoCounter" type="Label" parent="."]
 anchors_preset = -1
-anchor_left = 0.781
-anchor_top = 1.0
-anchor_right = 0.781
-anchor_bottom = 1.0
-offset_left = -102.712
-offset_top = -80.0
-offset_right = 36.288
-offset_bottom = -34.0
+anchor_left = 1.0
+anchor_top = 0.755
+anchor_right = 1.0
+anchor_bottom = 0.755
+offset_left = -225.0
+offset_top = -23.24
+offset_right = -86.0
+offset_bottom = 22.76
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 8
@@ -171,7 +179,16 @@ script = ExtResource("11_6rmj2")
 [node name="KitchenContainer" type="VBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer"]
+layout_mode = 2
+theme_override_constants/separation = 125
+
+[node name="ExitFromKitchen" type="Label" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer2"]
+layout_mode = 2
+text = "EXIT"
+label_settings = ExtResource("13_cof4p")
+
+[node name="Kitchen" type="Label" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "KITCHEN"
@@ -660,3 +677,44 @@ stream = ExtResource("16_cof4p")
 
 [node name="ChangeSelectionSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("17_f7tlh")
+
+[node name="SpawnTimer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -61.0
+offset_top = 63.0
+offset_right = 59.0
+offset_bottom = 103.0
+grow_horizontal = 2
+pivot_offset = Vector2(60, 0)
+
+[node name="waveTimer" type="Label" parent="SpawnTimer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -30.5
+offset_right = 33.0
+offset_bottom = 30.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "20"
+label_settings = SubResource("LabelSettings_jkdwc")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("18_8k7j3")
+
+[node name="ShotgunKnockbackSkill" type="ProgressBar" parent="."]
+anchors_preset = -1
+anchor_top = 0.329
+anchor_bottom = 0.329
+offset_left = 48.0
+offset_top = -17.192
+offset_right = 118.0
+offset_bottom = 48.808
+script = ExtResource("19_jkdwc")

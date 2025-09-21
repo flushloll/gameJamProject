@@ -1,9 +1,9 @@
-[gd_scene load_steps=25 format=3 uid="uid://cswlc83di6gbp"]
+[gd_scene load_steps=27 format=3 uid="uid://cswlc83di6gbp"]
 
 [ext_resource type="PackedScene" uid="uid://cufpjto4q3vgs" path="res://scenes/player.tscn" id="1_w4pyt"]
 [ext_resource type="AudioStream" uid="uid://c4myk46h5nng0" path="res://musicandsfx/kitchen-blog-positive-travel-happy-187696.mp3" id="4_7ceh2"]
-[ext_resource type="AudioStream" uid="uid://7go17pgvvwf0" path="res://musicandsfx/pistol-shot-233473.mp3" id="5_w4pyt"]
-[ext_resource type="AudioStream" uid="uid://dduw1q4dnxlpw" path="res://musicandsfx/clean-revolver-reload-6889.mp3" id="6_fhp6j"]
+[ext_resource type="AudioStream" uid="uid://c6ydar7m5fpgm" path="res://musicandsfx/shotgun-sound.mp3" id="4_016sp"]
+[ext_resource type="AudioStream" uid="uid://d2vraa6mcoipv" path="res://musicandsfx/realistic-shotgun-cocking-sound-38640.mp3" id="5_016sp"]
 [ext_resource type="AudioStream" uid="uid://bdkl1mos75q13" path="res://musicandsfx/error-sound-39539.mp3" id="7_lyn8a"]
 [ext_resource type="AudioStream" uid="uid://biwmx5wp3npfh" path="res://musicandsfx/chicken-noise-196746.mp3" id="8_vv30q"]
 [ext_resource type="AudioStream" uid="uid://b1fggablddkt2" path="res://musicandsfx/simple-whoosh-382724.mp3" id="9_016sp"]
@@ -14,6 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://dymx22377n8n" path="res://scenes/ui.tscn" id="12_flpa8"]
 [ext_resource type="AudioStream" uid="uid://brh0prfokml8o" path="res://musicandsfx/hit-flesh-02-266309.mp3" id="12_w4pyt"]
 [ext_resource type="AudioStream" uid="uid://cdyi6bpiqv1cr" path="res://ui/golf-swing-practice-01-255625 (1).mp3" id="13_lyn8a"]
+[ext_resource type="AudioStream" uid="uid://cqi8bf7vj605b" path="res://musicandsfx/Minimalist3.mp3" id="14_vv30q"]
+[ext_resource type="AudioStream" uid="uid://bsrqp3xuy7gur" path="res://ui/Retro7.mp3" id="15_016sp"]
 [ext_resource type="Shader" uid="uid://j4qbjvu31oll" path="res://shaders/stylizedsky.gdshader" id="21_q8nmi"]
 
 [sub_resource type="Curve" id="Curve_tvr1o"]
@@ -98,21 +100,16 @@ transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -
 light_cull_mask = 4294963199
 shadow_normal_bias = 10.0
 
-[node name="spawnTimer" type="Timer" parent="SubViewport"]
-wait_time = 5.0
-autostart = true
-
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="SubViewport"]
 stream = ExtResource("4_7ceh2")
-volume_db = -25.177
-autoplay = true
+volume_db = -33.647
 
 [node name="ShootSfx" type="AudioStreamPlayer" parent="SubViewport"]
-stream = ExtResource("5_w4pyt")
+stream = ExtResource("4_016sp")
 volume_db = -17.0
 
 [node name="ReloadSfx" type="AudioStreamPlayer" parent="SubViewport"]
-stream = ExtResource("6_fhp6j")
+stream = ExtResource("5_016sp")
 volume_db = -13.059
 
 [node name="ErrorReloadSfx" type="AudioStreamPlayer" parent="SubViewport"]
@@ -154,6 +151,14 @@ volume_db = 7.365
 [node name="PeckingSfx" type="AudioStreamPlayer" parent="SubViewport"]
 stream = ExtResource("13_lyn8a")
 volume_db = 0.47
+
+[node name="waveTimerTickSfx" type="AudioStreamPlayer" parent="SubViewport"]
+stream = ExtResource("14_vv30q")
+volume_db = -6.589
+
+[node name="waveStartedSfx" type="AudioStreamPlayer" parent="SubViewport"]
+stream = ExtResource("15_016sp")
+volume_db = -6.589
 
 [node name="DeathSoundSfx" type="AudioStreamPlayer" parent="SubViewport"]
 stream = ExtResource("12_w4pyt")

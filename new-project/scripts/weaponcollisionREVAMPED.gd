@@ -6,7 +6,7 @@ var swinging
 @onready var WeaponAreaShape3D: Area3D = $".."
 #@onready var whooshSoundReference = $"../../../../../../WhooshSound"
 @onready var weaponNode = %Weapon
-@onready var weaponMesh = $"../../WeaponMesh"
+@onready var weaponMesh = $"../../WeaponVisualRoot/WeaponMesh"
 
 var swingSoundPlaying
 
@@ -18,7 +18,7 @@ var weaponTypeName
 @export var mag_size: int = 6
 
 @export var shoot_delay : float = Global.WeaponCollisionCooldown
-@export var reload_time : float = 2.0
+@export var reload_time : float = 0.7
 var reload_timer_time : float
 @onready var gui = $"../../../../../../../UI"
 @onready var shoot_cast = $"../../../../../../ShootCast"
@@ -38,10 +38,20 @@ var ammo_text
 @onready var weaponDamageScaleSword: int
 @onready var weaponDamageScaleGun: int
 var swingSequence = 1
-@onready var slash_particle0 = $"../../WeaponMesh/SwordSlashParticle"
-@onready var slash_particle1 = $"../../WeaponMesh/SwordSlashParticle/GPUParticles3D2"
-@onready var slash_particle2 = $"../../WeaponMesh/SwordSlashParticle/GPUParticles3D3"
-@onready var slash_particle3 = $"../../WeaponMesh/SwordSlashParticle/GPUParticles3D4"
+@onready var slash_particle0 = $"../../WeaponVisualRoot/WeaponMesh/SwordSlashParticle"
+@onready var slash_particle1 = $"../../WeaponVisualRoot/WeaponMesh/SwordSlashParticle/GPUParticles3D2"
+@onready var slash_particle2 = $"../../WeaponVisualRoot/WeaponMesh/SwordSlashParticle/GPUParticles3D3"
+@onready var slash_particle3 = $"../../WeaponVisualRoot/WeaponMesh/SwordSlashParticle/GPUParticles3D4"
+@onready var tween := create_tween()
+var air_control: float = 12.0  # default
+var base_air_control: float = 52.0
+var reduced_air_control: float = 12.0
+@onready var shotgun = true
+@onready var ShotgunRange = $"../../ShotgunRange"
+		# 🔹 Apply knockback to player (opposite of shot direction)
+@export var default_knockback_strength = 128
+var knockback_strength = default_knockback_strength  # tweak this value
+@onready var knockbackCooldown = false
 
 func _ready():
 	WeaponAreaShape3D.connect("body_entered", Callable(gui, "_on_sword_body_entered"))
@@ -108,11 +118,16 @@ func start_attack_animation(clickType):
 			if swingSequence == 4:
 				swingSequence = 1
 	elif weaponTypeName == "FirstGun" and no_more_ammo() == false and can_shoot == true:
-		animation_player.stop()
-		weaponMesh.position = Vector3()
-		var weaponDamageScaleGun = 1
-		shoot(weaponDamageScaleGun)
-		print("HasShot")
+		if clickType == 1:
+			animation_player.stop()
+			weaponMesh.position = Vector3()
+			var weaponDamageScaleGun = 0.2
+			shoot(weaponDamageScaleGun)
+			print("HasShot")
+		elif clickType == 2:
+			# 🔹 Calculate shot direction
+			var direction = -$"../../..".global_transform.basis.z.normalized()
+			apply_knockback_cooldown(direction)
 
 func can_reload():
 	return reserve_ammo > 0 and current_ammo < mag_size
@@ -137,27 +152,40 @@ func shoot(weaponDamageScaleGun):
 	if not can_shoot or no_more_ammo():
 		return  # can't shoot right now
 	
-	
+	player.apply_shake(1/14.0)
 	can_shoot = false
-	#
-	#var origin = shoot_cast.global_position
-#
-## Calculate the target point (direction * length)
-	#var length = 1000  # max ray distance
-	#var direction = shoot_cast.global_transform.basis.z.normalized() * -1  # -Z is forward in Godot 4
-	#var target = origin + direction * length
-#
-	#if shoot_cast.is_colliding():
-		#target = shoot_cast.get_collision_point()
-#
-	#laserbeam.show_laser(origin, target)
-#
-	animation_player.play("shootrevolver")
+
+	var directionShoot = -$"../../..".global_transform.basis.z.normalized()
+	var recoil_strength: float = 12.0  # tweak this
+	player.velocity -= directionShoot * recoil_strength
+
+	animation_player.play("shootShotgun")
 	shootsfx.play()
 	current_ammo -= 1
-	
 	ammo_text.text = "%d/%d" % [current_ammo, reserve_ammo]
+
+	if tween:
+		tween.kill()
+	tween = create_tween()
+	tween.tween_property(player, "air_control", reduced_air_control, 0.15) \
+		 .set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.tween_interval(0.25)  # how long it stays low
+	tween.tween_property(player, "air_control", base_air_control, 0.5) \
 	
+		 .set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	
+	if weaponTypeName == "Revolver":
+		handleRevolverShots(weaponDamageScaleGun)
+	elif weaponTypeName == "FirstGun":
+		handleShotgunShots(weaponDamageScaleGun)
+	
+	reset_shoot()
+		
+func reset_shoot():
+	await get_tree().create_timer(Global.WeaponCollisionCooldown).timeout
+	can_shoot = true
+
+func handleRevolverShots(weaponDamageScaleGun):
 	if shoot_cast.is_colliding and Global.cameraFollowsCursor:
 		var collider = shoot_cast.get_collider()
 		Global.collider = shoot_cast.get_collider()
@@ -177,21 +205,39 @@ func shoot(weaponDamageScaleGun):
 		
 		while colliderFPS and not colliderFPS.is_in_group("Enemies") and colliderFPS.get_parent() != null:
 			colliderFPS = colliderFPS.get_parent()
-		
+	
 		if colliderFPS and colliderFPS.has_method("take_damage"):
 			Global.WeaponDamage = randomWeaponDamage(weaponDamageScaleGun)
 			colliderFPS.take_damage()
 			print("Hit enemy: ", colliderFPS.name)
 		else:
 			print("Hit something else FPS: ", FPS_shoot_cast.get_collision_point())
-	else:
-		print("Missed")
 	
-	reset_shoot()
+func handleShotgunShots(weaponDamageScaleGun):
+	for body in ShotgunRange.get_overlapping_bodies():
+		print (body.name)
 		
-func reset_shoot():
-	await get_tree().create_timer(Global.WeaponCollisionCooldown).timeout
-	can_shoot = true
+		while body and not body.is_in_group("Enemies") and body.get_parent() != null:
+			body = body.get_parent()
+			
+		if not body.is_in_group("Enemies"):
+			continue
+			
+		#var distance = player.global_position.distance_to(body.global_position)
+		#var max_range = 100.0
+		#var min_damage = 5.0
+		#var base_damage = weaponDamageScaleGun
+#
+		## Correct damage interpolation
+		#var factor = clamp(1.0 - (distance / max_range), 0.0, 1.0)
+		#var damage = min_damage + (base_damage - min_damage) * factor
+		## OR using lerp:
+		## var damage = lerp(min_damage, base_damage, factor)
+
+		Global.WeaponDamage = randomWeaponDamage(weaponDamageScaleGun)
+		body.take_damage()
+		#print("Hit", body.name, "Distance:", distance, "Damage:", damage)
+
 
 func reload_weapon():
 	if not is_reloading and can_reload():
@@ -202,6 +248,7 @@ func reload_weapon():
 		await get_tree().create_timer(reload_time).timeout
 		
 func finish_reload():
+	knockback_strength = default_knockback_strength
 	var ammo_needed = mag_size - current_ammo
 	var ammo_to_load = min(ammo_needed, reserve_ammo)
 	current_ammo += ammo_to_load
@@ -212,10 +259,12 @@ func randomWeaponDamage(weaponDamageScale):
 	var randomGeneratedWeaponDamage
 	if weaponTypeName == "FirstGun":
 		randomGeneratedWeaponDamage = 47 * randf_range(1.7, 2.8) * weaponDamageScale
-		return randomGeneratedWeaponDamage
 	elif weaponTypeName == "BaseWeapon":
 		randomGeneratedWeaponDamage = 41 * randf_range(1.7, 2.8) * weaponDamageScale
-		return randomGeneratedWeaponDamage
+	else:
+		randomGeneratedWeaponDamage = 10 * weaponDamageScale # fallback
+	return randomGeneratedWeaponDamage
+	
 	
 func canSwingAgain():
 	if Global.can_swing == true:
@@ -229,8 +278,8 @@ func resetSwingSequence():
 	swingSequence = 1
 
 func emitRevolverParticle():
-	$"../../WeaponMesh/RevolverParticle".emitting = true
-	$"../../WeaponMesh/RevolverParticle".restart()
+	$"../../WeaponVisualRoot/WeaponMesh/RevolverParticle".emitting = true
+	$"../../WeaponVisualRoot/WeaponMesh/RevolverParticle".restart()
 
 func emitSwordSlashParticle():
 	slash_particle0.emitting = false
@@ -247,3 +296,22 @@ func emitSwordSlashParticle():
 	slash_particle1.emitting = true
 	slash_particle2.emitting = true
 	slash_particle3.emitting = true
+	
+func apply_knockback_cooldown(direction: Vector3) -> void:
+		# Set knockback really low for this shot
+	var temp_knockback = knockback_strength * 0.06  # 25% of normal
+	var attemptToResetSkill = true
+	if knockbackCooldown:
+		return
+	else:
+		knockbackCooldown = true
+		player.velocity += -direction * temp_knockback
+		player.is_knocked_back = true
+		player.knockback_timer = 0.23
+		player.apply_shake(temp_knockback / 16.0)
+		# Wait 2 seconds before restoring knockback strength
+	if attemptToResetSkill == true:
+		await get_tree().create_timer(5.4).timeout
+		knockback_strength = default_knockback_strength
+		knockbackCooldown = false
+		attemptToResetSkill = false

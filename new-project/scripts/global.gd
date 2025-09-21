@@ -13,3 +13,5 @@ var cameraFollowsCursor: bool = false
 var can_switch: bool = true
 var current_enemies = []
 var can_swing = true
+var current_wave_timer
+var InMenu = false

@@ -1,15 +1,16 @@
 [gd_resource type="Resource" script_class="Weapons" load_steps=3 format=3 uid="uid://c7sy4eej1vynk"]
 
-[ext_resource type="ArrayMesh" uid="uid://ck4g14mwqe2vg" path="res://assets/revolverMesh/revolver.res" id="1_3lfr2"]
+[ext_resource type="ArrayMesh" uid="uid://dnndxebde1th7" path="res://assets/revolverMesh/shotGunMesh.tres" id="1_3lfr2"]
 [ext_resource type="Script" uid="uid://cdclv0yt67rps" path="res://weapons/weapons.gd" id="1_dj3ft"]
 
 [resource]
 script = ExtResource("1_dj3ft")
 name = &"FirstGun"
 position = Vector3(0.503, -0.125, -0.383)
-rotation = Vector3(125, 6.4, 7.5)
+rotation = Vector3(278.2, -238.1, 70)
 mesh = ExtResource("1_3lfr2")
 shadow = false
 weapon_damage = 13.0
-weapon_cooldown = 0.5
+weapon_cooldown = 0.7
+weapon_size = 0.05
 metadata/_custom_type_script = "uid://cdclv0yt67rps"

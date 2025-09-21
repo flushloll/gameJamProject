@@ -12,4 +12,5 @@ mesh = ExtResource("1_gghyt")
 shadow = false
 weapon_damage = 25.0
 weapon_cooldown = 1.0
+weapon_size = 1.0
 metadata/_custom_type_script = "uid://cdclv0yt67rps"

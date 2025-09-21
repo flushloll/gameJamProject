@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=4 uid="uid://cufpjto4q3vgs"]
+[gd_scene load_steps=85 format=4 uid="uid://cufpjto4q3vgs"]
 
 [ext_resource type="Script" uid="uid://chm5k84ccin4l" path="res://scripts/player.gd" id="1_dqkch"]
 [ext_resource type="Material" uid="uid://c7qv1a260m4mb" path="res://shaders/toon/cel-shading-playerhat.tres" id="2_3v2ag"]
@@ -7,11 +7,11 @@
 [ext_resource type="Script" uid="uid://cpkbf3ct856nl" path="res://scenes/spring_arm_3d.gd" id="3_d2wvv"]
 [ext_resource type="ArrayMesh" uid="uid://dkrmmg65wymi4" path="res://assets/egg.tres" id="3_f1ej7"]
 [ext_resource type="Script" uid="uid://cke5kylvsk2pm" path="res://scripts/weaponcollisionREVAMPED.gd" id="4_dqkch"]
-[ext_resource type="Resource" uid="uid://dv880iu5xh4nj" path="res://weapons/baseweapon.tres" id="4_y4r1p"]
 [ext_resource type="Script" uid="uid://ebtx1nedsk7f" path="res://scenes/gun_camera.gd" id="6_oprun"]
 [ext_resource type="Script" uid="uid://url51jeyeph6" path="res://scenes/camera3d.gd" id="7_smehm"]
 [ext_resource type="Script" uid="uid://bq8fq82fgwp38" path="res://scenes/laser_beam.gd" id="7_ur7pv"]
 [ext_resource type="ArrayMesh" uid="uid://b4tt45gfblj05" path="res://swordMesh.res" id="8_jej6c"]
+[ext_resource type="Resource" uid="uid://dv880iu5xh4nj" path="res://weapons/baseweapon.tres" id="8_l71n6"]
 [ext_resource type="Texture2D" uid="uid://2mxmh1iy0d1q" path="res://assets/revolverMesh/fireRevolver.png" id="9_f1ej7"]
 [ext_resource type="Script" uid="uid://fota2gqv3ab6" path="res://scenes/post_processing.gd" id="9_jej6c"]
 [ext_resource type="Material" uid="uid://d2gvx8bkyaykv" path="res://shaders/toon/cel-shading.tres" id="11_3v2ag"]
@@ -148,6 +148,9 @@ margin = 0.1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dqkch"]
 size = Vector3(1.13724, 1, 1.86435)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_l71n6"]
+points = PackedVector3Array(-0.000195742, 1, -0.000195742, 0.194988, -1, -0.980814, -0.000195742, -1, -1, -0.195184, -1, -0.980814, -0.382733, -1, -0.924041, -0.555599, -1, -0.831637, -0.707126, -1, -0.707126, -0.831637, -1, -0.555599, -0.924041, -1, -0.382733, -0.980814, -1, -0.195184, -1, -1, -0.000195742, -0.980814, -1, 0.194988, -0.924041, -1, 0.382537, -0.831637, -1, 0.555403, -0.707126, -1, 0.70693, -0.555599, -1, 0.831441, -0.382733, -1, 0.923845, -0.195184, -1, 0.980619, -0.000195742, -1, 1, 0.194988, -1, 0.980619, 0.382537, -1, 0.923845, 0.555403, -1, 0.831441, 0.70693, -1, 0.70693, 0.831441, -1, 0.555403, 0.923845, -1, 0.382537, 0.980619, -1, 0.194988, 1, -1, -0.000195742, 0.980619, -1, -0.195184, 0.923845, -1, -0.382733, 0.831441, -1, -0.555599, 0.70693, -1, -0.707126, 0.555403, -1, -0.831637, 0.382537, -1, -0.924041)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oprun"]
 blend_mode = 1
@@ -326,7 +329,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponMesh:rotation")
+tracks/0/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponVisualRoot/WeaponMesh:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -338,7 +341,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponMesh:position")
+tracks/1/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponVisualRoot/WeaponMesh:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -362,7 +365,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape:scale")
+tracks/3/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape:scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -374,7 +377,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape:position")
+tracks/4/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -389,7 +392,7 @@ resource_name = "bat_swing"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponMesh:rotation")
+tracks/0/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponVisualRoot/WeaponMesh:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -399,13 +402,54 @@ tracks/0/keys = {
 "values": [Vector3(2.34921, 0.322886, 0), Vector3(1.49749, -2.81871, 3.14159)]
 }
 
+[sub_resource type="Animation" id="Animation_ke2ow"]
+resource_name = "shootShotgun"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponVisualRoot/WeaponMesh:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333337, 0.0982116, 0.131545, 0.163089, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.554, -0.2, 0.006), Vector3(0.395, 0.1, -0.119), Vector3(0.42, 0.1, 0.2), Vector3(0.42, 0.1, 14.055), Vector3(0.42, 0.1, 0.2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponVisualRoot/WeaponMesh:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0630885, 0.129756, 0.733333, 1),
+"transitions": PackedFloat32Array(1, 1, 0.329877, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0.174533, 0), Vector3(-0.523599, 0.279253, -0.523599), Vector3(0.181514, 0.226893, 0), Vector3(0, 0.20944, 0), Vector3(0, 0.174533, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"emitRevolverParticle"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_smehm"]
 resource_name = "shootrevolver"
 length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponMesh:position")
+tracks/0/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponVisualRoot/WeaponMesh:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -417,7 +461,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponMesh:rotation")
+tracks/1/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponVisualRoot/WeaponMesh:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -429,7 +473,7 @@ tracks/1/keys = {
 tracks/2/type = "method"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape")
+tracks/2/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -447,7 +491,7 @@ length = 2.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponMesh:rotation")
+tracks/0/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponVisualRoot/WeaponMesh:rotation")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -459,7 +503,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponMesh:position")
+tracks/1/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponVisualRoot/WeaponMesh:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -485,7 +529,7 @@ tracks/2/keys = {
 tracks/3/type = "method"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape")
+tracks/3/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -499,7 +543,7 @@ tracks/3/keys = {
 tracks/4/type = "method"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape")
+tracks/4/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -513,7 +557,7 @@ tracks/4/keys = {
 tracks/5/type = "method"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape")
+tracks/5/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -530,7 +574,7 @@ tracks/5/keys = {
 tracks/6/type = "method"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape")
+tracks/6/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -544,7 +588,7 @@ tracks/6/keys = {
 tracks/7/type = "method"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape")
+tracks/7/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -562,7 +606,7 @@ length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponMesh:rotation")
+tracks/0/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponVisualRoot/WeaponMesh:rotation")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -574,7 +618,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponMesh:position")
+tracks/1/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponVisualRoot/WeaponMesh:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -600,7 +644,7 @@ tracks/2/keys = {
 tracks/3/type = "method"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape")
+tracks/3/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -614,7 +658,7 @@ tracks/3/keys = {
 tracks/4/type = "method"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape")
+tracks/4/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -628,7 +672,7 @@ tracks/4/keys = {
 tracks/5/type = "method"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape")
+tracks/5/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -645,7 +689,7 @@ tracks/5/keys = {
 tracks/6/type = "method"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape")
+tracks/6/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -659,7 +703,7 @@ tracks/6/keys = {
 tracks/7/type = "method"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape")
+tracks/7/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -676,7 +720,7 @@ resource_name = "swinganimLeftClick3"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponMesh:rotation")
+tracks/0/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponVisualRoot/WeaponMesh:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -688,7 +732,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponMesh:position")
+tracks/1/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponVisualRoot/WeaponMesh:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -714,7 +758,7 @@ tracks/2/keys = {
 tracks/3/type = "method"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape")
+tracks/3/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -728,7 +772,7 @@ tracks/3/keys = {
 tracks/4/type = "method"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape")
+tracks/4/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -742,7 +786,7 @@ tracks/4/keys = {
 tracks/5/type = "method"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape")
+tracks/5/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -759,7 +803,7 @@ tracks/5/keys = {
 tracks/6/type = "method"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape")
+tracks/6/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -773,7 +817,7 @@ tracks/6/keys = {
 tracks/7/type = "method"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape")
+tracks/7/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -791,7 +835,7 @@ length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponMesh:rotation")
+tracks/0/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponVisualRoot/WeaponMesh:rotation")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -803,7 +847,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponMesh:position")
+tracks/1/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/WeaponVisualRoot/WeaponMesh:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -829,7 +873,7 @@ tracks/2/keys = {
 tracks/3/type = "method"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape")
+tracks/3/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -843,7 +887,7 @@ tracks/3/keys = {
 tracks/4/type = "method"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape")
+tracks/4/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -857,7 +901,7 @@ tracks/4/keys = {
 tracks/5/type = "method"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape")
+tracks/5/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -874,7 +918,7 @@ tracks/5/keys = {
 tracks/6/type = "method"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape")
+tracks/6/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -931,7 +975,7 @@ tracks/9/keys = {
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape:scale")
+tracks/10/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape:scale")
 tracks/10/interp = 0
 tracks/10/loop_wrap = true
 tracks/10/keys = {
@@ -943,7 +987,7 @@ tracks/10/keys = {
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/Area3D/WeaponCollisionShape:position")
+tracks/11/path = NodePath("Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape:position")
 tracks/11/interp = 0
 tracks/11/loop_wrap = true
 tracks/11/keys = {
@@ -957,6 +1001,7 @@ tracks/11/keys = {
 _data = {
 &"RESET": SubResource("Animation_qlg0r"),
 &"bat_swing": SubResource("Animation_dqkch"),
+&"shootShotgun": SubResource("Animation_ke2ow"),
 &"shootrevolver": SubResource("Animation_smehm"),
 &"swinganimLeftClick1": SubResource("Animation_f1ej7"),
 &"swinganimLeftClick2": SubResource("Animation_oprun"),
@@ -1071,27 +1116,40 @@ script = ExtResource("6_oprun")
 
 [node name="Weapon" type="Node3D" parent="Head/SpringArm3D/GunCamera"]
 unique_name_in_owner = true
-transform = Transform3D(1, -2.27243e-07, -1.93715e-07, -1.78814e-07, 1, 6.55651e-07, -7.45058e-08, 7.45058e-07, 0.999999, 0.137016, -1.02457, -3.30514)
+transform = Transform3D(1, 1.78814e-07, 7.45057e-08, -1.78814e-07, 1, -7.45058e-07, -7.45058e-08, 7.45058e-07, 1, 0.137016, -1.02457, -3.30514)
 script = ExtResource("2_qlg0r")
-WEAPON_TYPE = ExtResource("4_y4r1p")
+WEAPON_TYPE = ExtResource("8_l71n6")
 
-[node name="Area3D" type="Area3D" parent="Head/SpringArm3D/GunCamera/Weapon"]
+[node name="MeleeRange" type="Area3D" parent="Head/SpringArm3D/GunCamera/Weapon"]
 transform = Transform3D(1, 4.4409e-16, -1.49012e-08, 0, 1, 2.98023e-08, 1.49012e-08, -2.98023e-08, 1, 0.443, 0.324, -0.945)
 collision_layer = 2
 collision_mask = 15
 
-[node name="WeaponCollisionShape" type="CollisionShape3D" parent="Head/SpringArm3D/GunCamera/Weapon/Area3D"]
+[node name="WeaponCollisionShape" type="CollisionShape3D" parent="Head/SpringArm3D/GunCamera/Weapon/MeleeRange"]
 transform = Transform3D(3.4, -2.89308e-07, -2.35987e-07, 3.50177e-07, 2.809, 5.71273e-07, 4.17239e-07, -8.34476e-07, 1.92301, -0.0403106, 0, -0.276958)
 shape = SubResource("BoxShape3D_dqkch")
 script = ExtResource("4_dqkch")
 
-[node name="WeaponMesh" type="MeshInstance3D" parent="Head/SpringArm3D/GunCamera/Weapon"]
+[node name="ShotgunRange" type="Area3D" parent="Head/SpringArm3D/GunCamera/Weapon"]
+transform = Transform3D(1, -1.33227e-15, 0, -1.33226e-15, 1, 0, 0, 0, 1, -0.137016, 1.02457, 3.30514)
+collision_layer = 2
+collision_mask = 15
+
+[node name="ShotgunRange" type="CollisionShape3D" parent="Head/SpringArm3D/GunCamera/Weapon/ShotgunRange"]
+transform = Transform3D(4, 0, 4.44101e-14, -5.32904e-15, -1.74846e-07, -4, 0, 4, -1.74846e-07, 0, 0, -3)
+shape = SubResource("ConvexPolygonShape3D_l71n6")
+
+[node name="WeaponVisualRoot" type="Node3D" parent="Head/SpringArm3D/GunCamera/Weapon"]
+transform = Transform3D(1, -1.33227e-15, 0, -1.33226e-15, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="WeaponMesh" type="MeshInstance3D" parent="Head/SpringArm3D/GunCamera/Weapon/WeaponVisualRoot"]
 transform = Transform3D(6.03869, -0.64092, -1.48522, 0.797932, 6.73931, 1.1984, 1.15656, -1.30317, 6.92795, 0.154274, -0.0799999, 0.00574401)
 layers = 2
 mesh = ExtResource("8_jej6c")
+skeleton = NodePath("../..")
 script = ExtResource("11_a8ls1")
 
-[node name="RevolverParticle" type="GPUParticles3D" parent="Head/SpringArm3D/GunCamera/Weapon/WeaponMesh"]
+[node name="RevolverParticle" type="GPUParticles3D" parent="Head/SpringArm3D/GunCamera/Weapon/WeaponVisualRoot/WeaponMesh"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00490847, -0.0122937, 0.00232032)
 material_override = SubResource("StandardMaterial3D_oprun")
 emitting = false
@@ -1102,7 +1160,7 @@ randomness = 1.0
 process_material = SubResource("ParticleProcessMaterial_fulsm")
 draw_pass_1 = SubResource("QuadMesh_4r5pv")
 
-[node name="SwordSlashParticle" type="GPUParticles3D" parent="Head/SpringArm3D/GunCamera/Weapon/WeaponMesh"]
+[node name="SwordSlashParticle" type="GPUParticles3D" parent="Head/SpringArm3D/GunCamera/Weapon/WeaponVisualRoot/WeaponMesh"]
 transform = Transform3D(0.0213559, -2.38448e-07, 0.14419, 0.15977, -5.71072e-07, -0.0167846, 7.23447e-07, 0.13916, 1.98738e-08, 0.366815, -0.233581, 0.0138556)
 visible = false
 material_override = SubResource("ShaderMaterial_wqfne")
@@ -1113,7 +1171,7 @@ one_shot = true
 process_material = SubResource("ParticleProcessMaterial_wnwbv")
 draw_pass_1 = ExtResource("19_ke2ow")
 
-[node name="GPUParticles3D2" type="GPUParticles3D" parent="Head/SpringArm3D/GunCamera/Weapon/WeaponMesh/SwordSlashParticle"]
+[node name="GPUParticles3D2" type="GPUParticles3D" parent="Head/SpringArm3D/GunCamera/Weapon/WeaponVisualRoot/WeaponMesh/SwordSlashParticle"]
 visible = false
 sorting_offset = -2.0
 material_override = SubResource("ShaderMaterial_gl8cc")
@@ -1125,7 +1183,7 @@ fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_487ah")
 draw_pass_1 = ExtResource("19_ke2ow")
 
-[node name="GPUParticles3D3" type="GPUParticles3D" parent="Head/SpringArm3D/GunCamera/Weapon/WeaponMesh/SwordSlashParticle"]
+[node name="GPUParticles3D3" type="GPUParticles3D" parent="Head/SpringArm3D/GunCamera/Weapon/WeaponVisualRoot/WeaponMesh/SwordSlashParticle"]
 transform = Transform3D(1, 0, 0, 0, 1, 1.19262e-18, 0, -2.84217e-14, 1, 0, 0, 0)
 visible = false
 material_override = SubResource("ShaderMaterial_md1ol")
@@ -1137,7 +1195,7 @@ fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_bj30b")
 draw_pass_1 = ExtResource("19_ke2ow")
 
-[node name="GPUParticles3D4" type="GPUParticles3D" parent="Head/SpringArm3D/GunCamera/Weapon/WeaponMesh/SwordSlashParticle"]
+[node name="GPUParticles3D4" type="GPUParticles3D" parent="Head/SpringArm3D/GunCamera/Weapon/WeaponVisualRoot/WeaponMesh/SwordSlashParticle"]
 transform = Transform3D(1, 0, 0, 0, 1, 2.1684e-19, 0, -2.84217e-14, 1, 0.32292, 1.13509e-12, -0.653735)
 visible = false
 material_override = SubResource("StandardMaterial3D_jc3p3")

@@ -2,7 +2,7 @@ extends CanvasLayer
 
 @onready var blueCursor = load("res://ui/cursorBlue.png")
 @onready var redCursor = load("res://ui/cursorRed.png")
-@onready var gunImage = load("res://ui/revolverMatching.png")
+@onready var gunImage = load("res://ui/sawedOff.png")
 @onready var knifeImage = load("res://ui/katanaMatching.png")
 @onready var centerCursor = $CenterCursor
 @onready var ammocounter = $AmmoCounter
@@ -10,8 +10,9 @@ extends CanvasLayer
 @onready var subViewport = $".."
 @onready var weapon1 = $Control1/FirstWeaponLoadout
 @onready var weapon2 = $Control2/SecondWeaponLoadout
-@onready var swordBox = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/Player/Head/SpringArm3D/GunCamera/Weapon/Area3D")
+@onready var swordBox = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/Player/Head/SpringArm3D/GunCamera/Weapon/MeleeRange")
 @onready var shop_kitchen = $Shop_Kitchen
+@onready var player = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/Player/")
 @onready var shop_kitchen_margin_container = $Shop_Kitchen/PanelContainer/MarginContainer
 var fade_speed = 0.5
 var current_weapon_type = ""
@@ -37,12 +38,12 @@ func _process(delta: float) -> void:
 			weapon1.position = Vector2(-90, 5)
 			ammocounter.hide()
 			cursor.texture = blueCursor
-			cursor.scale = Vector2(0.3, 0.3)
+			cursor.scale = Vector2(0.1, 0.1)
 		
 		elif current_weapon_type == "FirstGun":
 			weapon1.texture = gunImage
-			weapon1.scale = Vector2(0.17, 0.17)
-			weapon1.position = Vector2(0, 0)
+			weapon1.scale = Vector2(0.35, 0.35)
+			weapon1.position = Vector2(-40, 0)
 			ammocounter.show()
 			cursor.texture = redCursor
 			cursor.scale = Vector2(0.1, 0.1)
@@ -76,6 +77,7 @@ func _on_sword_body_exited(body):
 func load_or_exit_shop_kitchen(enter_or_exit: String):
 	if enter_or_exit == "exit":
 		shop_kitchen.hide()
+		player.in_menu = false
 		shop_kitchen_margin_container.enter_or_exit_ShopKitchen("exitShopKitchen")
 	elif enter_or_exit == "enter":
 		shop_kitchen.show()

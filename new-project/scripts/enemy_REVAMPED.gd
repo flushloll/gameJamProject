@@ -297,6 +297,7 @@ func startPecking():
 			player.current_health -= 10.0 # Enemy/chicken does damage to player
 			player.damagedParticlePlay()
 			playerdamageCooldown()
+		player.apply_shake("pecked")
 		PeckingSfx.play()
 		#ChickenMissSfx.play()
 		animation_state_machine_node.travel("chickenPeck")

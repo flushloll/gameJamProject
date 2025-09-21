@@ -8,8 +8,9 @@ extends Node3D
 		if Engine.is_editor_hint():
 			load_weapon()
 
-@onready var weapon_mesh : MeshInstance3D = $WeaponMesh
-@onready var weapon_collision_shape : CollisionShape3D = $Area3D/WeaponCollisionShape
+@onready var weapon_mesh : MeshInstance3D = $WeaponVisualRoot/WeaponMesh
+@onready var WeaponVisualRoot : Node3D = $WeaponVisualRoot
+@onready var weapon_collision_shape : CollisionShape3D = $MeleeRange/WeaponCollisionShape
 @onready var playeranimationplayer = %PlayerAnimationPlayer
 @onready var weapon = %Weapon
 var baseweapon = load("res://weapons/baseweapon.tres")
@@ -60,7 +61,9 @@ func load_weapon() -> void:
 	Global.WeaponCollisionCooldown = weapon_cooldown
 	var weapon_damage = WEAPON_TYPE.weapon_damage
 	Global.WeaponDamage = weapon_damage
+	WeaponVisualRoot.scale = Vector3.ONE * WEAPON_TYPE.weapon_size
 	
+	print("Weapon size:", WEAPON_TYPE.weapon_size)
 	print("Loaded weapon:", WEAPON_TYPE.name)
 	print("Position:", WEAPON_TYPE.position)
 	print("Rotation:", WEAPON_TYPE.rotation)

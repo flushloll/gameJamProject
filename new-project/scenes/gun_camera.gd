@@ -15,10 +15,10 @@ func toggle_zoom():
 	if not zoomed_in:
 		# Zoom in
 		tween.tween_property(self, "fov", zoomed_fov, zoom_in_speed)
-		$Weapon/WeaponMesh.start_jitter()
+		$Weapon/WeaponVisualRoot/WeaponMesh.start_jitter()
 		zoomed_in = true
 	else:
 		# Reset to original zoom
 		tween.tween_property(self, "fov", original_fov, zoom_out_speed)
-		$Weapon/WeaponMesh.stop_jitter()
+		$Weapon/WeaponVisualRoot/WeaponMesh.stop_jitter()
 		zoomed_in = false

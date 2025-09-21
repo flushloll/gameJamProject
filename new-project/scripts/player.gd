@@ -15,7 +15,6 @@ extends CharacterBody3D
 @onready var gun_cam = $Head/SpringArm3D/GunCamera
 @onready var original_local_cam_top_position = camTop.transform.origin
 @onready var original_local_cam_gun_position = gun_cam.transform.origin
-
 var is_stomp_falling: bool = false
 @export var stomp_speed: float = -30.0
 @export var stomp_radius: float = 5.0
@@ -69,6 +68,9 @@ var lunge_velocity: Vector3 = Vector3.ZERO
 @onready var in_menu = false
 @onready var in_shop_kitchen = false
 var interact_distance := 5.0
+@onready var stomp_speed_modifier = 1.0
+var is_knocked_back: bool = false
+var knockback_timer: float = 0.0
 
 func _ready() -> void:
 	# Lock mouse for camera control
@@ -156,11 +158,15 @@ func camViewSwitchToTopView():
 # ---------- Main process ----------
 func _process(delta) -> void:
 	
+	stomp_speed_modifier += delta
+	
 	if current_health <= 0 and not is_dead:
 		die()
 					
 	if Input.is_action_just_pressed("escape") and in_menu:
 		if in_shop_kitchen:
+			in_menu = false
+			in_shop_kitchen = false
 			UI.load_or_exit_shop_kitchen("exit")
 		else:
 			return
@@ -172,8 +178,9 @@ func _process(delta) -> void:
 		if Input.is_action_just_pressed("stomp") and can_stomp:
 			is_stomp_falling = true
 			can_stomp = false
-			fallingsfx.play()
-			velocity.y -= stomp_speed   # force you downward fast
+			playFallingSfx()
+			stomp_speed_modifier = 1.0
+			velocity.y -= pow(stomp_speed, stomp_speed_modifier)  # force you downward fast
 	else:
 		if absf(velocity.y) < 0.01:
 			velocity.y = 0.0
@@ -244,16 +251,29 @@ func _process(delta) -> void:
 	var hvel: Vector3 = velocity
 	hvel.y = 0.0
 
+	if is_lunging or is_knocked_back:  # skip friction/acceleration during knockback/lunge
+		ground_accel = 19.0
+		ground_friction = 7.0
+	else:
+		ground_accel = 12.0
+		ground_friction = 10.0
+
 	if is_on_floor():
-		if desired_dir.length() > 0.0:
-			# Accelerate toward desired velocity
+		if desired_dir.length() > 0:
 			hvel = hvel.lerp(target_hvel, clamp(ground_accel * delta, 0.0, 1.0))
 		else:
-			# Slow down smoothly when idle
 			hvel = hvel.lerp(Vector3.ZERO, clamp(ground_friction * delta, 0.0, 1.0))
 	else:
-		# Limited air steering
 		hvel = hvel.lerp(target_hvel, clamp(air_control * delta, 0.0, 1.0))
+
+		velocity.x = hvel.x
+		velocity.z = hvel.z
+
+	# Handle knockback timer
+	if is_knocked_back:
+		knockback_timer -= delta
+		if knockback_timer <= 0:
+			is_knocked_back = false
 
 	velocity.x = hvel.x
 	velocity.z = hvel.z
@@ -299,7 +319,11 @@ func _process(delta) -> void:
 			var new_transformFPS = gun_cam.transform
 			new_transformFPS.origin = original_local_cam_gun_position + offset
 			gun_cam.transform = new_transformFPS
-			
+
+func playFallingSfx():
+	await get_tree().create_timer(1)
+	if not is_on_floor():
+		fallingsfx.play()
 	
 func perform_stomp() -> void:
 	if stompedYetThisFrame:
@@ -343,15 +367,18 @@ func perform_stomp() -> void:
 		can_stomp = true
 
 func apply_shake(shakeStrengthBasedOnInput):
-	shakeStrengthBasedOnInput = str(shakeStrengthBasedOnInput)
-	if shakeStrengthBasedOnInput == "1":
+	var shakeStrengthBasedOnInputCheck = str(shakeStrengthBasedOnInput)
+	if shakeStrengthBasedOnInputCheck == "1":
 		shake_strength = randomStrength
-	elif shakeStrengthBasedOnInput == "stomp":
+	elif shakeStrengthBasedOnInputCheck == "stomp":
 		shake_strength = randomStrength * 3.3
-	elif shakeStrengthBasedOnInput == "damaged":
+	elif shakeStrengthBasedOnInputCheck == "damaged":
 		shake_strength = randomStrength * 0.8
+	elif shakeStrengthBasedOnInputCheck == "pecked":
+		shake_strength = randomStrength * 0.3
 	else:
-		shake_strength = randomStrength
+		if typeof(shakeStrengthBasedOnInput) == TYPE_FLOAT or typeof(shakeStrengthBasedOnInput) == TYPE_INT:
+			shake_strength = randomStrength * float(shakeStrengthBasedOnInput)
 
 func random_offset() -> Vector3:
 	return Vector3(
@@ -413,7 +440,7 @@ func flash_red():
 	mat.set_shader_parameter("color", original_color) # "#c2a08a" if that's default
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("interact") and not in_menu:
+	if event.is_action_pressed("interact"):
 		var from: Vector3 = gun_cam.global_transform.origin
 		var to: Vector3 = from + -gun_cam.global_transform.basis.z * interact_distance
 
@@ -427,8 +454,19 @@ func _input(event: InputEvent) -> void:
 		if result:
 			var collider = result.collider
 			if collider and collider.is_in_group("Interactable"):
-				if collider.name == "Shop_Kitchen":
+				if collider.name == "Shop_Kitchen" and not in_shop_kitchen:
 					print("hi")  # triggers once per key press
 					UI.load_or_exit_shop_kitchen("enter")
 					in_menu = true
 					in_shop_kitchen = true
+				else:
+					in_menu = false
+					in_shop_kitchen = false
+					UI.load_or_exit_shop_kitchen("exit")
+		else:
+			if in_shop_kitchen:
+				in_menu = false
+				in_shop_kitchen = false
+				UI.load_or_exit_shop_kitchen("exit")
+			else:
+				return
