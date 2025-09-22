@@ -20,7 +20,7 @@ var ENEMIES_PER_BATCH = 4
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("skipCountdown") and not Global.InMenu:
 		localrelegatedWaveTime = 1
-		_on_countdown_tick()
+		_on_countdown_tick(true)
 		
 func spawn_enemy_batch():
 	if Global.current_enemies.size() == 0: # Only spawn if no enemies alive
@@ -51,6 +51,8 @@ func _on_enemies_dead(enemy):
 		current_wave += 1
 		ENEMIES_PER_BATCH = randi_range(3 + floori(current_wave), 7 + floori(current_wave))
 		localrelegatedWaveTime = relegatedWaveTime
+		waveTimer.fadeIn()
+		await get_tree().create_timer(3.5).timeout
 		startNewWaveTimerCountdown()
 
 func startNewWaveTimerCountdown():
@@ -61,8 +63,13 @@ func startNewWaveTimerCountdown():
 	startMusicWhileWaiting()
 	countdown_timer.start()  # starts ticking every second
 	
-func _on_countdown_tick():
-	localrelegatedWaveTime -= 1
+func _on_countdown_tick(skipped: bool = false):
+	
+	if skipped:
+		localrelegatedWaveTime = 0
+	else:
+		localrelegatedWaveTime -= 1
+	
 	waveTimerTickSfx.play()
 	waveTimer.changeWaveTimerLabel(localrelegatedWaveTime)
 	
@@ -75,7 +82,6 @@ func _on_countdown_tick():
 	
 func _ready():
 	Input.set_custom_mouse_cursor(cursor)
-	startNewWaveTimerCountdown()
 	add_child(countdown_timer)
 	countdown_timer.wait_time = 1
 	countdown_timer.one_shot = false
@@ -85,7 +91,7 @@ func _ready():
 func stopMusicAfterDoneWaiting():
 	musicFadedOut = false
 	var tweenFadeOutMusic = create_tween()
-	tweenFadeOutMusic.tween_property(music, "volume_db", -80.0, 6.0) # fade to quiet volume in 2 seconds
+	tweenFadeOutMusic.tween_property(music, "volume_db", -80.0, 3.0) # fade to quiet volume in 2 seconds
 	await tweenFadeOutMusic.finished.connect(stop_music)
 	localrelegatedWaveTime = relegatedWaveTime
 
@@ -93,7 +99,7 @@ func startMusicWhileWaiting():
 	await get_tree().create_timer(1).timeout
 	music.play()
 	var tweenFadeInMusic = create_tween()
-	tweenFadeInMusic.tween_property(music, "volume_db", -33.647, 6.5) # fade to normal volume in 3.5 seconds
+	tweenFadeInMusic.tween_property(music, "volume_db", -33.647, 3.5) # fade to normal volume in 3.5 seconds
 	
 	
 func stop_music():

@@ -13,7 +13,7 @@ extends CanvasLayer
 @onready var swordBox = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/Player/Head/SpringArm3D/GunCamera/Weapon/MeleeRange")
 @onready var shop_kitchen = $Shop_Kitchen
 @onready var player = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/Player/")
-@onready var shop_kitchen_margin_container = $Shop_Kitchen/PanelContainer/MarginContainer
+@onready var shop_kitchen_margin_container = $Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer
 var fade_speed = 0.5
 var current_weapon_type = ""
 
@@ -81,4 +81,5 @@ func load_or_exit_shop_kitchen(enter_or_exit: String):
 		shop_kitchen_margin_container.enter_or_exit_ShopKitchen("exitShopKitchen")
 	elif enter_or_exit == "enter":
 		shop_kitchen.show()
+		player.in_menu = true
 		shop_kitchen_margin_container.enter_or_exit_ShopKitchen("enterShopKitchen")

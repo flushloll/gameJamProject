@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://n6ums3o462hi"]
+
+[ext_resource type="Script" uid="uid://dcg1qumh0dqep" path="res://ingredients/ingredientsResourceClass.gd" id="1_6bad2"]
+[ext_resource type="Texture2D" uid="uid://vi621ji6e2mw" path="res://ui/cabbage.png" id="2_6bad2"]
+
+[resource]
+script = ExtResource("1_6bad2")
+ingredient_name = "cabbage"
+texture = ExtResource("2_6bad2")
+value = 1
+description = ""

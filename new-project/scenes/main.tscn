@@ -2300,7 +2300,7 @@ pixel_size = 0.015
 billboard = 1
 text = "STORE/KITCHEN
 
-(not set up yet)"
+(F to interact)"
 font = ExtResource("28_vchkt")
 
 [node name="Nature" type="Node3D" parent="."]

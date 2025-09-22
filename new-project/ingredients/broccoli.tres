@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://ds812l3pso4tw"]
+
+[ext_resource type="Script" uid="uid://dcg1qumh0dqep" path="res://ingredients/ingredientsResourceClass.gd" id="1_heg3t"]
+[ext_resource type="Texture2D" uid="uid://25421puld5wx" path="res://ui/broccoli.png" id="2_wq21r"]
+
+[resource]
+script = ExtResource("1_heg3t")
+ingredient_name = "broccoli"
+texture = ExtResource("2_wq21r")
+value = 1
+description = ""

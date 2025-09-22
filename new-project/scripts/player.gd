@@ -23,6 +23,7 @@ var is_stomp_falling: bool = false
 @onready var cracksfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/CrackSfx")
 @onready var playerdeathsfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/DeathSoundSfx")
 @onready var UI = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/UI")
+@onready var stompskill = $"../UI/StompSkill"
 @onready var can_stomp = true
 @onready var DamagedParticle = $DamagedParticle
 @onready var playerMesh = $MeshInstance3D
@@ -155,6 +156,47 @@ func camViewSwitchToTopView():
 	$Camera3D.global_rotation_degrees = Vector3(-90.0, 0.0, 0.0)
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
+func _input(event: InputEvent) -> void:
+	if not is_on_floor():
+		if Input.is_action_just_pressed("stomp") and can_stomp:
+			stompedYetThisFrame = false
+			is_stomp_falling = true
+			can_stomp = false
+			playFallingSfx()
+			stomp_speed_modifier = 1.0
+			velocity.y -= pow(stomp_speed, stomp_speed_modifier)  # force you downward fast
+			
+	if event.is_action_pressed("interact"):
+		var from: Vector3 = gun_cam.global_transform.origin
+		var to: Vector3 = from + -gun_cam.global_transform.basis.z * interact_distance
+
+		var space_state = get_world_3d().direct_space_state
+		var query = PhysicsRayQueryParameters3D.create(from, to)
+		query.exclude = [self]
+		query.collision_mask = 1  # only detect interactables
+
+		var result = space_state.intersect_ray(query)
+
+		if result:
+			var collider = result.collider
+			if collider and collider.is_in_group("Interactable"):
+				if collider.name == "Shop_Kitchen" and not in_shop_kitchen:
+					print("hi")  # triggers once per key press
+					UI.load_or_exit_shop_kitchen("enter")
+					in_menu = true
+					in_shop_kitchen = true
+				else:
+					in_menu = false
+					in_shop_kitchen = false
+					UI.load_or_exit_shop_kitchen("exit")
+		else:
+			if in_shop_kitchen:
+				in_menu = false
+				in_shop_kitchen = false
+				UI.load_or_exit_shop_kitchen("exit")
+			else:
+				return
+			
 # ---------- Main process ----------
 func _process(delta) -> void:
 	
@@ -171,16 +213,10 @@ func _process(delta) -> void:
 		else:
 			return
 		
-	stompedYetThisFrame = false
 	# === 1. Gravity ===
 	if not is_on_floor():
 		velocity.y -= gravity * delta
-		if Input.is_action_just_pressed("stomp") and can_stomp:
-			is_stomp_falling = true
-			can_stomp = false
-			playFallingSfx()
-			stomp_speed_modifier = 1.0
-			velocity.y -= pow(stomp_speed, stomp_speed_modifier)  # force you downward fast
+		
 	else:
 		if absf(velocity.y) < 0.01:
 			velocity.y = 0.0
@@ -333,7 +369,7 @@ func perform_stomp() -> void:
 	playCrackSfx()
 	stompsfx.play()
 	apply_shake("stomp")
-	current_health -= 25
+	current_health -= 10
 		
 	var killed: Array = []
 	var space_state_forstomp = get_world_3d().direct_space_state
@@ -361,8 +397,11 @@ func perform_stomp() -> void:
 			
 	if killed.has(true):
 		can_stomp = true
+		current_health += 10
+		pass
 	if not killed.has(true):
 		can_stomp = false
+		stompskill.resetSkillProgressBar()
 		await get_tree().create_timer(6).timeout
 		can_stomp = true
 
@@ -439,34 +478,10 @@ func flash_red():
 	# Restore
 	mat.set_shader_parameter("color", original_color) # "#c2a08a" if that's default
 
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("interact"):
-		var from: Vector3 = gun_cam.global_transform.origin
-		var to: Vector3 = from + -gun_cam.global_transform.basis.z * interact_distance
 
-		var space_state = get_world_3d().direct_space_state
-		var query = PhysicsRayQueryParameters3D.create(from, to)
-		query.exclude = [self]
-		query.collision_mask = 1  # only detect interactables
-
-		var result = space_state.intersect_ray(query)
-
-		if result:
-			var collider = result.collider
-			if collider and collider.is_in_group("Interactable"):
-				if collider.name == "Shop_Kitchen" and not in_shop_kitchen:
-					print("hi")  # triggers once per key press
-					UI.load_or_exit_shop_kitchen("enter")
-					in_menu = true
-					in_shop_kitchen = true
-				else:
-					in_menu = false
-					in_shop_kitchen = false
-					UI.load_or_exit_shop_kitchen("exit")
-		else:
-			if in_shop_kitchen:
-				in_menu = false
-				in_shop_kitchen = false
-				UI.load_or_exit_shop_kitchen("exit")
-			else:
-				return
+func addHealthBuff():
+	if current_health == max_health:
+		current_health += Global.player_health
+		max_health += Global.player_health
+	else:
+		max_health += Global.player_health

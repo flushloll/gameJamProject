@@ -266,10 +266,12 @@ text = "Killing enemies will drop ingredients you can use to cook tasty (and som
 
 WASD + SPACEBAR to move
 LEFT CLICK to swing.
-RIGHT CLICK to lunge.
+RIGHT CLICK with the melee to lunge.
+RIGHT CLICK with the shotgun to launch yourself.
 1 and 2 to switch between weapons
 C in the air to stomp (recharges on kill)
-F to interact (can be used at the kitchen)"
+F to interact (can be used at the kitchen)
+T to immediately start next wave."
 label_settings = ExtResource("8_25e00")
 autowrap_mode = 3
 

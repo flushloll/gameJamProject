@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://d0sefqp1vmr04"]
+
+[ext_resource type="Script" uid="uid://dcg1qumh0dqep" path="res://ingredients/ingredientsResourceClass.gd" id="1_jttxd"]
+[ext_resource type="Texture2D" uid="uid://c4oftoi05co48" path="res://ui/carrot.png" id="2_jttxd"]
+
+[resource]
+script = ExtResource("1_jttxd")
+ingredient_name = "carrot"
+texture = ExtResource("2_jttxd")
+value = 1
+description = ""

@@ -15,3 +15,6 @@ var current_enemies = []
 var can_swing = true
 var current_wave_timer
 var InMenu = false
+var player_attack: float = 1.0
+var player_melee_attack_speed: float = 1.0
+var player_health: float

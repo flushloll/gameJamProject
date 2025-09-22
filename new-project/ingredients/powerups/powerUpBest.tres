@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PowerUp" load_steps=2 format=3 uid="uid://dfr6715fldj5"]
+
+[ext_resource type="Script" uid="uid://borb7p2r77bki" path="res://ingredients/powerups/PowerUpResourceClass.gd" id="1_ajwf8"]
+
+[resource]
+script = ExtResource("1_ajwf8")
+power_up_name = ""
+damage_buff = 0
+attack_speed = 0
+health_buff = 0
+description = ""

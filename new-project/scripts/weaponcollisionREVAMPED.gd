@@ -21,6 +21,7 @@ var weaponTypeName
 @export var reload_time : float = 0.7
 var reload_timer_time : float
 @onready var gui = $"../../../../../../../UI"
+@onready var skill1 = $"../../../../../../../UI/Skill1"
 @onready var shoot_cast = $"../../../../../../ShootCast"
 @onready var FPS_shoot_cast = $"../../../FPSCast"
 
@@ -45,13 +46,16 @@ var swingSequence = 1
 @onready var tween := create_tween()
 var air_control: float = 12.0  # default
 var base_air_control: float = 52.0
-var reduced_air_control: float = 12.0
+var reduced_air_control: float = 4.0
 @onready var shotgun = true
 @onready var ShotgunRange = $"../../ShotgunRange"
 		# 🔹 Apply knockback to player (opposite of shot direction)
-@export var default_knockback_strength = 128
+@export var default_knockback_strength = 12.0
 var knockback_strength = default_knockback_strength  # tweak this value
 @onready var knockbackCooldown = false
+@onready var shootWithPower = false
+@onready var knockBackCooldownTimer = 9.3
+var skillType = "shotgunKnockback"
 
 func _ready():
 	WeaponAreaShape3D.connect("body_entered", Callable(gui, "_on_sword_body_entered"))
@@ -68,6 +72,9 @@ func _ready():
 	slash_particle1.emitting = false
 	slash_particle2.emitting = false
 	slash_particle3.emitting = false
+	
+	skillType == "shotgunKnockback"
+	skill1.switchSkill(skillType)
 	
 	print(can_reload())
 		
@@ -110,9 +117,11 @@ func start_attack_animation(clickType):
 		if clickType == 2 and Global.can_swing:
 			swingsfxRightClick.pitch_scale = randf_range(1.1, 1.3)
 			animation_player.play("swinganimRightClick")
+			animation_player.speed_scale = Global.player_melee_attack_speed
 		elif clickType == 1 and Global.can_swing:
 			swingsfx.pitch_scale = randf_range(0.9, 1.1)
 			animation_player.play("swinganimLeftClick" + str(swingSequence))
+			animation_player.speed_scale = Global.player_melee_attack_speed
 			print("swinganimLeftClick" + str(swingSequence))
 			swingSequence += 1
 			if swingSequence == 4:
@@ -122,6 +131,7 @@ func start_attack_animation(clickType):
 			animation_player.stop()
 			weaponMesh.position = Vector3()
 			var weaponDamageScaleGun = 0.2
+			animation_player.speed_scale = 1
 			shoot(weaponDamageScaleGun)
 			print("HasShot")
 		elif clickType == 2:
@@ -156,9 +166,9 @@ func shoot(weaponDamageScaleGun):
 	can_shoot = false
 
 	var directionShoot = -$"../../..".global_transform.basis.z.normalized()
-	var recoil_strength: float = 12.0  # tweak this
+	var recoil_strength: float = 4.0  # tweak this
 	player.velocity -= directionShoot * recoil_strength
-
+	
 	animation_player.play("shootShotgun")
 	shootsfx.play()
 	current_ammo -= 1
@@ -178,7 +188,8 @@ func shoot(weaponDamageScaleGun):
 		handleRevolverShots(weaponDamageScaleGun)
 	elif weaponTypeName == "FirstGun":
 		handleShotgunShots(weaponDamageScaleGun)
-	
+		
+	shootWithPower = false
 	reset_shoot()
 		
 func reset_shoot():
@@ -258,12 +269,12 @@ func finish_reload():
 func randomWeaponDamage(weaponDamageScale):
 	var randomGeneratedWeaponDamage
 	if weaponTypeName == "FirstGun":
-		randomGeneratedWeaponDamage = 47 * randf_range(1.7, 2.8) * weaponDamageScale
+		randomGeneratedWeaponDamage = 16 * randf_range(1.7, 2.8) * weaponDamageScale
 	elif weaponTypeName == "BaseWeapon":
-		randomGeneratedWeaponDamage = 41 * randf_range(1.7, 2.8) * weaponDamageScale
+		randomGeneratedWeaponDamage = 21 * randf_range(1.7, 2.8) * weaponDamageScale
 	else:
 		randomGeneratedWeaponDamage = 10 * weaponDamageScale # fallback
-	return randomGeneratedWeaponDamage
+	return randomGeneratedWeaponDamage * Global.player_attack
 	
 	
 func canSwingAgain():
@@ -299,19 +310,31 @@ func emitSwordSlashParticle():
 	
 func apply_knockback_cooldown(direction: Vector3) -> void:
 		# Set knockback really low for this shot
-	var temp_knockback = knockback_strength * 0.06  # 25% of normal
-	var attemptToResetSkill = true
-	if knockbackCooldown:
-		return
-	else:
+	#var temp_knockback = knockback_strength * 0.06  # 25% of normal
+	#var attemptToResetSkill = true
+	#if knockbackCooldown:
+		#return
+	#else:
+		#knockbackCooldown = true
+		#player.velocity += -direction * temp_knockback
+		#player.is_knocked_back = true
+		#player.knockback_timer = 0.23
+		#player.apply_shake(temp_knockback / 16.0)
+		## Wait 2 seconds before restoring knockback strength
+	#if attemptToResetSkill == true:
+		#await get_tree().create_timer(5.4).timeout
+		#knockback_strength = default_knockback_strength
+		#knockbackCooldown = false
+		#attemptToResetSkill = false
+	if skillType == "shotgunKnockback":
+		if knockbackCooldown:
+			return
 		knockbackCooldown = true
-		player.velocity += -direction * temp_knockback
+		skill1.resetSkillProgressBar()
 		player.is_knocked_back = true
-		player.knockback_timer = 0.23
-		player.apply_shake(temp_knockback / 16.0)
-		# Wait 2 seconds before restoring knockback strength
-	if attemptToResetSkill == true:
-		await get_tree().create_timer(5.4).timeout
-		knockback_strength = default_knockback_strength
+		player.velocity += -direction * default_knockback_strength
+		shootWithPower = true
+		var weaponDamageScaleGun = 0.5
+		shoot(weaponDamageScaleGun * 1.6)
+		await get_tree().create_timer(knockBackCooldownTimer).timeout
 		knockbackCooldown = false
-		attemptToResetSkill = false

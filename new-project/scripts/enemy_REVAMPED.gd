@@ -34,6 +34,7 @@ var pecking: bool = false
 @onready var ChickenMissSfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/ChickenMissSfx")
 var horizontal_speed = Vector3(velocity.x, 0, velocity.z).length()
 @onready var playerdamageCooldownBool: bool = false
+@onready var inventory = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/UI/Inventory")
 
 # cached safe velocity received from NavigationAgent3D
 var agent_safe_velocity: Vector3 = Vector3.ZERO
@@ -175,14 +176,11 @@ func _physics_process(delta: float) -> void:
 func stomp_take_damage():
 	if stomped_this_frame:
 		return false
-	stomped_this_frame = true
 	flash_red()
-	player.current_health -= 25
-	var stompDeduction = randi_range(56, 64)
+	var stompDeduction = randi_range(13, 25)
 	current_health -= stompDeduction
 	if current_health <= 0:
 		die()
-		player.current_health += 25
 		return true
 	else:
 		$HitMarker.display_damage(stompDeduction)
@@ -220,6 +218,21 @@ func die():
 	feathers.emitting = true    # now play once
 	chickendeadSfx.play()
 	$HealthBar.hide()
+	var IngredientRandomChance = randi_range(0,10)
+	if IngredientRandomChance >= 5:
+		var selectRandomIngredientRoll = randi_range(1, 5)
+		var randomIngredient
+		if selectRandomIngredientRoll == 1:
+			randomIngredient = load("res://ingredients/broccoli.tres")
+		elif selectRandomIngredientRoll == 2:
+			randomIngredient = load("res://ingredients/cabbage.tres")
+		elif selectRandomIngredientRoll == 3:
+			randomIngredient = load("res://ingredients/carrot.tres")
+		elif selectRandomIngredientRoll == 4:
+			randomIngredient = load("res://ingredients/potato.tres")
+		elif selectRandomIngredientRoll == 5:
+			randomIngredient = load("res://ingredients/tomato.tres")
+		inventory.addIngredientToInventory(randomIngredient)
 	# animation_player.play("Death")
 	set_physics_process(false)
 	# animation_player.animation_finished.connect(_on_death_animation_finished)

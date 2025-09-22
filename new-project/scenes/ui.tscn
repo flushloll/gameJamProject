@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dymx22377n8n"]
+[gd_scene load_steps=43 format=3 uid="uid://dymx22377n8n"]
 
 [ext_resource type="Script" uid="uid://b2jga8epi11h0" path="res://scripts/ui.gd" id="1_gdt2y"]
 [ext_resource type="Texture2D" uid="uid://bxls2v826qxr1" path="res://ui/revolverMatching.png" id="2_cgfq5"]
@@ -15,10 +15,22 @@
 [ext_resource type="LabelSettings" uid="uid://baem2ugbwlbre" path="res://ui/kitchenshoptitle.tres" id="12_h1mc3"]
 [ext_resource type="LabelSettings" uid="uid://b7dxld1jrefvl" path="res://ui/menuInstructions.tres" id="12_qsv74"]
 [ext_resource type="LabelSettings" uid="uid://cfy2kasedn87" path="res://ui/switchPagesLabel.tres" id="13_cof4p"]
+[ext_resource type="Texture2D" uid="uid://bys5dxxftebay" path="res://ui/Whisk.png" id="16_41akx"]
 [ext_resource type="AudioStream" uid="uid://cqi8bf7vj605b" path="res://musicandsfx/Minimalist3.mp3" id="16_cof4p"]
+[ext_resource type="StyleBox" uid="uid://igven1plcguv" path="res://ui/buttonOutlineKitchen.tres" id="16_sesyt"]
 [ext_resource type="AudioStream" uid="uid://c4qhywbkcjqdm" path="res://ui/Modern2.mp3" id="17_f7tlh"]
+[ext_resource type="Script" uid="uid://bngooxi13xee3" path="res://scenes/ingredientInSpotKitchen.gd" id="17_gglip"]
 [ext_resource type="Script" uid="uid://dxy2rpgrogvwx" path="res://scenes/waveTimer.gd" id="18_8k7j3"]
+[ext_resource type="FontFile" uid="uid://blci11tjppu1i" path="res://ui/Myfont-Regular.otf" id="18_kupmu"]
 [ext_resource type="Script" uid="uid://cm8v5b0aj2syi" path="res://scenes/shotgun_knockback_skill.gd" id="19_jkdwc"]
+[ext_resource type="Script" uid="uid://iogtsjut4po3" path="res://scenes/powerUpSlot.gd" id="19_rleeb"]
+[ext_resource type="Texture2D" uid="uid://nnpi70kn1p5s" path="res://ui/kleki.png" id="19_ycmcx"]
+[ext_resource type="Texture2D" uid="uid://buhl2skkho8br" path="res://ui/sawedoff-skill-underside.png" id="20_catpy"]
+[ext_resource type="Texture2D" uid="uid://cnqq1hngtcldj" path="res://ui/skillSawedOffBackgroundFixed2.png" id="20_kupmu"]
+[ext_resource type="Script" uid="uid://cbiyc4dxsrd8t" path="res://scenes/kitchenInventory.gd" id="21_i5tog"]
+[ext_resource type="Texture2D" uid="uid://kxp7e741rrgc" path="res://ui/stompBackground.png" id="25_wquew"]
+[ext_resource type="Script" uid="uid://q76dcrxh3t4w" path="res://scenes/inventory.gd" id="27_0tsab"]
+[ext_resource type="Script" uid="uid://j2jc0qog8tn5" path="res://scenes/stomp_skill.gd" id="28_wu1et"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vdcm2"]
 font = ExtResource("4_p7vwb")
@@ -35,10 +47,88 @@ outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_jkdwc"]
-font = ExtResource("5_7dvkv")
-font_size = 64
+font = ExtResource("18_kupmu")
+font_size = 48
 outline_size = 8
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_catpy"]
+font = ExtResource("4_p7vwb")
+font_size = 14
+outline_size = 4
+outline_color = Color(0.650885, 0.311114, 1.92523e-07, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_sesyt"]
+font = ExtResource("4_p7vwb")
+font_size = 14
+outline_size = 4
+outline_color = Color(0, 0.578541, 0.194658, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gglip"]
+bg_color = Color(0.617455, 0.617455, 0.617455, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.580392, 0.196078, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="LabelSettings" id="LabelSettings_0tsab"]
+font = ExtResource("4_p7vwb")
+font_size = 14
+outline_size = 4
+outline_color = Color(3.46541e-06, 0.63526, 0.783027, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i5tog"]
+bg_color = Color(0.617455, 0.617455, 0.617455, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.635294, 0.784314, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0tsab"]
+bg_color = Color(0.617455, 0.617455, 0.617455, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rleeb"]
+bg_color = Color(0.736392, 0.769435, 0.320351, 0.666667)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wu1et"]
+bg_color = Color(0.410776, 0.454565, 0.211648, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_gdt2y")
@@ -137,547 +227,6 @@ texture_progress = ExtResource("7_cgfq5")
 texture_progress_offset = Vector2(648.38, 0)
 script = ExtResource("6_8dubc")
 
-[node name="Shop_Kitchen" type="Control" parent="."]
-visible = false
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="PanelContainer" type="PanelContainer" parent="Shop_Kitchen"]
-custom_minimum_size = Vector2(100, 80)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -250.0
-offset_top = -200.0
-offset_right = 250.0
-offset_bottom = 200.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = ExtResource("10_6rmj2")
-
-[node name="MarginContainer" type="MarginContainer" parent="Shop_Kitchen/PanelContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
-script = ExtResource("11_6rmj2")
-
-[node name="KitchenContainer" type="VBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer"]
-layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer"]
-layout_mode = 2
-theme_override_constants/separation = 125
-
-[node name="ExitFromKitchen" type="Label" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer2"]
-layout_mode = 2
-text = "EXIT"
-label_settings = ExtResource("13_cof4p")
-
-[node name="Kitchen" type="Label" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer2"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-text = "KITCHEN"
-label_settings = ExtResource("12_h1mc3")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 1.89
-
-[node name="ItemList1" type="VBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 3.0
-
-[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="TextureButton" type="TextureButton" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer"]
-custom_minimum_size = Vector2(40, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.0
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 3.0
-
-[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer2/VBoxContainer"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer2/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="TextureButton" type="TextureButton" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer2"]
-custom_minimum_size = Vector2(40, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.0
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer3"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 3.0
-
-[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer3/VBoxContainer"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer3/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="TextureButton" type="TextureButton" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer3"]
-custom_minimum_size = Vector2(40, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.0
-
-[node name="ItemList2" type="VBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList2"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList2/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 3.0
-
-[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList2/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList2/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="TextureButton" type="TextureButton" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList2/HBoxContainer"]
-custom_minimum_size = Vector2(40, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.0
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList2"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList2/HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 3.0
-
-[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList2/HBoxContainer2/VBoxContainer"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList2/HBoxContainer2/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="TextureButton" type="TextureButton" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList2/HBoxContainer2"]
-custom_minimum_size = Vector2(40, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.0
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList2"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList2/HBoxContainer3"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 3.0
-
-[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList2/HBoxContainer3/VBoxContainer"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList2/HBoxContainer3/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="TextureButton" type="TextureButton" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList2/HBoxContainer3"]
-custom_minimum_size = Vector2(40, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.0
-
-[node name="SwitchPages" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/SwitchPages"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/SwitchPages/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Control2" type="Control" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/SwitchPages/HBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.21
-
-[node name="Control" type="Control" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/SwitchPages/HBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.9
-
-[node name="Label" type="Label" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/SwitchPages/HBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/SwitchPages/HBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.49
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/SwitchPages"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/SwitchPages/HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="PageSwitchLabel" type="Label" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/SwitchPages/HBoxContainer2/HBoxContainer" groups=["NextPage"]]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 5.3
-text = "NEXT  PAGE"
-label_settings = ExtResource("13_cof4p")
-horizontal_alignment = 2
-
-[node name="Control2" type="Control" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/SwitchPages/HBoxContainer2/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.0
-
-[node name="Control" type="Control" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/SwitchPages/HBoxContainer2/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.0
-
-[node name="Label" type="Label" parent="Shop_Kitchen/PanelContainer/MarginContainer/KitchenContainer/SwitchPages/HBoxContainer2"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.49
-
-[node name="ShopContainer" type="VBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer"]
-visible = false
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-text = "SHOP"
-label_settings = ExtResource("12_h1mc3")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 1.89
-
-[node name="ItemList1" type="VBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 3.0
-
-[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="TextureButton" type="TextureButton" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer"]
-custom_minimum_size = Vector2(40, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.0
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 3.0
-
-[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer2/VBoxContainer"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer2/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="TextureButton" type="TextureButton" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer2"]
-custom_minimum_size = Vector2(40, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.0
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer3"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 3.0
-
-[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer3/VBoxContainer"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer3/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="TextureButton" type="TextureButton" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer3"]
-custom_minimum_size = Vector2(40, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.0
-
-[node name="ItemList2" type="VBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 3.0
-
-[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="TextureButton" type="TextureButton" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer"]
-custom_minimum_size = Vector2(40, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.0
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 3.0
-
-[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer2/VBoxContainer"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer2/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="TextureButton" type="TextureButton" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer2"]
-custom_minimum_size = Vector2(40, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.0
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer3"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 3.0
-
-[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer3/VBoxContainer"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer3/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="TextureButton" type="TextureButton" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer3"]
-custom_minimum_size = Vector2(40, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.0
-
-[node name="SwitchPages" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/SwitchPages"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/SwitchPages/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Control2" type="Control" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/SwitchPages/HBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.21
-
-[node name="PageSwitchLabel" type="Label" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/SwitchPages/HBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "BACK"
-label_settings = ExtResource("13_cof4p")
-
-[node name="Control" type="Control" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/SwitchPages/HBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.9
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/SwitchPages"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/SwitchPages/HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/SwitchPages/HBoxContainer2/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 5.3
-label_settings = ExtResource("12_qsv74")
-horizontal_alignment = 2
-
-[node name="Control2" type="Control" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/SwitchPages/HBoxContainer2/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.0
-
-[node name="Control" type="Control" parent="Shop_Kitchen/PanelContainer/MarginContainer/ShopContainer/SwitchPages/HBoxContainer2/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.0
-
-[node name="Arrow" type="Sprite2D" parent="Shop_Kitchen/PanelContainer/MarginContainer"]
-position = Vector2(398, 418)
-scale = Vector2(0.06, 0.06)
-texture = ExtResource("11_vsj0x")
-
-[node name="SelectOptionSFX" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("16_cof4p")
-
-[node name="ChangeSelectionSFX" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("17_f7tlh")
-
 [node name="SpawnTimer" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 5
@@ -709,12 +258,717 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("18_8k7j3")
 
-[node name="ShotgunKnockbackSkill" type="ProgressBar" parent="."]
+[node name="Shop_Kitchen" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Shop_Kitchen"]
+layout_mode = 2
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -248.0
+offset_top = -232.26
+offset_right = 248.0
+offset_bottom = 226.46
+theme_override_constants/separation = 10
+
+[node name="PanelContainer" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer"]
+custom_minimum_size = Vector2(400, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.76
+theme_override_styles/panel = ExtResource("10_6rmj2")
+
+[node name="MarginContainer" type="MarginContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 8
+script = ExtResource("11_6rmj2")
+
+[node name="KitchenContainer" type="VBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 11
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer"]
+layout_mode = 2
+theme_override_constants/separation = 125
+
+[node name="ExitFromKitchen" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer2"]
+layout_mode = 2
+text = "EXIT"
+label_settings = ExtResource("13_cof4p")
+
+[node name="Kitchen" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "KITCHEN"
+label_settings = ExtResource("12_h1mc3")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.89
+theme_override_constants/separation = 20
+
+[node name="ItemList1" type="VBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1" groups=["Ingredient"]]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+theme_override_constants/separation = 5
+
+[node name="TextureRect" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "INGREDIENT"
+label_settings = SubResource("LabelSettings_catpy")
+
+[node name="MarginContainer" type="MarginContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 6.75
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 69
+
+[node name="PanelContainer" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 12.36
+theme_override_styles/panel = ExtResource("16_sesyt")
+
+[node name="TextureButton" type="TextureButton" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer/VBoxContainer/MarginContainer/PanelContainer"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 20.0
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("17_gglip")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1" groups=["Ingredient"]]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="TextureRect" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "INGREDIENT"
+label_settings = SubResource("LabelSettings_sesyt")
+
+[node name="MarginContainer" type="MarginContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 6.6
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_right = 69
+
+[node name="PanelContainer" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer2/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 12.36
+theme_override_styles/panel = SubResource("StyleBoxFlat_gglip")
+
+[node name="TextureButton" type="TextureButton" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer2/VBoxContainer/MarginContainer/PanelContainer"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 20.0
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("17_gglip")
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1" groups=["Ingredient"]]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="TextureRect" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer3/VBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "INGREDIENT"
+label_settings = SubResource("LabelSettings_0tsab")
+
+[node name="MarginContainer" type="MarginContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer3/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 6.62
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_right = 69
+
+[node name="PanelContainer" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer3/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 12.36
+theme_override_styles/panel = SubResource("StyleBoxFlat_i5tog")
+
+[node name="TextureButton" type="TextureButton" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList1/HBoxContainer3/VBoxContainer/MarginContainer/PanelContainer"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 20.0
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("17_gglip")
+
+[node name="ItemList2" type="VBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.08
+
+[node name="MarginContainer" type="MarginContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList2" groups=["ActivateCook", "FaceRight"]]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.08
+theme_override_constants/margin_left = 125
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 0
+
+[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList2/MarginContainer"]
+custom_minimum_size = Vector2(45, 45)
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("16_41akx")
+expand_mode = 3
+
+[node name="MarginContainer2" type="MarginContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList2" groups=["FaceRight", "UsePowerup"]]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.5
+theme_override_constants/margin_left = 116
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 30
+
+[node name="PanelContainer" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList2/MarginContainer2"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0tsab")
+
+[node name="TextureButton" type="TextureButton" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/HBoxContainer/ItemList2/MarginContainer2/PanelContainer"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("19_rleeb")
+
+[node name="SwitchPages" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/SwitchPages"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/SwitchPages/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control2" type="Control" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/SwitchPages/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.21
+
+[node name="Control" type="Control" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/SwitchPages/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.9
+
+[node name="Label" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/SwitchPages/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/SwitchPages/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.49
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/SwitchPages"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/SwitchPages/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PageSwitchLabel" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/SwitchPages/HBoxContainer2/HBoxContainer" groups=["FaceRight"]]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.3
+text = "NEXT  PAGE"
+label_settings = ExtResource("13_cof4p")
+horizontal_alignment = 2
+
+[node name="Control2" type="Control" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/SwitchPages/HBoxContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+
+[node name="Control" type="Control" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/SwitchPages/HBoxContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+
+[node name="Label" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/KitchenContainer/SwitchPages/HBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.49
+
+[node name="ShopContainer" type="VBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "SHOP"
+label_settings = ExtResource("12_h1mc3")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.89
+
+[node name="ItemList1" type="VBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextureButton" type="TextureButton" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextureButton" type="TextureButton" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer2"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer3/VBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer3/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextureButton" type="TextureButton" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer3"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+
+[node name="ItemList2" type="VBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextureButton" type="TextureButton" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextureButton" type="TextureButton" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer2"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer3/VBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer3/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextureButton" type="TextureButton" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer3"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+
+[node name="SwitchPages" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/SwitchPages"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/SwitchPages/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control2" type="Control" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/SwitchPages/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.21
+
+[node name="PageSwitchLabel" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/SwitchPages/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "BACK"
+label_settings = ExtResource("13_cof4p")
+
+[node name="Control" type="Control" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/SwitchPages/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.9
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/SwitchPages"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/SwitchPages/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/SwitchPages/HBoxContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.3
+label_settings = ExtResource("12_qsv74")
+horizontal_alignment = 2
+
+[node name="Control2" type="Control" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/SwitchPages/HBoxContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+
+[node name="Control" type="Control" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/SwitchPages/HBoxContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+
+[node name="Arrow" type="Sprite2D" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer"]
+position = Vector2(105, 27.26)
+scale = Vector2(0.06, 0.06)
+texture = ExtResource("11_vsj0x")
+
+[node name="PanelContainer2" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_rleeb")
+
+[node name="InventoryMarginContainer" type="MarginContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer2/InventoryMarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PanelContainer" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer2/InventoryMarginContainer/HBoxContainer" groups=["Inventory"]]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wu1et")
+
+[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer2/InventoryMarginContainer/HBoxContainer/PanelContainer"]
+custom_minimum_size = Vector2(70, 50)
+layout_mode = 2
+expand_mode = 3
+script = ExtResource("21_i5tog")
+
+[node name="PanelContainer2" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer2/InventoryMarginContainer/HBoxContainer" groups=["Inventory"]]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wu1et")
+
+[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer2/InventoryMarginContainer/HBoxContainer/PanelContainer2"]
+custom_minimum_size = Vector2(70, 50)
+layout_mode = 2
+expand_mode = 3
+script = ExtResource("21_i5tog")
+
+[node name="PanelContainer3" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer2/InventoryMarginContainer/HBoxContainer" groups=["Inventory"]]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wu1et")
+
+[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer2/InventoryMarginContainer/HBoxContainer/PanelContainer3"]
+custom_minimum_size = Vector2(70, 50)
+layout_mode = 2
+expand_mode = 3
+script = ExtResource("21_i5tog")
+
+[node name="PanelContainer4" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer2/InventoryMarginContainer/HBoxContainer" groups=["Inventory"]]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wu1et")
+
+[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer2/InventoryMarginContainer/HBoxContainer/PanelContainer4"]
+custom_minimum_size = Vector2(70, 50)
+layout_mode = 2
+expand_mode = 3
+script = ExtResource("21_i5tog")
+
+[node name="PanelContainer5" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer2/InventoryMarginContainer/HBoxContainer" groups=["Inventory"]]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wu1et")
+
+[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer2/InventoryMarginContainer/HBoxContainer/PanelContainer5"]
+custom_minimum_size = Vector2(70, 50)
+layout_mode = 2
+expand_mode = 3
+script = ExtResource("21_i5tog")
+
+[node name="PanelContainer6" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer2/InventoryMarginContainer/HBoxContainer" groups=["Inventory"]]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wu1et")
+
+[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer2/InventoryMarginContainer/HBoxContainer/PanelContainer6"]
+custom_minimum_size = Vector2(70, 50)
+layout_mode = 2
+expand_mode = 3
+script = ExtResource("21_i5tog")
+
+[node name="SelectOptionSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_cof4p")
+
+[node name="ChangeSelectionSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_f7tlh")
+
+[node name="StompSkill" type="TextureProgressBar" parent="."]
 anchors_preset = -1
-anchor_top = 0.329
-anchor_bottom = 0.329
-offset_left = 48.0
-offset_top = -17.192
-offset_right = 118.0
-offset_bottom = 48.808
+anchor_top = 0.138
+anchor_bottom = 0.138
+offset_left = 54.0
+offset_top = 94.576
+offset_right = 962.0
+offset_bottom = 1051.58
+scale = Vector2(0.1, 0.1)
+value = 92.0
+stretch_margin_left = 1675
+texture_under = ExtResource("25_wquew")
+texture_over = ExtResource("20_kupmu")
+texture_progress = ExtResource("25_wquew")
+tint_under = Color(0.281187, 0.281187, 0.281187, 1)
+script = ExtResource("28_wu1et")
+
+[node name="Skill1" type="TextureProgressBar" parent="."]
+anchors_preset = -1
+anchor_top = 0.138
+anchor_bottom = 0.138
+offset_left = 54.0
+offset_top = 201.576
+offset_right = 966.0
+offset_bottom = 1158.58
+scale = Vector2(0.1, 0.1)
+stretch_margin_left = 1675
+texture_under = ExtResource("20_catpy")
+texture_over = ExtResource("20_kupmu")
+texture_progress = ExtResource("19_ycmcx")
+texture_progress_offset = Vector2(100, 0)
+tint_under = Color(0.281187, 0.281187, 0.281187, 1)
 script = ExtResource("19_jkdwc")
+
+[node name="Inventory" type="HBoxContainer" parent="."]
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.08
+anchor_right = 1.0
+anchor_bottom = 0.08
+offset_left = -120.0
+offset_top = -19.84
+offset_right = -80.0
+offset_bottom = 20.16
+grow_horizontal = 0
+theme_override_constants/separation = 5
+alignment = 2
+script = ExtResource("27_0tsab")
+
+[node name="UsedPowerUps" type="HBoxContainer" parent="."]
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.177
+anchor_right = 1.0
+anchor_bottom = 0.177
+offset_left = -120.0
+offset_top = -25.696
+offset_right = -80.0
+offset_bottom = 14.304
+grow_horizontal = 0
+alignment = 2
+
+[node name="PowerUpStatsBuff" type="VBoxContainer" parent="."]
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.247
+anchor_right = 1.0
+anchor_bottom = 0.247
+offset_left = -240.0
+offset_top = -20.056
+offset_right = -82.0
+offset_bottom = 19.944
+theme_override_constants/separation = 12

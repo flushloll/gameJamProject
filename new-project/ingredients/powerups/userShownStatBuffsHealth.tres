@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://hnux4k3m46ir"]
+
+[ext_resource type="FontFile" uid="uid://b5b3polo64e17" path="res://ui/ChiknScrach-Regular.ttf (2).otf" id="1_nejni"]
+
+[resource]
+font = ExtResource("1_nejni")
+font_color = Color(0, 0.784314, 0.341176, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
