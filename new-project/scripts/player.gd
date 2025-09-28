@@ -18,11 +18,11 @@ extends CharacterBody3D
 var is_stomp_falling: bool = false
 @export var stomp_speed: float = -30.0
 @export var stomp_radius: float = 5.0
-@onready var stompsfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/StompSfx")
-@onready var fallingsfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/FallingSfx")
-@onready var cracksfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/CrackSfx")
-@onready var playerdeathsfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/DeathSoundSfx")
-@onready var UI = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/UI")
+@onready var stompsfx = $"../StompSfx"
+@onready var fallingsfx = $"../FallingSfx"
+@onready var cracksfx = $"../CrackSfx"
+@onready var playerdeathsfx = $"../DeathSoundSfx"
+@onready var UI = $"../UI"
 @onready var stompskill = $"../UI/StompSkill"
 @onready var can_stomp = true
 @onready var DamagedParticle = $DamagedParticle
@@ -78,14 +78,15 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion: #and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		_yaw   -= event.relative.x * mouse_sensitivityX
-		_pitch -= event.relative.y * mouse_sensitivityY
-		_pitch = clamp(_pitch, PITCH_LIMIT_DOWN, PITCH_LIMIT_UP)
-	if Global.cameraFollowsCursor:
-		head.rotation_degrees.y = _yaw
-	else:
-		head.rotation_degrees.x = _pitch  # only pitch
+	if not Global.isPlayerDead:
+		if event is InputEventMouseMotion: #and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+			_yaw   -= event.relative.x * mouse_sensitivityX
+			_pitch -= event.relative.y * mouse_sensitivityY
+			_pitch = clamp(_pitch, PITCH_LIMIT_DOWN, PITCH_LIMIT_UP)
+		if Global.cameraFollowsCursor:
+			head.rotation_degrees.y = _yaw
+		else:
+			head.rotation_degrees.x = _pitch  # only pitch
 
 # ---------- Helper: save / restore views ----------
 func save_fps_view() -> void:
@@ -157,45 +158,47 @@ func camViewSwitchToTopView():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _input(event: InputEvent) -> void:
-	if not is_on_floor():
-		if Input.is_action_just_pressed("stomp") and can_stomp:
-			stompedYetThisFrame = false
-			is_stomp_falling = true
-			can_stomp = false
-			playFallingSfx()
-			stomp_speed_modifier = 1.0
-			velocity.y -= pow(stomp_speed, stomp_speed_modifier)  # force you downward fast
-			
-	if event.is_action_pressed("interact"):
-		var from: Vector3 = gun_cam.global_transform.origin
-		var to: Vector3 = from + -gun_cam.global_transform.basis.z * interact_distance
+	
+	if not Global.isPlayerDead:
+		if not is_on_floor():
+			if Input.is_action_just_pressed("stomp") and can_stomp:
+				stompedYetThisFrame = false
+				is_stomp_falling = true
+				can_stomp = false
+				playFallingSfx()
+				stomp_speed_modifier = 1.0
+				velocity.y -= pow(stomp_speed, stomp_speed_modifier)  # force you downward fast
+				
+		if event.is_action_pressed("interact"):
+			var from: Vector3 = gun_cam.global_transform.origin
+			var to: Vector3 = from + -gun_cam.global_transform.basis.z * interact_distance
 
-		var space_state = get_world_3d().direct_space_state
-		var query = PhysicsRayQueryParameters3D.create(from, to)
-		query.exclude = [self]
-		query.collision_mask = 1  # only detect interactables
+			var space_state = get_world_3d().direct_space_state
+			var query = PhysicsRayQueryParameters3D.create(from, to)
+			query.exclude = [self]
+			query.collision_mask = 1  # only detect interactables
 
-		var result = space_state.intersect_ray(query)
+			var result = space_state.intersect_ray(query)
 
-		if result:
-			var collider = result.collider
-			if collider and collider.is_in_group("Interactable"):
-				if collider.name == "Shop_Kitchen" and not in_shop_kitchen:
-					print("hi")  # triggers once per key press
-					UI.load_or_exit_shop_kitchen("enter")
-					in_menu = true
-					in_shop_kitchen = true
-				else:
+			if result:
+				var collider = result.collider
+				if collider and collider.is_in_group("Interactable"):
+					if collider.name == "Shop_Kitchen" and not in_shop_kitchen:
+						print("hi")  # triggers once per key press
+						UI.load_or_exit_shop_kitchen("enter")
+						in_menu = true
+						in_shop_kitchen = true
+					else:
+						in_menu = false
+						in_shop_kitchen = false
+						UI.load_or_exit_shop_kitchen("exit")
+			else:
+				if in_shop_kitchen:
 					in_menu = false
 					in_shop_kitchen = false
 					UI.load_or_exit_shop_kitchen("exit")
-		else:
-			if in_shop_kitchen:
-				in_menu = false
-				in_shop_kitchen = false
-				UI.load_or_exit_shop_kitchen("exit")
-			else:
-				return
+				else:
+					return
 			
 # ---------- Main process ----------
 func _process(delta) -> void:
@@ -203,15 +206,17 @@ func _process(delta) -> void:
 	stomp_speed_modifier += delta
 	
 	if current_health <= 0 and not is_dead:
+		playerdeathsfx.play()
 		die()
 					
-	if Input.is_action_just_pressed("escape") and in_menu:
-		if in_shop_kitchen:
-			in_menu = false
-			in_shop_kitchen = false
-			UI.load_or_exit_shop_kitchen("exit")
-		else:
-			return
+	if not Global.isPlayerDead:
+		if Input.is_action_just_pressed("escape") and in_menu:
+			if in_shop_kitchen:
+				in_menu = false
+				in_shop_kitchen = false
+				UI.load_or_exit_shop_kitchen("exit")
+			else:
+				return
 		
 	# === 1. Gravity ===
 	if not is_on_floor():
@@ -315,8 +320,9 @@ func _process(delta) -> void:
 	velocity.z = hvel.z
 
 	# === 5. Jump ===
-	if is_on_floor() and Input.is_action_just_pressed("jump"):
-		velocity.y = jump_force
+	if not Global.isPlayerDead:
+		if is_on_floor() and Input.is_action_just_pressed("jump"):
+			velocity.y = jump_force
 	
 	if is_lunging:
 		velocity.x = lunge_velocity.x
@@ -456,8 +462,12 @@ func playCrackSfx():
 	cracksfx.stop()
 
 func die():
+	UI.show_death_screen()
 	move_speed = 0.0001
-	playerdeathsfx.play()
+	if not Global.isPlayerDead:
+		remove_from_group("Player")
+	Global.isPlayerDead = true
+	is_dead = true
 
 func damagedParticlePlay():
 	flash_red()

@@ -12,10 +12,10 @@
 [ext_resource type="AudioStream" uid="uid://dmql8ykwyrdwo" path="res://ui/punch-04-383965.mp3" id="11_w4pyt"]
 [ext_resource type="AudioStream" uid="uid://jsg6wyrahvdl" path="res://musicandsfx/howling-wind-73982.mp3" id="11_yilbv"]
 [ext_resource type="PackedScene" uid="uid://dymx22377n8n" path="res://scenes/ui.tscn" id="12_flpa8"]
-[ext_resource type="AudioStream" uid="uid://brh0prfokml8o" path="res://musicandsfx/hit-flesh-02-266309.mp3" id="12_w4pyt"]
 [ext_resource type="AudioStream" uid="uid://cdyi6bpiqv1cr" path="res://ui/golf-swing-practice-01-255625 (1).mp3" id="13_lyn8a"]
 [ext_resource type="AudioStream" uid="uid://cqi8bf7vj605b" path="res://musicandsfx/Minimalist3.mp3" id="14_vv30q"]
 [ext_resource type="AudioStream" uid="uid://bsrqp3xuy7gur" path="res://ui/Retro7.mp3" id="15_016sp"]
+[ext_resource type="AudioStream" uid="uid://ccthkcabncg2m" path="res://ui/player-death-sfx.mp3" id="15_vv30q"]
 
 [node name="SubViewportContainer" type="SubViewportContainer"]
 texture_filter = 1
@@ -43,11 +43,11 @@ volume_db = -33.647
 
 [node name="ShootSfx" type="AudioStreamPlayer" parent="SubViewport"]
 stream = ExtResource("4_016sp")
-volume_db = -17.0
+volume_db = -25.432
 
 [node name="ReloadSfx" type="AudioStreamPlayer" parent="SubViewport"]
 stream = ExtResource("5_016sp")
-volume_db = -13.059
+volume_db = -17.744
 
 [node name="ErrorReloadSfx" type="AudioStreamPlayer" parent="SubViewport"]
 stream = ExtResource("7_lyn8a")
@@ -98,7 +98,7 @@ stream = ExtResource("15_016sp")
 volume_db = -6.589
 
 [node name="DeathSoundSfx" type="AudioStreamPlayer" parent="SubViewport"]
-stream = ExtResource("12_w4pyt")
-volume_db = -10.824
+stream = ExtResource("15_vv30q")
+volume_db = -20.0
 
 [node name="UI" parent="SubViewport" instance=ExtResource("12_flpa8")]

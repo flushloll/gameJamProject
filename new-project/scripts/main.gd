@@ -24,6 +24,7 @@ func _input(event: InputEvent) -> void:
 		
 func spawn_enemy_batch():
 	if Global.current_enemies.size() == 0: # Only spawn if no enemies alive
+		Global.enemyDamageScaleAccumulate += 0.025
 		for i in ENEMIES_PER_BATCH:
 			var enemyInstance = enemySpawn.instantiate()
 			add_child(enemyInstance)
@@ -32,6 +33,8 @@ func spawn_enemy_batch():
 			enemyInstance.global_transform.origin = Vector3(randf_range(-64, 64), 2, randf_range(-64, 64))
 			var random_scale = randf_range(1.6, 3) # For example, between 70% and 130% of original size
 			enemyInstance.get_child(0).get_child(0).get_child(0).get_child(0).scale = Vector3(random_scale, random_scale, random_scale)
+			enemyInstance.speed = randf_range(6.7, 11.3)
+			enemyInstance.enemyDamageScale = Global.enemyDamageScaleAccumulate
 			#enemyInstance.play_spawn_sound_and_effects()
 			waveStartedSfx.play() 
 			

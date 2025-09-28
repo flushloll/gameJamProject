@@ -1,5 +1,5 @@
 extends TextureProgressBar
-@onready var playerWeaponCollision = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/Player/Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape")
+@onready var playerWeaponCollision = $"../../Player/Head/SpringArm3D/GunCamera/Weapon/MeleeRange/WeaponCollisionShape"
 @onready var skill1 : String
 
 func _ready() -> void:

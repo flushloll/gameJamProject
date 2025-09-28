@@ -7,7 +7,8 @@ var camera: Camera3D
 
 func _ready():
 	# Get the active camera
-	camera = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport").get_camera_3d()
+	var subviewport = $"../../SubViewportContainer/SubViewport"
+	camera = subviewport.get_camera_3d()
 	show()
 	
 	# Set the initial value to a placeholder (e.g., full health)
@@ -46,5 +47,5 @@ func _process(delta):
 		global_position += Vector2(-get_rect().size.x / 2, 0)
 		
 		var distance = camera.global_transform.origin.distance_to(enemy.global_transform.origin)
-		var scale_factor = clamp(0.25 - distance / 100.0, 0.11, 0.25)
+		var scale_factor = clamp(0.25 - distance / 100.0, 0.04, 0.25)
 		scale = Vector2(scale_factor, scale_factor)

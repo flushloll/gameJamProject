@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://dymx22377n8n"]
+[gd_scene load_steps=48 format=3 uid="uid://dymx22377n8n"]
 
 [ext_resource type="Script" uid="uid://b2jga8epi11h0" path="res://scripts/ui.gd" id="1_gdt2y"]
 [ext_resource type="Texture2D" uid="uid://bxls2v826qxr1" path="res://ui/revolverMatching.png" id="2_cgfq5"]
@@ -31,6 +31,8 @@
 [ext_resource type="Texture2D" uid="uid://kxp7e741rrgc" path="res://ui/stompBackground.png" id="25_wquew"]
 [ext_resource type="Script" uid="uid://q76dcrxh3t4w" path="res://scenes/inventory.gd" id="27_0tsab"]
 [ext_resource type="Script" uid="uid://j2jc0qog8tn5" path="res://scenes/stomp_skill.gd" id="28_wu1et"]
+[ext_resource type="Script" uid="uid://cg3hdyhag43ge" path="res://scenes/death_screen_menu.gd" id="32_3vrs6"]
+[ext_resource type="Texture2D" uid="uid://ba7xblns51cs1" path="res://ui/ChickenWithPitchfork.png" id="33_3vrs6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vdcm2"]
 font = ExtResource("4_p7vwb")
@@ -130,10 +132,35 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3vrs6"]
+bg_color = Color(0.487995, 0.305999, 0.18279, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.380531, 0.193997, 0.115132, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="LabelSettings" id="LabelSettings_pawqx"]
+font = ExtResource("4_p7vwb")
+font_size = 32
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3vrs6"]
+font = ExtResource("4_p7vwb")
+font_size = 32
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_gdt2y")
 
 [node name="Control2" type="Control" parent="."]
+z_index = 1
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -142,6 +169,7 @@ offset_bottom = 40.0
 [node name="SecondWeaponLoadout" type="Sprite2D" parent="Control2"]
 
 [node name="Control1" type="Control" parent="."]
+z_index = 1
 layout_mode = 3
 anchor_left = 0.984
 anchor_top = 1.0
@@ -164,6 +192,7 @@ scale = Vector2(0.1, 0.1)
 texture = ExtResource("3_gdt2y")
 
 [node name="AmmoCounter" type="Label" parent="."]
+z_index = 1
 anchors_preset = -1
 anchor_left = 1.0
 anchor_top = 0.755
@@ -182,6 +211,7 @@ label_settings = SubResource("LabelSettings_vdcm2")
 metadata/_edit_use_anchors_ = true
 
 [node name="WingCounter" type="Label" parent="."]
+z_index = 1
 anchors_preset = -1
 anchor_left = 0.13
 anchor_right = 0.13
@@ -202,6 +232,7 @@ texture = ExtResource("3_gdt2y")
 script = ExtResource("5_wm3ai")
 
 [node name="Control" type="Control" parent="."]
+z_index = 1
 custom_minimum_size = Vector2(175, 30)
 layout_mode = 3
 anchors_preset = 0
@@ -228,6 +259,7 @@ texture_progress_offset = Vector2(648.38, 0)
 script = ExtResource("6_8dubc")
 
 [node name="SpawnTimer" type="Control" parent="."]
+z_index = 1
 layout_mode = 3
 anchors_preset = 5
 anchor_left = 0.5
@@ -259,6 +291,8 @@ vertical_alignment = 1
 script = ExtResource("18_8k7j3")
 
 [node name="Shop_Kitchen" type="Control" parent="."]
+visible = false
+z_index = 1
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -900,6 +934,7 @@ stream = ExtResource("16_cof4p")
 stream = ExtResource("17_f7tlh")
 
 [node name="StompSkill" type="TextureProgressBar" parent="."]
+z_index = 1
 anchors_preset = -1
 anchor_top = 0.138
 anchor_bottom = 0.138
@@ -917,6 +952,7 @@ tint_under = Color(0.281187, 0.281187, 0.281187, 1)
 script = ExtResource("28_wu1et")
 
 [node name="Skill1" type="TextureProgressBar" parent="."]
+z_index = 1
 anchors_preset = -1
 anchor_top = 0.138
 anchor_bottom = 0.138
@@ -934,6 +970,7 @@ tint_under = Color(0.281187, 0.281187, 0.281187, 1)
 script = ExtResource("19_jkdwc")
 
 [node name="Inventory" type="HBoxContainer" parent="."]
+z_index = 1
 anchors_preset = -1
 anchor_left = 1.0
 anchor_top = 0.08
@@ -949,6 +986,7 @@ alignment = 2
 script = ExtResource("27_0tsab")
 
 [node name="UsedPowerUps" type="HBoxContainer" parent="."]
+z_index = 1
 anchors_preset = -1
 anchor_left = 1.0
 anchor_top = 0.177
@@ -962,6 +1000,7 @@ grow_horizontal = 0
 alignment = 2
 
 [node name="PowerUpStatsBuff" type="VBoxContainer" parent="."]
+z_index = 1
 anchors_preset = -1
 anchor_left = 1.0
 anchor_top = 0.247
@@ -972,3 +1011,77 @@ offset_top = -20.056
 offset_right = -82.0
 offset_bottom = 19.944
 theme_override_constants/separation = 12
+
+[node name="DeathScreenBackground" type="ColorRect" parent="."]
+z_index = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.505882)
+
+[node name="DeathScreenMenu" type="HBoxContainer" parent="."]
+z_index = 2
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -361.5
+offset_top = -154.5
+offset_right = 361.5
+offset_bottom = 154.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 40
+script = ExtResource("32_3vrs6")
+
+[node name="TextureRect" type="TextureRect" parent="DeathScreenMenu"]
+custom_minimum_size = Vector2(373.333, 309.333)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+texture = ExtResource("33_3vrs6")
+expand_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="DeathScreenMenu"]
+layout_mode = 2
+theme_override_constants/margin_top = 60
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeathScreenMenu/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 40
+
+[node name="RetryButton" type="PanelContainer" parent="DeathScreenMenu/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3vrs6")
+
+[node name="Label" type="Label" parent="DeathScreenMenu/MarginContainer/VBoxContainer/RetryButton"]
+layout_mode = 2
+text = "TRY AGAIN"
+label_settings = SubResource("LabelSettings_pawqx")
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="DeathScreenMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 110
+
+[node name="MainMenuButton" type="PanelContainer" parent="DeathScreenMenu/MarginContainer/VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_3vrs6")
+
+[node name="Label" type="Label" parent="DeathScreenMenu/MarginContainer/VBoxContainer/MarginContainer/MainMenuButton"]
+layout_mode = 2
+text = "MENU"
+label_settings = SubResource("LabelSettings_3vrs6")
+horizontal_alignment = 1
+
+[node name="Arrow" type="Sprite2D" parent="DeathScreenMenu"]
+position = Vector2(812, 110)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("11_vsj0x")

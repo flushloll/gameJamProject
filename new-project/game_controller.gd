@@ -25,6 +25,8 @@ func change_gui_scene(
 	seconds: float = 1.0
 	) -> void:
 		
+	Global.reset()
+		
 	if transition:
 		transition_controller.transition(transition_out, seconds) # Transition out
 		await transition_controller.animation_player.animation_finished
@@ -51,6 +53,8 @@ func change_3d_scene(
 	seconds: float = 1.0
 	) -> void:
 	
+	Global.reset()
+	
 	if transition:
 		transition_controller.transition(transition_out, seconds) # Transition out
 		await transition_controller.animation_player.animation_finished
@@ -76,6 +80,8 @@ func change_2d_scene(
 	transition_out: String = "Fade Out",
 	seconds: float = 1.0
 	) -> void:
+		
+	Global.reset()
 		
 	if transition:
 		transition_controller.transition(transition_out, seconds) # Transition out

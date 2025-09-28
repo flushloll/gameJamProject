@@ -5,16 +5,17 @@ extends CharacterBody3D
 @onready var animation_player: AnimationPlayer = $chicken4/AnimationPlayer
 @onready var navigation_agent = $NavigationAgent3D
 @export var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
-@export var speed = 5.0
+@export var speed = 8.0
 @export var wander_radius = 6 # How far the NPC will wander from its starting point
-@onready var player = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/Player")
-@onready var chickendeadSfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/ChickenDeadSfx")
+@onready var player = $"../SubViewportContainer/SubViewport/Player"
+@onready var chickendeadSfx = $"../SubViewportContainer/SubViewport/ChickenDeadSfx"
 @onready var spawn_sound = $SpawnSound
 @onready var feathers = $FeathersParticle
-@onready var ImpactSoundSfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/ImpactSfx")
+@onready var ImpactSoundSfx = $"../SubViewportContainer/SubViewport/ImpactSfx"
 @onready var animation_tree: AnimationTree = $chicken4/AnimationTree
 @onready var animation_state_machine_node = animation_tree.get("parameters/playback")
 @export var max_health: int = 100
+@onready var enemyDamageScale: float = 1
 
 @export var rotation_speed: float = 8.0            # how fast the enemy turns (higher = snappier)
 @export var rotation_offset_degrees: float = 0.0   # use 180 if your model faces the other way
@@ -30,11 +31,11 @@ signal enemy_died
 
 var stomped_this_frame = false
 var pecking: bool = false
-@onready var PeckingSfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/PeckingSfx")
-@onready var ChickenMissSfx = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/ChickenMissSfx")
+@onready var PeckingSfx = $"../SubViewportContainer/SubViewport/PeckingSfx"
+@onready var ChickenMissSfx = $"../SubViewportContainer/SubViewport/ChickenMissSfx"
 var horizontal_speed = Vector3(velocity.x, 0, velocity.z).length()
 @onready var playerdamageCooldownBool: bool = false
-@onready var inventory = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/UI/Inventory")
+@onready var inventory = $"../SubViewportContainer/SubViewport/UI/Inventory"
 
 # cached safe velocity received from NavigationAgent3D
 var agent_safe_velocity: Vector3 = Vector3.ZERO
@@ -307,7 +308,7 @@ func startPecking():
 	if not pecking:
 		pecking = true
 		if not playerdamageCooldownBool:
-			player.current_health -= 10.0 # Enemy/chicken does damage to player
+			player.current_health -= randf_range(6.7, 11.2) * enemyDamageScale # Enemy/chicken does damage to player
 			player.damagedParticlePlay()
 			playerdamageCooldown()
 		player.apply_shake("pecked")
@@ -318,7 +319,7 @@ func startPecking():
 func playerdamageCooldown():
 	if playerdamageCooldownBool == false:
 		playerdamageCooldownBool = true
-		await get_tree().create_timer(3).timeout
+		await get_tree().create_timer(0.7).timeout
 		playerdamageCooldownBool = false
 	else:
 		return
