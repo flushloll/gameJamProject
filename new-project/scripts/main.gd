@@ -2,7 +2,7 @@ extends Node3D
 
 var enemySpawn = load("res://scenes/enemy.tscn")
 @onready var cursor = $SubViewportContainer/SubViewport/UI/Cursor
-@onready var relegatedWaveTime = 20
+@onready var relegatedWaveTime = 40
 @onready var timerBeforeNextTick
 @onready var waveTimerTickSfx = $SubViewportContainer/SubViewport/waveTimerTickSfx
 @onready var waveStartedSfx = $SubViewportContainer/SubViewport/waveStartedSfx
@@ -14,7 +14,7 @@ var localrelegatedWaveTime
 @onready var countdown_timer: Timer = Timer.new()
 
 # Number of enemies per batch
-var ENEMIES_PER_BATCH = 4
+var ENEMIES_PER_BATCH = 21
 
 #func _input(event: InputEvent) -> void:
 func _input(event: InputEvent) -> void:
@@ -29,7 +29,7 @@ func spawn_enemy_batch():
 			add_child(enemyInstance)
 			
 			# Randomize position and scale
-			enemyInstance.global_transform.origin = Vector3(randf_range(-12, 12), 2, randf_range(-8, 8))
+			enemyInstance.global_transform.origin = Vector3(randf_range(-64, 64), 2, randf_range(-64, 64))
 			var random_scale = randf_range(1.6, 3) # For example, between 70% and 130% of original size
 			enemyInstance.get_child(0).get_child(0).get_child(0).get_child(0).scale = Vector3(random_scale, random_scale, random_scale)
 			#enemyInstance.play_spawn_sound_and_effects()
