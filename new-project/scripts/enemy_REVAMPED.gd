@@ -13,6 +13,7 @@ extends CharacterBody3D
 @onready var feathers = $FeathersParticle
 @onready var ImpactSoundSfx = $"../SubViewportContainer/SubViewport/ImpactSfx"
 @onready var animation_tree: AnimationTree = $chicken4/AnimationTree
+@onready var newIngredientSfx = $newIgredientSfx
 @onready var animation_state_machine_node = animation_tree.get("parameters/playback")
 @export var max_health: int = 100
 @onready var enemyDamageScale: float = 1
@@ -234,6 +235,8 @@ func die():
 		elif selectRandomIngredientRoll == 5:
 			randomIngredient = load("res://ingredients/tomato.tres")
 		inventory.addIngredientToInventory(randomIngredient)
+		newIngredientSfx.pitch_scale = randf_range(0.9, 1.1)
+		newIngredientSfx.play()
 	# animation_player.play("Death")
 	set_physics_process(false)
 	# animation_player.animation_finished.connect(_on_death_animation_finished)

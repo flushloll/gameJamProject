@@ -34,6 +34,8 @@ var OpenInventory: bool = false
 @onready var kitchenInventorySlot5 = $"../../PanelContainer2/InventoryMarginContainer/HBoxContainer/PanelContainer5/TextureRect"
 @onready var kitchenInventorySlot6 = $"../../PanelContainer2/InventoryMarginContainer/HBoxContainer/PanelContainer6/TextureRect"
 
+@onready var confirmCookSfx = $"../../../../confirmCookSfx"
+
 var didMoveAnything
 
 func _ready():
@@ -78,10 +80,8 @@ func _input(event):
 			elif event.is_action_pressed("ui_accept") and options[current_index].name == "PageSwitchLabel" and (showKitchenArrow or showShopArrow):
 				switchBetweenKitchenAndShop()
 				setWhatPageArrowIsOn()
-				update_arrow_position()
 			elif event.is_action_pressed("ui_accept") and options[current_index].name == "ExitFromKitchen" and (showKitchenArrow or showShopArrow):
 				setWhatPageArrowIsOn()
-				update_arrow_position()
 				enter_or_exit_ShopKitchen("exitShopKitchen")
 			elif event.is_action_pressed("ui_accept") and options[current_index].is_in_group("Ingredient") and showKitchenArrow:
 				arrow.rotation_degrees = 90
@@ -151,6 +151,9 @@ func update_arrow_position():
 	# Reset bounce when switching options
 	var current_option = options[current_index]
 	time_passed = 0.0
+	
+	
+	
 	if showKitchenArrow:
 		if current_index == 0:
 			target_position = current_option.get_global_position() + Vector2(current_option.size.x, 0) + Vector2(67, 7)
@@ -164,6 +167,29 @@ func update_arrow_position():
 			target_position = current_option.get_global_position() - Vector2(current_option.size.x, 0) + Vector2(170, 7)
 		else:
 			target_position = current_option.get_global_position() + Vector2(current_option.size.x, 0) + arrow_offset
+			
+			
+			
+	elif showShopArrow:
+		if current_index == 0:
+			target_position = current_option.get_global_position() + Vector2(current_option.size.x, 0) + Vector2(-60, 7)
+		elif current_index == 1:
+			target_position = current_option.get_global_position() + Vector2(current_option.size.x, 0) + Vector2(-60, 7)
+		elif current_index == 2:
+			target_position = current_option.get_global_position() + Vector2(current_option.size.x, 0) + Vector2(-60, 7)
+		elif current_index == 3:
+			target_position = current_option.get_global_position() - Vector2(current_option.size.x, 0) + Vector2(210, 7)
+		elif current_index == 4:
+			target_position = current_option.get_global_position() - Vector2(current_option.size.x, 0) + Vector2(210, 7)
+		elif current_index == 5:
+			target_position = current_option.get_global_position() - Vector2(current_option.size.x, 0) + Vector2(210, 7)
+		elif current_index == 6:
+			target_position = current_option.get_global_position() + Vector2(current_option.size.x, 0) + arrow_offset
+		else:
+			target_position = current_option.get_global_position() + Vector2(current_option.size.x, 0) + arrow_offset
+			
+			
+			
 	elif OpenInventory:
 		if current_index >= 0:
 			target_position = current_option.get_global_position() + Vector2(current_option.size.x, 0) + Vector2(-40, 145)
@@ -225,6 +251,7 @@ func makeProduct():
 	var totalIngredientValue = ingredient1.ingredientInSpotAssociatedValue + ingredient2.ingredientInSpotAssociatedValue + ingredient3.ingredientInSpotAssociatedValue
 	if totalIngredientValue >= 0 and totalIngredientValue <= 27:
 		powerUpSlot.addPowerUpToSlot("worst")
+		confirmCookSfx.play()
 	#elif totalIngredientValue > 9 and totalIngredientValue <= 18:
 		#powerUpSlot.addPowerUpToSlot("mid")
 	#elif totalIngredientValue > 18 and totalIngredientValue <= 27:

@@ -22,6 +22,7 @@ var is_stomp_falling: bool = false
 @onready var fallingsfx = $"../FallingSfx"
 @onready var cracksfx = $"../CrackSfx"
 @onready var playerdeathsfx = $"../DeathSoundSfx"
+@onready var deathbassdropsfx = $"../DeathBassDropSfx"
 @onready var UI = $"../UI"
 @onready var stompskill = $"../UI/StompSkill"
 @onready var can_stomp = true
@@ -207,6 +208,7 @@ func _process(delta) -> void:
 	
 	if current_health <= 0 and not is_dead:
 		playerdeathsfx.play()
+		deathbassdropsfx.play()
 		die()
 					
 	if not Global.isPlayerDead:

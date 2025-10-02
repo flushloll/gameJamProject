@@ -6,7 +6,8 @@ func _ready():
 func fadeIn():
 			# Make sure it starts invisible
 	modulate.a = 0.0
-
+	visible = true
+	
 	# Create and configure a tween
 	await get_tree().create_timer(1)
 	var tween = get_tree().create_tween()

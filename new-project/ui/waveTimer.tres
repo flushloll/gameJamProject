@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://cb0jdpaajmwmk"]
+
+[ext_resource type="FontFile" uid="uid://blci11tjppu1i" path="res://ui/Myfont-Regular.otf" id="1_16e2g"]
+
+[resource]
+font = ExtResource("1_16e2g")
+font_size = 48
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)

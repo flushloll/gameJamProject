@@ -8,7 +8,9 @@ var enemySpawn = load("res://scenes/enemy.tscn")
 @onready var waveStartedSfx = $SubViewportContainer/SubViewport/waveStartedSfx
 var localrelegatedWaveTime
 @onready var waveTimer = $SubViewportContainer/SubViewport/UI/SpawnTimer/waveTimer
+@onready var skipTimerLabel = $SubViewportContainer/SubViewport/UI/SpawnTimer/skipTimerLabel
 @onready var music = $SubViewportContainer/SubViewport/MusicPlayer
+@onready var UI = $SubViewportContainer/SubViewport/UI
 @onready var current_wave = 1
 @onready var musicFadedOut = true
 @onready var countdown_timer: Timer = Timer.new()
@@ -50,6 +52,7 @@ func _on_enemies_dead(enemy):
 	# If all dead, spawn next batch after a short delay
 	if Global.current_enemies.size() == 0:
 		waveTimer.show()
+		skipTimerLabel.show()
 		waveTimer.changeWaveTimerLabel("WAVE " + str(current_wave) + " COMPLETE")
 		current_wave += 1
 		ENEMIES_PER_BATCH = randi_range(3 + floori(current_wave), 7 + floori(current_wave))
@@ -57,12 +60,14 @@ func _on_enemies_dead(enemy):
 		waveTimer.fadeIn()
 		await get_tree().create_timer(3.5).timeout
 		startNewWaveTimerCountdown()
+		startSkipTimerLabelFadeIn()
 
 func startNewWaveTimerCountdown():
 	 
 	localrelegatedWaveTime = relegatedWaveTime
 	waveTimer.changeWaveTimerLabel(localrelegatedWaveTime)
 	waveTimer.fadeIn()
+	startSkipTimerLabelFadeIn()
 	startMusicWhileWaiting()
 	countdown_timer.start()  # starts ticking every second
 	
@@ -82,6 +87,8 @@ func _on_countdown_tick(skipped: bool = false):
 		spawn_enemy_batch()
 		stopMusicAfterDoneWaiting()
 		waveTimer.hide()
+		skipTimerLabel.hide()
+		
 	
 func _ready():
 	Input.set_custom_mouse_cursor(cursor)
@@ -107,3 +114,9 @@ func startMusicWhileWaiting():
 	
 func stop_music():
 	music.stop()
+	
+func startSkipTimerLabelFadeIn():
+	await get_tree().create_timer(5).timeout
+	if Global.current_enemies.size() == 0:
+		skipTimerLabel.skipWaveTimerFadeIn()
+	

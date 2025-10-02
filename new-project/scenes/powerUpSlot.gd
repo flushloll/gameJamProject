@@ -2,13 +2,14 @@ extends TextureButton
 
 var hasPowerUpAvailable: bool
 var stats = ["attack", "melee_attack_speed", "health"]
-var powerUpAttack
-var powerUpMeleeAttackSpeed
-var powerUpHealth
+var powerUpAttack = 0
+var powerUpMeleeAttackSpeed = 0
+var powerUpHealth = 0
 @onready var powerUpsBoxShown = $"../../../../../../../../../../PowerUpStatsBuff"
 @onready var usedPowerUpsList = $"../../../../../../../../../../UsedPowerUps"
 var currentPowerUp
-@onready var player = get_node("/root/GameController/World3D/Main/SubViewportContainer/SubViewport/Player")
+@onready var accquirePowerUpSfx = $"../../../../../../../../../../accquirePowerUpSfx"
+@onready var player = $"../../../../../../../../../../../Player"
 var buffs = []
 
 func addPowerUpToSlot(powerUpStrength):
@@ -100,6 +101,7 @@ func showTheUserTheStatBuffs():
 
 func addPowerUpToUsedPowerUpList():
 	if powerUpAttack > 0 and powerUpMeleeAttackSpeed > 0 and powerUpHealth > 0:
+		accquirePowerUpSfx.play()
 		var power_up_icon = TextureRect.new()
 		power_up_icon.name = currentPowerUp.power_up_name
 		power_up_icon.texture = currentPowerUp.texture

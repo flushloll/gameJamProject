@@ -14,6 +14,7 @@ extends CanvasLayer
 @onready var shop_kitchen = $Shop_Kitchen
 @onready var player = $"../Player"
 @onready var shop_kitchen_margin_container = $Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer
+@onready var skipTimerLabel = $SpawnTimer/skipTimerLabel
 var fade_speed = 0.5
 var current_weapon_type = ""
 

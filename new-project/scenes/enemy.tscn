@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://bgwx7alhd6yb3"]
+[gd_scene load_steps=33 format=4 uid="uid://bgwx7alhd6yb3"]
 
 [ext_resource type="Script" uid="uid://bs606d67k60lp" path="res://scripts/enemy_REVAMPED.gd" id="1_md0e3"]
 [ext_resource type="Texture2D" uid="uid://bp3ucudda1ipc" path="res://assets/Animals/chicken4_Texture_1.png" id="2_ipns3"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://dwj07g5r7ralt" path="res://scenes/load_particles.gd" id="7_md484"]
 [ext_resource type="AudioStream" uid="uid://dxv637svc2bsj" path="res://musicandsfx/audiomass-output.wav" id="8_md484"]
 [ext_resource type="PackedScene" uid="uid://ckjdqxm5t8ffa" path="res://scenes/enemyHealthBar.tscn" id="9_ipns3"]
+[ext_resource type="AudioStream" uid="uid://b3ahcx070r0xh" path="res://ui/abs-popup-2-fast.mp3" id="12_otmr2"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0phsc"]
 resource_name = "material"
@@ -763,6 +764,10 @@ autostart = true
 [node name="WanderTimer" type="Timer" parent="."]
 wait_time = 6.0
 autostart = true
+
+[node name="newIgredientSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_otmr2")
+volume_db = -19.675
 
 [connection signal="animation_finished" from="chicken4/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="chicken4/AnimationTree" to="." method="_on_animation_tree_animation_finished"]

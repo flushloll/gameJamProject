@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cswlc83di6gbp"]
+[gd_scene load_steps=18 format=3 uid="uid://cswlc83di6gbp"]
 
 [ext_resource type="PackedScene" uid="uid://cufpjto4q3vgs" path="res://scenes/player.tscn" id="1_w4pyt"]
 [ext_resource type="AudioStream" uid="uid://c4myk46h5nng0" path="res://musicandsfx/kitchen-blog-positive-travel-happy-187696.mp3" id="4_7ceh2"]
@@ -16,6 +16,7 @@
 [ext_resource type="AudioStream" uid="uid://cqi8bf7vj605b" path="res://musicandsfx/Minimalist3.mp3" id="14_vv30q"]
 [ext_resource type="AudioStream" uid="uid://bsrqp3xuy7gur" path="res://ui/Retro7.mp3" id="15_016sp"]
 [ext_resource type="AudioStream" uid="uid://ccthkcabncg2m" path="res://ui/player-death-sfx.mp3" id="15_vv30q"]
+[ext_resource type="AudioStream" uid="uid://byncgqg3jia5l" path="res://ui/misc-bassdrop.mp3" id="16_016sp"]
 
 [node name="SubViewportContainer" type="SubViewportContainer"]
 texture_filter = 1
@@ -100,5 +101,9 @@ volume_db = -6.589
 [node name="DeathSoundSfx" type="AudioStreamPlayer" parent="SubViewport"]
 stream = ExtResource("15_vv30q")
 volume_db = -20.0
+
+[node name="DeathBassDropSfx" type="AudioStreamPlayer" parent="SubViewport"]
+stream = ExtResource("16_016sp")
+volume_db = -18.739
 
 [node name="UI" parent="SubViewport" instance=ExtResource("12_flpa8")]
