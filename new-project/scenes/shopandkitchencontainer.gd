@@ -128,6 +128,23 @@ func _input(event):
 					clearInventory()
 			elif event.is_action_pressed("ui_accept") and options[current_index].is_in_group("UsePowerup"):
 				powerUpSlot.usePowerUpInSlot()
+			elif event.is_action_pressed("ui_accept") and options[current_index].is_in_group("ShopSlot"):
+				if current_index == 0:
+					pass
+				elif current_index == 1:
+					pass
+				elif current_index == 2:
+					pass
+				elif current_index == 3:
+					pass
+				elif current_index == 4:
+					pass
+				elif current_index == 5:
+					pass
+				if didMoveAnything == true:
+					pass
+				else:
+					update_arrow_position()
 
 func _process(delta):
 	
@@ -152,8 +169,6 @@ func update_arrow_position():
 	var current_option = options[current_index]
 	time_passed = 0.0
 	
-	
-	
 	if showKitchenArrow:
 		if current_index == 0:
 			target_position = current_option.get_global_position() + Vector2(current_option.size.x, 0) + Vector2(67, 7)
@@ -171,17 +186,24 @@ func update_arrow_position():
 			
 			
 	elif showShopArrow:
+		ShopKitchenButtonHoverEventBus.emit_signal("shop_slot_hide_all")
 		if current_index == 0:
+			ShopKitchenButtonHoverEventBus.emit_signal("shop_slot_0")
 			target_position = current_option.get_global_position() + Vector2(current_option.size.x, 0) + Vector2(-60, 7)
 		elif current_index == 1:
+			ShopKitchenButtonHoverEventBus.emit_signal("shop_slot_1")
 			target_position = current_option.get_global_position() + Vector2(current_option.size.x, 0) + Vector2(-60, 7)
 		elif current_index == 2:
+			ShopKitchenButtonHoverEventBus.emit_signal("shop_slot_2")
 			target_position = current_option.get_global_position() + Vector2(current_option.size.x, 0) + Vector2(-60, 7)
 		elif current_index == 3:
+			ShopKitchenButtonHoverEventBus.emit_signal("shop_slot_3")
 			target_position = current_option.get_global_position() - Vector2(current_option.size.x, 0) + Vector2(210, 7)
 		elif current_index == 4:
+			ShopKitchenButtonHoverEventBus.emit_signal("shop_slot_4")
 			target_position = current_option.get_global_position() - Vector2(current_option.size.x, 0) + Vector2(210, 7)
 		elif current_index == 5:
+			ShopKitchenButtonHoverEventBus.emit_signal("shop_slot_5")
 			target_position = current_option.get_global_position() - Vector2(current_option.size.x, 0) + Vector2(210, 7)
 		elif current_index == 6:
 			target_position = current_option.get_global_position() + Vector2(current_option.size.x, 0) + arrow_offset

@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://dymx22377n8n"]
+[gd_scene load_steps=61 format=3 uid="uid://dymx22377n8n"]
 
 [ext_resource type="Script" uid="uid://b2jga8epi11h0" path="res://scripts/ui.gd" id="1_gdt2y"]
 [ext_resource type="Texture2D" uid="uid://bxls2v826qxr1" path="res://ui/revolverMatching.png" id="2_cgfq5"]
@@ -30,6 +30,8 @@
 [ext_resource type="Texture2D" uid="uid://buhl2skkho8br" path="res://ui/sawedoff-skill-underside.png" id="20_catpy"]
 [ext_resource type="Texture2D" uid="uid://cnqq1hngtcldj" path="res://ui/skillSawedOffBackgroundFixed2.png" id="20_kupmu"]
 [ext_resource type="Script" uid="uid://cbiyc4dxsrd8t" path="res://scenes/kitchenInventory.gd" id="21_i5tog"]
+[ext_resource type="Script" uid="uid://bndye6gs0q4ca" path="res://scenes/button.gd" id="22_mgb8n"]
+[ext_resource type="Script" uid="uid://4863visyh3oc" path="res://scenes/button_hover_text.gd" id="22_y6fpy"]
 [ext_resource type="Texture2D" uid="uid://kxp7e741rrgc" path="res://ui/stompBackground.png" id="25_wquew"]
 [ext_resource type="Script" uid="uid://q76dcrxh3t4w" path="res://scenes/inventory.gd" id="27_0tsab"]
 [ext_resource type="Script" uid="uid://j2jc0qog8tn5" path="res://scenes/stomp_skill.gd" id="28_wu1et"]
@@ -102,6 +104,78 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0tsab"]
+bg_color = Color(0.617455, 0.617455, 0.617455, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6bb67"]
+bg_color = Color(0.617455, 0.617455, 0.617455, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mgb8n"]
+bg_color = Color(0.617455, 0.617455, 0.617455, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y6fpy"]
+bg_color = Color(0.617455, 0.617455, 0.617455, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phcun"]
+bg_color = Color(0.617455, 0.617455, 0.617455, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7crvc"]
+bg_color = Color(0.617455, 0.617455, 0.617455, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wibvp"]
 bg_color = Color(0.617455, 0.617455, 0.617455, 0)
 border_width_left = 2
 border_width_top = 2
@@ -353,7 +427,6 @@ theme_override_constants/margin_bottom = 8
 script = ExtResource("11_6rmj2")
 
 [node name="KitchenContainer" type="VBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer"]
-visible = false
 layout_mode = 2
 theme_override_constants/separation = 11
 
@@ -642,7 +715,7 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1" groups=["FaceRight", "ShopSlot"]]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_vertical = 3
@@ -651,29 +724,34 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
+script = ExtResource("22_y6fpy")
 
-[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(30, 0)
+[node name="Label" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_vertical = 6
+text = "aaaaaaaaaaaaaaaaaaaaa"
+autowrap_mode = 1
 
-[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer/VBoxContainer"]
+[node name="Label2" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 6
+text = "aaaaaaaaaaaaaaaaaaaaa"
+autowrap_mode = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.51
+theme_override_styles/panel = SubResource("StyleBoxFlat_6bb67")
 
-[node name="Button" type="Button" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer/PanelContainer"]
+[node name="Button_0" type="TextureButton" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer/PanelContainer"]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
+script = ExtResource("22_mgb8n")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1" groups=["FaceRight", "ShopSlot"]]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_vertical = 3
@@ -683,28 +761,32 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 
-[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer2/VBoxContainer"]
-custom_minimum_size = Vector2(30, 0)
+[node name="Label" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_vertical = 6
+text = "aaaaaaaaaaaaaaaaaaaaa"
+autowrap_mode = 1
 
-[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer2/VBoxContainer"]
+[node name="Label2" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 6
+text = "aaaaaaaaaaaaaaaaaaaaa"
+autowrap_mode = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.51
+theme_override_styles/panel = SubResource("StyleBoxFlat_mgb8n")
 
-[node name="Button" type="Button" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer2/PanelContainer"]
+[node name="Button_1" type="TextureButton" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer2/PanelContainer"]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
+script = ExtResource("22_mgb8n")
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1" groups=["FaceRight", "ShopSlot"]]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_vertical = 3
@@ -714,22 +796,25 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 
-[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer3/VBoxContainer"]
-custom_minimum_size = Vector2(30, 0)
+[node name="Label" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer3/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_vertical = 6
+text = "aaaaaaaaaaaaaaaaaaaaa"
+autowrap_mode = 1
 
-[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer3/VBoxContainer"]
+[node name="Label2" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer3/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 6
+text = "aaaaaaaaaaaaaaaaaaaaa"
+autowrap_mode = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.51
+theme_override_styles/panel = SubResource("StyleBoxFlat_y6fpy")
 
-[node name="Button" type="Button" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer3/PanelContainer"]
+[node name="Button_2" type="TextureButton" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer3/PanelContainer"]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -740,7 +825,7 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2" groups=["FaceRight"]]
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2" groups=["FaceRight", "ShopSlot"]]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_vertical = 3
@@ -750,28 +835,31 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 
-[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(30, 0)
+[node name="Label" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_vertical = 6
+text = "aaaaaaaaaaaaaaaaaaaaa"
+autowrap_mode = 1
 
-[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer/VBoxContainer"]
+[node name="Label2" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 6
+text = "aaaaaaaaaaaaaaaaaaaaa"
+autowrap_mode = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.51
+theme_override_styles/panel = SubResource("StyleBoxFlat_phcun")
 
-[node name="Button" type="Button" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer/PanelContainer"]
+[node name="Button_3" type="TextureButton" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer/PanelContainer"]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2" groups=["FaceRight"]]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2" groups=["FaceRight", "ShopSlot"]]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_vertical = 3
@@ -781,28 +869,31 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 
-[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer2/VBoxContainer"]
-custom_minimum_size = Vector2(30, 0)
+[node name="Label" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_vertical = 6
+text = "aaaaaaaaaaaaaaaaaaaaa"
+autowrap_mode = 1
 
-[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer2/VBoxContainer"]
+[node name="Label2" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 6
+text = "aaaaaaaaaaaaaaaaaaaaa"
+autowrap_mode = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.51
+theme_override_styles/panel = SubResource("StyleBoxFlat_7crvc")
 
-[node name="Button" type="Button" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer2/PanelContainer"]
+[node name="Button_4" type="TextureButton" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer2/PanelContainer"]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2" groups=["FaceRight"]]
+[node name="HBoxContainer3" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2" groups=["FaceRight", "ShopSlot"]]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_vertical = 3
@@ -812,22 +903,25 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 
-[node name="TextureRect" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer3/VBoxContainer"]
-custom_minimum_size = Vector2(30, 0)
+[node name="Label" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer3/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_vertical = 6
+text = "aaaaaaaaaaaaaaaaaaaaa"
+autowrap_mode = 1
 
-[node name="TextureRect2" type="TextureRect" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer3/VBoxContainer"]
+[node name="Label2" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer3/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 6
+text = "aaaaaaaaaaaaaaaaaaaaa"
+autowrap_mode = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.51
+theme_override_styles/panel = SubResource("StyleBoxFlat_wibvp")
 
-[node name="Button" type="Button" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer3/PanelContainer"]
+[node name="Button_5" type="TextureButton" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer3/PanelContainer"]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 size_flags_horizontal = 3

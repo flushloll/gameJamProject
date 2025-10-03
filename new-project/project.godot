@@ -21,6 +21,7 @@ boot_splash/image="uid://5r68g87lplt1"
 
 Global="*res://scripts/global.gd"
 GlobalController="*res://global_controller.gd"
+ShopKitchenButtonHoverEventBus="*res://shop_kitchen_button_hover_event_bus.gd"
 
 [debug_draw_3d]
 
