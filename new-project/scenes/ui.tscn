@@ -1,10 +1,9 @@
-[gd_scene load_steps=62 format=3 uid="uid://dymx22377n8n"]
+[gd_scene load_steps=63 format=3 uid="uid://dymx22377n8n"]
 
 [ext_resource type="Script" uid="uid://b2jga8epi11h0" path="res://scripts/ui.gd" id="1_gdt2y"]
 [ext_resource type="Texture2D" uid="uid://bxls2v826qxr1" path="res://ui/revolverMatching.png" id="2_cgfq5"]
 [ext_resource type="Texture2D" uid="uid://cdmh6jcvkwkkh" path="res://ui/whitedot.tres" id="3_gdt2y"]
 [ext_resource type="FontFile" uid="uid://b5b3polo64e17" path="res://ui/ChiknScrach-Regular.ttf (2).otf" id="4_p7vwb"]
-[ext_resource type="FontFile" uid="uid://c0sx4gtuplc2s" path="res://ui/Night Fashion.ttf" id="5_7dvkv"]
 [ext_resource type="Script" uid="uid://xr00ksmy0s5p" path="res://scenes/center_cursor.gd" id="5_wm3ai"]
 [ext_resource type="Script" uid="uid://dpspvqqo5b1kx" path="res://scripts/player_healthbar.gd" id="6_8dubc"]
 [ext_resource type="Texture2D" uid="uid://dwvjcfvhii0se" path="res://ui/PlayerHealthBarTopLeftFull.png" id="6_ktti3"]
@@ -32,7 +31,6 @@
 [ext_resource type="Script" uid="uid://cbiyc4dxsrd8t" path="res://scenes/kitchenInventory.gd" id="21_i5tog"]
 [ext_resource type="Script" uid="uid://bndye6gs0q4ca" path="res://scenes/button.gd" id="22_mgb8n"]
 [ext_resource type="Script" uid="uid://4863visyh3oc" path="res://scenes/button_hover_text.gd" id="22_y6fpy"]
-[ext_resource type="LabelSettings" uid="uid://d12qhkga75cgg" path="res://ui/ingredient.tres" id="23_phcun"]
 [ext_resource type="Texture2D" uid="uid://kxp7e741rrgc" path="res://ui/stompBackground.png" id="25_wquew"]
 [ext_resource type="Script" uid="uid://q76dcrxh3t4w" path="res://scenes/inventory.gd" id="27_0tsab"]
 [ext_resource type="Script" uid="uid://j2jc0qog8tn5" path="res://scenes/stomp_skill.gd" id="28_wu1et"]
@@ -41,19 +39,14 @@
 [ext_resource type="AudioStream" uid="uid://66x7j2sc1hqr" path="res://ui/mixkit-cooking-bell-ding-1791.wav" id="34_5ls34"]
 [ext_resource type="AudioStream" uid="uid://du7d6c68l4n1x" path="res://ui/abs-confirm-3-alt.mp3" id="34_ukrhx"]
 [ext_resource type="AudioStream" uid="uid://dqaguoga5ap6n" path="res://ui/pot-hit-1-87572.mp3" id="35_fsl8s"]
+[ext_resource type="Texture2D" uid="uid://dk37h2bsws3hy" path="res://ui/chickenWingCount.png" id="40_y6fpy"]
+[ext_resource type="Script" uid="uid://bmnb6rt4gt1mg" path="res://scenes/wing_counter_label.gd" id="41_phcun"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vdcm2"]
 font = ExtResource("4_p7vwb")
 font_size = 42
 font_color = Color(0.770032, 0.457367, 0.30513, 1)
 outline_size = 8
-outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_tefeu"]
-font = ExtResource("5_7dvkv")
-font_size = 64
-font_color = Color(0.539096, 0.311987, 0.182129, 1)
-outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_6bb67"]
@@ -115,6 +108,12 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
+
+[sub_resource type="LabelSettings" id="LabelSettings_y6fpy"]
+font = ExtResource("4_p7vwb")
+font_size = 11
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6bb67"]
 bg_color = Color(0.617455, 0.617455, 0.617455, 0)
@@ -236,6 +235,13 @@ font_size = 32
 outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_tefeu"]
+font = ExtResource("18_kupmu")
+font_size = 32
+font_color = Color(0.812426, 0.513763, 0.347583, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_gdt2y")
 
@@ -288,22 +294,6 @@ size_flags_horizontal = 8
 size_flags_vertical = 8
 text = "30/30"
 label_settings = SubResource("LabelSettings_vdcm2")
-metadata/_edit_use_anchors_ = true
-
-[node name="WingCounter" type="Label" parent="."]
-z_index = 1
-anchors_preset = -1
-anchor_left = 0.13
-anchor_right = 0.13
-offset_left = 18.24
-offset_top = 12.0
-offset_right = 185.24
-offset_bottom = 73.0
-grow_horizontal = 0
-grow_vertical = 0
-size_flags_horizontal = 8
-size_flags_vertical = 8
-label_settings = SubResource("LabelSettings_tefeu")
 metadata/_edit_use_anchors_ = true
 
 [node name="CenterCursor" type="Sprite2D" parent="."]
@@ -385,6 +375,7 @@ label_settings = SubResource("LabelSettings_6bb67")
 script = ExtResource("13_6bb67")
 
 [node name="Shop_Kitchen" type="Control" parent="."]
+visible = false
 z_index = 1
 layout_mode = 3
 anchors_preset = 8
@@ -696,6 +687,7 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 0.49
 
 [node name="ShopContainer" type="VBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer"]
@@ -729,13 +721,15 @@ script = ExtResource("22_y6fpy")
 
 [node name="Label" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "base text"
-label_settings = ExtResource("23_phcun")
+text = "item
+description"
+label_settings = SubResource("LabelSettings_y6fpy")
 
 [node name="Label2" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "base text"
-label_settings = ExtResource("23_phcun")
+text = "item
+description"
+label_settings = SubResource("LabelSettings_y6fpy")
 
 [node name="PanelContainer" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer"]
 layout_mode = 2
@@ -759,16 +753,19 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
+script = ExtResource("22_y6fpy")
 
 [node name="Label" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
-text = "base text"
-label_settings = ExtResource("23_phcun")
+text = "item
+description"
+label_settings = SubResource("LabelSettings_y6fpy")
 
 [node name="Label2" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
-text = "base text"
-label_settings = ExtResource("23_phcun")
+text = "item
+description"
+label_settings = SubResource("LabelSettings_y6fpy")
 
 [node name="PanelContainer" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer2"]
 layout_mode = 2
@@ -792,16 +789,19 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
+script = ExtResource("22_y6fpy")
 
 [node name="Label" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer3/VBoxContainer"]
 layout_mode = 2
-text = "base text"
-label_settings = ExtResource("23_phcun")
+text = "item
+description"
+label_settings = SubResource("LabelSettings_y6fpy")
 
 [node name="Label2" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer3/VBoxContainer"]
 layout_mode = 2
-text = "base text"
-label_settings = ExtResource("23_phcun")
+text = "item
+description"
+label_settings = SubResource("LabelSettings_y6fpy")
 
 [node name="PanelContainer" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList1/HBoxContainer3"]
 layout_mode = 2
@@ -814,6 +814,7 @@ custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
+script = ExtResource("22_mgb8n")
 
 [node name="ItemList2" type="VBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer"]
 custom_minimum_size = Vector2(100, 0)
@@ -829,16 +830,19 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
+script = ExtResource("22_y6fpy")
 
 [node name="Label" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "base text"
-label_settings = ExtResource("23_phcun")
+text = "item
+description"
+label_settings = SubResource("LabelSettings_y6fpy")
 
 [node name="Label2" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "base text"
-label_settings = ExtResource("23_phcun")
+text = "item
+description"
+label_settings = SubResource("LabelSettings_y6fpy")
 
 [node name="PanelContainer" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer"]
 layout_mode = 2
@@ -851,6 +855,7 @@ custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
+script = ExtResource("22_mgb8n")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2" groups=["FaceRight", "ShopSlot"]]
 custom_minimum_size = Vector2(30, 0)
@@ -861,16 +866,19 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
+script = ExtResource("22_y6fpy")
 
 [node name="Label" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
-text = "base text"
-label_settings = ExtResource("23_phcun")
+text = "item
+description"
+label_settings = SubResource("LabelSettings_y6fpy")
 
 [node name="Label2" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
-text = "base text"
-label_settings = ExtResource("23_phcun")
+text = "item
+description"
+label_settings = SubResource("LabelSettings_y6fpy")
 
 [node name="PanelContainer" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer2"]
 layout_mode = 2
@@ -883,6 +891,7 @@ custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
+script = ExtResource("22_mgb8n")
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2" groups=["FaceRight", "ShopSlot"]]
 custom_minimum_size = Vector2(30, 0)
@@ -893,16 +902,19 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
+script = ExtResource("22_y6fpy")
 
 [node name="Label" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer3/VBoxContainer"]
 layout_mode = 2
-text = "base text"
-label_settings = ExtResource("23_phcun")
+text = "item
+description"
+label_settings = SubResource("LabelSettings_y6fpy")
 
 [node name="Label2" type="Label" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer3/VBoxContainer"]
 layout_mode = 2
-text = "base text"
-label_settings = ExtResource("23_phcun")
+text = "item
+description"
+label_settings = SubResource("LabelSettings_y6fpy")
 
 [node name="PanelContainer" type="PanelContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer/HBoxContainer/ItemList2/HBoxContainer3"]
 layout_mode = 2
@@ -915,6 +927,7 @@ custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
+script = ExtResource("22_mgb8n")
 
 [node name="SwitchPages" type="HBoxContainer" parent="Shop_Kitchen/VBoxContainer/PanelContainer/MarginContainer/ShopContainer"]
 layout_mode = 2
@@ -1077,7 +1090,6 @@ stream = ExtResource("34_ukrhx")
 volume_db = -10.306
 
 [node name="StompSkill" type="TextureProgressBar" parent="."]
-visible = false
 z_index = 1
 anchors_preset = -1
 anchor_top = 0.138
@@ -1096,7 +1108,6 @@ tint_under = Color(0.281187, 0.281187, 0.281187, 1)
 script = ExtResource("28_wu1et")
 
 [node name="Skill1" type="TextureProgressBar" parent="."]
-visible = false
 z_index = 1
 anchors_preset = -1
 anchor_top = 0.138
@@ -1115,7 +1126,6 @@ tint_under = Color(0.281187, 0.281187, 0.281187, 1)
 script = ExtResource("19_jkdwc")
 
 [node name="Inventory" type="HBoxContainer" parent="."]
-visible = false
 z_index = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -1132,7 +1142,6 @@ alignment = 2
 script = ExtResource("27_0tsab")
 
 [node name="UsedPowerUps" type="HBoxContainer" parent="."]
-visible = false
 z_index = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -1147,17 +1156,16 @@ grow_horizontal = 0
 alignment = 2
 
 [node name="PowerUpStatsBuff" type="VBoxContainer" parent="."]
-visible = false
 z_index = 1
 anchors_preset = -1
 anchor_left = 1.0
-anchor_top = 0.247
+anchor_top = 0.36
 anchor_right = 1.0
-anchor_bottom = 0.247
-offset_left = -240.0
-offset_top = -20.056
-offset_right = -82.0
-offset_bottom = 19.944
+anchor_bottom = 0.36
+offset_left = -238.0
+offset_top = -20.28
+offset_right = -80.0
+offset_bottom = 19.72
 theme_override_constants/separation = 12
 
 [node name="DeathScreenBackground" type="ColorRect" parent="."]
@@ -1235,3 +1243,31 @@ horizontal_alignment = 1
 position = Vector2(812, 110)
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("11_vsj0x")
+
+[node name="WingsCount" type="HBoxContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.988
+anchor_top = 0.261
+anchor_right = 1.0
+anchor_bottom = 0.261
+offset_left = -193.176
+offset_top = -36.0
+offset_right = -80.0
+offset_bottom = 36.0
+theme_override_constants/separation = -15
+
+[node name="TextureRect" type="TextureRect" parent="WingsCount"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.29
+texture = ExtResource("40_y6fpy")
+expand_mode = 3
+
+[node name="WingCounter" type="Label" parent="WingsCount"]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+label_settings = SubResource("LabelSettings_tefeu")
+script = ExtResource("41_phcun")
+metadata/_edit_use_anchors_ = true

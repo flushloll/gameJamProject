@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://ebtx1nedsk7f" path="res://scenes/gun_camera.gd" id="6_oprun"]
 [ext_resource type="Script" uid="uid://url51jeyeph6" path="res://scenes/camera3d.gd" id="7_smehm"]
 [ext_resource type="Script" uid="uid://bq8fq82fgwp38" path="res://scenes/laser_beam.gd" id="7_ur7pv"]
-[ext_resource type="ArrayMesh" uid="uid://b4tt45gfblj05" path="res://swordMesh.res" id="8_jej6c"]
+[ext_resource type="ArrayMesh" uid="uid://b4tt45gfblj05" path="res://assets/swordMesh/swordMesh.res" id="8_jej6c"]
 [ext_resource type="Resource" uid="uid://dv880iu5xh4nj" path="res://weapons/baseweapon.tres" id="8_l71n6"]
 [ext_resource type="Texture2D" uid="uid://2mxmh1iy0d1q" path="res://assets/revolverMesh/fireRevolver.png" id="9_f1ej7"]
 [ext_resource type="Script" uid="uid://fota2gqv3ab6" path="res://scenes/post_processing.gd" id="9_jej6c"]

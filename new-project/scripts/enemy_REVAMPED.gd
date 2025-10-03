@@ -37,6 +37,7 @@ var pecking: bool = false
 var horizontal_speed = Vector3(velocity.x, 0, velocity.z).length()
 @onready var playerdamageCooldownBool: bool = false
 @onready var inventory = $"../SubViewportContainer/SubViewport/UI/Inventory"
+@onready var wingCountLabel = $"../SubViewportContainer/SubViewport/UI/WingsCount/WingCounter"
 
 # cached safe velocity received from NavigationAgent3D
 var agent_safe_velocity: Vector3 = Vector3.ZERO
@@ -219,6 +220,7 @@ func die():
 	feathers.restart()          # force restart if it was already used
 	feathers.emitting = true    # now play once
 	chickendeadSfx.play()
+	wingCountLabel.addWingsToWingCount(1)
 	$HealthBar.hide()
 	var IngredientRandomChance = randi_range(0,10)
 	if IngredientRandomChance >= 5:

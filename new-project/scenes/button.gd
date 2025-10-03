@@ -1,6 +1,6 @@
 extends TextureButton
 
-var buttonHoverText = get_parent().get_parent().get_child(0)
+@onready var buttonHoverText = get_parent().get_parent().get_child(0)
 
 func _ready():
 	# Get the number at the end of the button's name
@@ -18,4 +18,5 @@ func _on_slot_hover():
 	buttonHoverText.fadeIn()
 
 func hide_self():
+	print(buttonHoverText.name)
 	buttonHoverText.fadeOut()
